@@ -913,7 +913,7 @@ public class LoopManiaWorldController {
 
                         // maybe add more cases? 
                         // draggedEntity.setImage(vampireCastleCardImage);
-                        draggedEntity.setImage(zombiePitCardImage);
+                        draggedEntity.setImage(villageCardImage);
                         break;
                     case ITEM:
                         draggedEntity.setImage(swordImage);

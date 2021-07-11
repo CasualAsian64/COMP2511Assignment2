@@ -9,5 +9,6 @@ public class CampfireCard extends Card {
     // TODO = add more types of card
     public CampfireCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        this.cardType = "CampfireCard";
     }    
 }
