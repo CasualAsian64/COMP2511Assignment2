@@ -472,22 +472,28 @@ public class LoopManiaWorld {
     // loop through all buildings and see if Enemy is onTile 
     public void detectEnemyisOnTile() {
 
-        List<Building> destroyedBuildings = new ArrayList<Building>();
-        for (Building b: buildingEntities) {
-            // if building X coordinate == enemy X coordinate && 
-            //    building Y coordinate == enemy Y coordinate
+        ArrayList<Building> destroyedBuildings = new ArrayList<Building>();
+        List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
 
-            for (Enemy e: enemies) {
-                if (b.getX() == (e.getX()) && b.getY() == (e.getY())) {
-                    b.performActionOnEnemy(e, enemies);
+
+        for (Building b: buildingEntities) {
+            for (Enemy e: enemies) { 
+                if (b.getX() == (e.getX()) && b.getY() == (e.getY()) && b.getType().equals("Trap")) {
+                    boolean enemyKilledByTrap = b.performActionOnEnemy(e);
                     destroyedBuildings.add(b);
+
+                    if (enemyKilledByTrap) {
+                        defeatedEnemies.add(e);
+                    }
                 }
             }
         }
 
-
         for (Building b: destroyedBuildings) {
             destroyBuilding(b);
+        }
+        for (Enemy e : defeatedEnemies) {
+            killEnemy(e);
         }
     }
 
@@ -741,10 +747,7 @@ public class LoopManiaWorld {
         }
 
         return b;
-    
 
-
-    
     }
 
 }

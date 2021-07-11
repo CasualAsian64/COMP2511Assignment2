@@ -13,7 +13,7 @@ public class Village extends Building {
 
     // function that every "step-on" building can call if stepped on
     @Override
-    public void performAction(Character character) {
+    public void performActionOnCharacter(Character character) {
         healCharacter(character.getStats());
     }
 

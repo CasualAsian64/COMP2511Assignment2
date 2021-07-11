@@ -15,21 +15,17 @@ public class Trap extends Building {
     }    
 
     @Override
-    public void performActionOnEnemy(Enemy e, List<Enemy> enemies){
-        // Deal damage to the 
-        boolean result = inflictDamage(e, e.getStats());
+    public boolean performActionOnEnemy(Enemy e){
+        // Deal damage to the enemy
+        return inflictDamage(e, e.getStats());
 
-        if (result) {
-              // need to also remove the killed enemy from enemieslist 
-            enemies.remove(e);
-        }
     }
 
     // Return true if the enemy is killed, false if it still survives
     public boolean inflictDamage(Enemy enemy, Statistics enemyStats) {
 
         // Kill the enemy if it has less than 25 health 
-        if (enemyStats.getHealth() < 25) {
+        if (enemyStats.getHealth() <= 25) {
             enemy.destroy();
 
             System.out.println("The enemy stepped on the trap and was killed!");

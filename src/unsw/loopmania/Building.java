@@ -26,7 +26,8 @@ public abstract class Building extends StaticEntity {
     public void performActionOnCharacter(Character character) {
     }
 
-    public void performActionOnEnemy(Enemy enemy, List<Enemy> enemies) {
+    public boolean performActionOnEnemy(Enemy enemy) {
+        return false;
     }
 
 
