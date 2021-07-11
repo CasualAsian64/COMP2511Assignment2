@@ -14,7 +14,7 @@ public class Barracks extends Building {
     }  
     
     @Override
-    public void performAction(Character character) {
+    public void performActionOnCharacter(Character character) {
         spawnAlliedSoldier(character.getAllies());
     }
 
