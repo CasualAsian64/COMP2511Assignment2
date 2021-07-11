@@ -465,6 +465,10 @@ public class LoopManiaWorld {
             //    building Y coordinate == character Y coordinate
             if (b.getX() == (this.character.getX()) && b.getY() == (this.character.getY())) {
                 b.performActionOnCharacter(this.character);
+
+                if (b.getType().equals("HerosCastle")) {
+                    incrementLoops();
+                }
             }
         }
     }

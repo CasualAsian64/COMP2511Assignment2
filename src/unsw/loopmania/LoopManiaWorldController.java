@@ -11,6 +11,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -296,8 +297,9 @@ public class LoopManiaWorldController {
         }
 
         // TODO Load the Hero's Castle, put at spot (0,0)?
-        ImageView herosCastleView = new ImageView(herosCastleImage);
-        // HerosCastle herosCastle = new HerosCastle(0, 0);
+        // ImageView herosCastleView = new ImageView(herosCastleImage);
+        HerosCastle herosCastle =  new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        onLoadHerosCastle(herosCastle);
         
 
         // add the empty slot images for the unequipped inventory
