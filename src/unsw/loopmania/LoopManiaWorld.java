@@ -453,6 +453,7 @@ public class LoopManiaWorld {
         moveEnemies();
         worldGoals.printAllGoals();
         detectCharacterisOnTile();
+        detectEnemyisOnTile();
         // Everytime the character moves, check if the character has acheieved the world goals
         worldGoals.checkGoalsMet(character.getStats(), numLoops);
     }
@@ -462,12 +463,39 @@ public class LoopManiaWorld {
         for (Building b: buildingEntities) {
             // if building X coordinate == character X coordinate && 
             //    building Y coordinate == character Y coordinate
-            if (b.getX() == (this.character.getX()) && 
-                b.getY() == (this.character.getY())) {
-                b.performAction(this.character);
+            if (b.getX() == (this.character.getX()) && b.getY() == (this.character.getY())) {
+                b.performActionOnCharacter(this.character);
             }
         }
     }
+
+    // loop through all buildings and see if Enemy is onTile 
+    public void detectEnemyisOnTile() {
+
+        List<Building> destroyedBuildings = new ArrayList<Building>();
+        for (Building b: buildingEntities) {
+            // if building X coordinate == enemy X coordinate && 
+            //    building Y coordinate == enemy Y coordinate
+
+            for (Enemy e: enemies) {
+                if (b.getX() == (e.getX()) && b.getY() == (e.getY())) {
+                    b.performActionOnEnemy(e, enemies);
+                    destroyedBuildings.add(b);
+                }
+            }
+        }
+
+
+        for (Building b: destroyedBuildings) {
+            destroyBuilding(b);
+        }
+    }
+
+    private void destroyBuilding(Building building) {
+        building.destroy();
+        buildingEntities.remove(building);
+    }
+
 
     /**
      * remove an item from the unequipped inventory
@@ -602,18 +630,12 @@ public class LoopManiaWorld {
                 break;
             }
         }
-        // TODO needs to be refactored so any building gets built. 
-        // TODO - add a separate function that spawns the building and then returns it, similar to the spawn cards
-        // VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-
-
 
 
         Building b = null;
 
 
         // Call card.getType() to determine which building to create and add 
-
 
         ///////////////
 
@@ -622,12 +644,10 @@ public class LoopManiaWorld {
             VampireCastleBuilding newBuilding = new VampireCastleBuilding (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
             buildingEntities.add(newBuilding);
 
-
             // Remove the card
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
-            // b = newBuilding;
 
             // Return the building to be added
             return newBuilding;
@@ -642,7 +662,7 @@ public class LoopManiaWorld {
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
-            // b = newBuilding;
+
 
             // Return the building to be added
             return newBuilding;
@@ -656,7 +676,6 @@ public class LoopManiaWorld {
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
-            // b = newBuilding;
 
             // Return the building to be added
             return newBuilding;
@@ -673,7 +692,6 @@ public class LoopManiaWorld {
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
-            // b = newBuilding;
 
             // Return the building to be added
             return newBuilding;
@@ -688,7 +706,6 @@ public class LoopManiaWorld {
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
-            // b = newBuilding;
 
             // Return the building to be added
             return newBuilding;
@@ -704,7 +721,6 @@ public class LoopManiaWorld {
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
-            // b = newBuilding;
 
             // Return the building to be added
             return newBuilding;
@@ -719,38 +735,16 @@ public class LoopManiaWorld {
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
-            // b = newBuilding;
 
             // Return the building to be added
             return newBuilding;
         }
 
-
-      
-
-
-
-       
         return b;
     
 
-        // // Remove the card
-        // card.destroy();
-        // cardEntities.remove(card);
-        // shiftCardsDownFromXCoordinate(cardNodeX);
-
-        // Return the building to be added
-        // return null;
 
     
     }
-
-    // public Village createVillage(int buildingNodeX, int buildingNodeY) {
-    //     Village village = new Village (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-    //     buildingEntities.add(village);
-
-    
-    //     return village;
-    // }
 
 }
