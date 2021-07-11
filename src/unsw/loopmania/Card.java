@@ -11,4 +11,15 @@ public abstract class Card extends StaticEntity {
     public Card(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }
+
+
+    // BELOW IS WORKING, try commenting out and applying for each other card
+    // protected String cardType = "VillageCard";
+    protected String cardType;
+
+    public String getCardType() {
+        return cardType;
+    }
+
+    
 }

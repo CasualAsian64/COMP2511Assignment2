@@ -463,8 +463,6 @@ public class LoopManiaWorldController {
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
         
-        //loadSword();
-        //loadVampireCard();
 
         Random randomCard = new Random();
         Random randomItem = new Random();
@@ -492,6 +490,10 @@ public class LoopManiaWorldController {
         }
         else if (randCard == 6) {
            loadCampfireCard();
+        }
+
+        if (randItem == 0) {
+            loadSword();
         }
         
         if (randItem == 1) {
@@ -664,52 +666,85 @@ public class LoopManiaWorldController {
      * 
      * @param building
      */
-    private void onLoad(VampireCastleBuilding building){
+    private void onLoadVampireCastle(Building building){
         ImageView view = new ImageView(vampireCastleImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoad(ZombiePit building){
+    private void onLoadZombiePit(Building building){
         ImageView view = new ImageView(zombiePitImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoad(Tower building){
+    private void onLoadTower(Building building){
         ImageView view = new ImageView(towerImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoad(Village building){
+    // private void onLoadVillage(Village building){
+    //     ImageView view = new ImageView(villageImage);
+    //     addEntity(building, view);
+    //     squares.getChildren().add(view);
+    // }
+    private void onLoadVillage(Building building){
         ImageView view = new ImageView(villageImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoad(Barracks building){
+    private void onLoadBarracks(Building building){
         ImageView view = new ImageView(barracksImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoad(Trap building){
+    private void onLoadTrap(Building building){
         ImageView view = new ImageView(trapImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoad(Campfire building){
+    private void onLoadCampfire(Building building){
         ImageView view = new ImageView(campfireImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
 
-    private void onLoad(HerosCastle building){
+    private void onLoadHerosCastle(Building building){
         ImageView view = new ImageView(herosCastleImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
     private void onLoad(Building building){
         
-        ImageView view = new ImageView(towerImage);
-        addEntity(building, view);
-        squares.getChildren().add(view);
+        if (building.getType().equals("VampireCastle")) {
+            onLoadVampireCastle(building);
+        }
+
+        if (building.getType().equals("ZombiePit")) {
+            onLoadZombiePit(building);
+        }
+
+        if (building.getType().equals("Tower")) {
+            onLoadTower(building);
+        }
+
+        if (building.getType().equals("Village")) {
+            onLoadVillage(building);
+        }
+
+        if (building.getType().equals("Barracks")) {
+            onLoadBarracks(building);
+        }
+
+        if (building.getType().equals("Trap")) {
+            onLoadTrap(building);
+        }
+
+        if (building.getType().equals("Campfire")) {
+            onLoadCampfire(building);
+        }
+        
+        // ImageView view = new ImageView(villageImage);
+        // addEntity(building, view);
+        // squares.getChildren().add(view);
     }
 
 
@@ -764,12 +799,9 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn a building here of different types
 
-                                // TODO - need to refactor such that any building can get spawned 
-                                Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
-                                // if (newBuilding.getType().equals("VampireCastleBuilding")){
-                                //     onLoad(newBuilding);
-                                // }
 
+                                Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
+                                
                                 onLoad(newBuilding);
                                 break;
                             case ITEM:
@@ -908,8 +940,12 @@ public class LoopManiaWorldController {
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType) {
                     case CARD:
+
+                        // maybe add more cases? 
                         // draggedEntity.setImage(vampireCastleCardImage);
-                        draggedEntity.setImage(zombiePitCardImage);
+
+                        //TODO -revisit this idk what this does
+                        draggedEntity.setImage(villageCardImage);
                         break;
                     case ITEM:
                         draggedEntity.setImage(swordImage);
