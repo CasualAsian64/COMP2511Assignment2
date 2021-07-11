@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Village extends Building {
     public Village(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        this.type = "Village";
     }    
 
     // function that every "step-on" building can call if stepped on
@@ -17,7 +18,10 @@ public class Village extends Building {
     }
 
     public void healCharacter(Statistics stats) {
-        
+
+        System.out.println("The character has visited the village");
+        System.out.println("");
+
 
         System.out.println("The characters health before healing is " + stats.getHealth());
 
@@ -32,5 +36,8 @@ public class Village extends Building {
         }    
 
         System.out.println("The characters health after healing is " + stats.getHealth());
+
+        System.out.println("");
+
     }
 }

@@ -618,7 +618,7 @@ public class LoopManiaWorld {
         ///////////////
 
 
-        if (card.getCardType().equals("VampiresCastleCard")) {
+        if (card.getCardType().equals("VampireCastleCard")) {
             VampireCastleBuilding newBuilding = new VampireCastleBuilding (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
             buildingEntities.add(newBuilding);
 

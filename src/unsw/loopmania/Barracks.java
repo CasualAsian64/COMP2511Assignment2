@@ -8,5 +8,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Barracks extends Building {
     public Barracks(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        this.type = "Barracks";
     }    
 }
