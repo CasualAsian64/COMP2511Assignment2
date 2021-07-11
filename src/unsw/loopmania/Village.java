@@ -10,15 +10,18 @@ public class Village extends Building {
         super(x, y);
     }    
 
+    // function that every "step-on" building can call if stepped on
+    @Override
+    public void performAction(Character character) {
+        healCharacter(character.getStats());
+    }
+
     public void healCharacter(Statistics stats) {
         
-        // This logic should come before the healing. 
-        // if village X coordinate == character X coordinate && 
-        //    village Y coordinate == character Y coordinate
 
         System.out.println("The characters health before healing is " + stats.getHealth());
 
-        // if heal amount is greater than 100, set health to 100 
+        // if heal amount is greater than 100, set health to 100 (max health)
         if (stats.getHealth() >= 90) {
             stats.setHealth(100);
         }

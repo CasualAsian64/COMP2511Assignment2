@@ -451,8 +451,21 @@ public class LoopManiaWorld {
         character.moveDownPath();
         moveEnemies();
         worldGoals.printAllGoals();
+        detectCharacterisOnTile();
         // Everytime the character moves, check if the character has acheieved the world goals
         worldGoals.checkGoalsMet(character.getStats(), numLoops);
+    }
+
+    // loop through all buildings and see if Character is onTile 
+    public void detectCharacterisOnTile() {
+        for (Building b: buildingEntities) {
+            // if building X coordinate == character X coordinate && 
+            //    building Y coordinate == character Y coordinate
+            if (b.getX() == (this.character.getX()) && 
+                b.getY() == (this.character.getY())) {
+                b.performAction(this.character);
+            }
+        }
     }
 
     /**
@@ -590,8 +603,14 @@ public class LoopManiaWorld {
         }
         // TODO needs to be refactored so any building gets built. 
         // TODO - add a separate function that spawns the building and then returns it, similar to the spawn cards
-        VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+        // VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+
+
+
+        Village newBuilding = new Village (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
         buildingEntities.add(newBuilding);
+
+
 
         // Remove the card
         card.destroy();

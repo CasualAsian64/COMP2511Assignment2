@@ -463,8 +463,6 @@ public class LoopManiaWorldController {
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
         
-        //loadSword();
-        //loadVampireCard();
 
         Random randomCard = new Random();
         Random randomItem = new Random();
@@ -492,6 +490,10 @@ public class LoopManiaWorldController {
         }
         else if (randCard == 6) {
            loadCampfireCard();
+        }
+
+        if (randItem == 0) {
+            loadSword();
         }
         
         if (randItem == 1) {
@@ -707,7 +709,7 @@ public class LoopManiaWorldController {
     }
     private void onLoad(Building building){
         
-        ImageView view = new ImageView(towerImage);
+        ImageView view = new ImageView(villageImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
@@ -908,6 +910,8 @@ public class LoopManiaWorldController {
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType) {
                     case CARD:
+
+                        // maybe add more cases? 
                         // draggedEntity.setImage(vampireCastleCardImage);
                         draggedEntity.setImage(zombiePitCardImage);
                         break;
