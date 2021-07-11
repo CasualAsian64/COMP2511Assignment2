@@ -18,6 +18,7 @@ public class Character extends MovingEntity {
         stats = new Statistics(100, 5, 0, 0, 0);
         weapons = new ArrayList<Weapon>();
         equippedWeapon = null;
+        allies = new ArrayList<AlliedSoldier>();
     }
 
     public void move() {
@@ -35,6 +36,10 @@ public class Character extends MovingEntity {
     @Override
     public Statistics getStats() {
         return stats;
+    }
+
+    public ArrayList<AlliedSoldier> getAllies(){
+        return allies;
     }
 
 }
