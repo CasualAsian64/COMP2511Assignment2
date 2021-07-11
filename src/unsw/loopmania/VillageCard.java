@@ -8,5 +8,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class VillageCard extends Card {
     public VillageCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        this.cardType = "VillageCard";
     }    
+
+    // public String getCardType() {
+    //     return cardType;
+    // }
+
 }

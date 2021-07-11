@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -451,8 +452,21 @@ public class LoopManiaWorld {
         character.moveDownPath();
         moveEnemies();
         worldGoals.printAllGoals();
+        detectCharacterisOnTile();
         // Everytime the character moves, check if the character has acheieved the world goals
         worldGoals.checkGoalsMet(character.getStats(), numLoops);
+    }
+
+    // loop through all buildings and see if Character is onTile 
+    public void detectCharacterisOnTile() {
+        for (Building b: buildingEntities) {
+            // if building X coordinate == character X coordinate && 
+            //    building Y coordinate == character Y coordinate
+            if (b.getX() == (this.character.getX()) && 
+                b.getY() == (this.character.getY())) {
+                b.performAction(this.character);
+            }
+        }
     }
 
     /**
@@ -590,18 +604,153 @@ public class LoopManiaWorld {
         }
         // TODO needs to be refactored so any building gets built. 
         // TODO - add a separate function that spawns the building and then returns it, similar to the spawn cards
-        VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-        buildingEntities.add(newBuilding);
+        // VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
 
-        // Remove the card
-        card.destroy();
-        cardEntities.remove(card);
-        shiftCardsDownFromXCoordinate(cardNodeX);
+
+
+
+        Building b = null;
+
+
+        // Call card.getType() to determine which building to create and add 
+
+
+        ///////////////
+
+
+        if (card.getCardType().equals("VampireCastleCard")) {
+            VampireCastleBuilding newBuilding = new VampireCastleBuilding (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+            buildingEntities.add(newBuilding);
+
+
+            // Remove the card
+            card.destroy();
+            cardEntities.remove(card);
+            shiftCardsDownFromXCoordinate(cardNodeX);
+            // b = newBuilding;
+
+            // Return the building to be added
+            return newBuilding;
+        }
+
+        if (card.getCardType().equals("ZombiePitCard")) {
+            ZombiePit newBuilding = new ZombiePit (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+            buildingEntities.add(newBuilding);
+
+
+            // Remove the card
+            card.destroy();
+            cardEntities.remove(card);
+            shiftCardsDownFromXCoordinate(cardNodeX);
+            // b = newBuilding;
+
+            // Return the building to be added
+            return newBuilding;
+        }
+
+        if (card.getCardType().equals("TowerCard")) {
+            Tower newBuilding = new Tower (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+            buildingEntities.add(newBuilding);
+
+            // Remove the card
+            card.destroy();
+            cardEntities.remove(card);
+            shiftCardsDownFromXCoordinate(cardNodeX);
+            // b = newBuilding;
+
+            // Return the building to be added
+            return newBuilding;
+        }
+
+         // Village
+        if (card.getCardType().equals("VillageCard")) {
+            Village newBuilding = new Village (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+            buildingEntities.add(newBuilding);
+
+            // Village newBuilding = createVillage(buildingNodeX, buildingNodeY);
+
+            // Remove the card
+            card.destroy();
+            cardEntities.remove(card);
+            shiftCardsDownFromXCoordinate(cardNodeX);
+            // b = newBuilding;
+
+            // Return the building to be added
+            return newBuilding;
+        }
+
+        if (card.getCardType().equals("BarracksCard")) {
+            Barracks newBuilding = new Barracks (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+            buildingEntities.add(newBuilding);
+
+
+            // Remove the card
+            card.destroy();
+            cardEntities.remove(card);
+            shiftCardsDownFromXCoordinate(cardNodeX);
+            // b = newBuilding;
+
+            // Return the building to be added
+            return newBuilding;
+        }
+
+
+        if (card.getCardType().equals("TrapCard")) {
+            Trap newBuilding = new Trap (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+            buildingEntities.add(newBuilding);
+
+
+            // Remove the card
+            card.destroy();
+            cardEntities.remove(card);
+            shiftCardsDownFromXCoordinate(cardNodeX);
+            // b = newBuilding;
+
+            // Return the building to be added
+            return newBuilding;
+        }
+
+        if (card.getCardType().equals("CampfireCard")) {
+            Campfire newBuilding = new Campfire (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+            buildingEntities.add(newBuilding);
+
+
+            // Remove the card
+            card.destroy();
+            cardEntities.remove(card);
+            shiftCardsDownFromXCoordinate(cardNodeX);
+            // b = newBuilding;
+
+            // Return the building to be added
+            return newBuilding;
+        }
+
+
+      
+
+
+
+       
+        return b;
+    
+
+        // // Remove the card
+        // card.destroy();
+        // cardEntities.remove(card);
+        // shiftCardsDownFromXCoordinate(cardNodeX);
 
         // Return the building to be added
-        return newBuilding;
+        // return null;
 
     
     }
+
+    // public Village createVillage(int buildingNodeX, int buildingNodeY) {
+    //     Village village = new Village (new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+    //     buildingEntities.add(village);
+
+    
+    //     return village;
+    // }
 
 }

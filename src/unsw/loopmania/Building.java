@@ -21,6 +21,9 @@ public abstract class Building extends StaticEntity {
         return type;
     }
 
+    public void performAction(Character character) {
+    }
+
 
     
 }
