@@ -121,6 +121,16 @@ public class LoopManiaWorld {
         this.numLoops++;
     }
 
+    public List<Building> getBuildingEntities() {
+        return buildingEntities;
+    }
+
+    
+
+    public int getNumLoops() {
+        return numLoops;
+    }
+
     /**
      * add a generic entity (without it's own dedicated method for adding to the
      * world)
@@ -193,6 +203,7 @@ public class LoopManiaWorld {
                 while (e.getHealth() != 0) {
                     e.getAttacked(character.getAttack());
                     character.getAttacked(e.getAttack());
+                    System.out.println();
                     System.out.println("Character's health is: " + character.getHealth());
                 }
                 character.collectRewards(e);
@@ -451,7 +462,6 @@ public class LoopManiaWorld {
     public void runTickMoves() {
         character.moveDownPath();
         moveEnemies();
-        worldGoals.printAllGoals();
         detectCharacterisOnTile();
         detectEnemyisOnTile();
         // Everytime the character moves, check if the character has acheieved the world goals
@@ -467,7 +477,15 @@ public class LoopManiaWorld {
                 b.performActionOnCharacter(this.character);
 
                 if (b.getType().equals("HerosCastle")) {
+                    System.out.println();
+                    System.out.println("The character visited the Hero's Castle");
                     incrementLoops();
+                    System.out.println("The number of loops completed is now " + getNumLoops());
+
+                    System.out.println();
+                    worldGoals.printAllGoals();
+                    System.out.println();
+
                 }
             }
         }
