@@ -13,4 +13,6 @@ public abstract class Equipment extends Item {
     public Equipment(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }
+
+    public abstract int reduceAttack(int attack);
 }

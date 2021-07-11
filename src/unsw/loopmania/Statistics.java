@@ -60,4 +60,8 @@ public class Statistics{
         this.exp = exp;
     }
 
+    public int getDefense() {
+        return defense;
+    }
+
 }
