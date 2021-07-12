@@ -21,5 +21,8 @@ public abstract class Enemy extends MovingEntity {
     }
 
     public abstract void move();
+
     public abstract int getBattleRadius();
+
+    public abstract String getType();
 }
