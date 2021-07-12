@@ -1,28 +1,32 @@
 package test;
 
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.LoopManiaWorldControllerLoader;
 import unsw.loopmania.Character;
 import unsw.loopmania.PathPosition;
 
 import org.javatuples.Pair;
+import org.json.JSONObject;
 import org.junit.Test;
 
+
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterTest {
+
     // Multiple setups for enemies, a character, buildings etc.
-    public Character testCharacterSetup() throws FileNotFoundException {
-        String filename = "world_with_twists_and_turns.json";
-        LoopManiaWorldControllerLoader worldControllerLoader = new LoopManiaWorldControllerLoader(filename);
-        // throws IO 
-        LoopManiaWorld world = worldControllerLoader.load();
-        List<Pair<Integer, Integer>> orderedPath = world.getOrderedPath();
+    public Character testCharacterSetup() {
+        Helper helper = new Helper();
+        int height = 14;
+        int width = 8;
+        int start_posX = 0;
+        int start_posY = 0;
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        JSONObject path = helper.createJSONMap(start_posX, start_posY, 1);
+        orderedPath = helper.loadPathTiles(path, width, height);
         // Create a path position where the character is at the first part of the path
         PathPosition pathPosition = new PathPosition(0, orderedPath);
         Character c = new Character(pathPosition);
-        System.out.println(c.getHealth());
         return c;
     }
 
@@ -31,10 +35,18 @@ public class CharacterTest {
      * @throws FileNotFoundException
      */
     @Test
-    public void test_character_movement() throws FileNotFoundException {
+    public void test_character_movement(){
         Character c = testCharacterSetup();
-        System.out.println("Hello world");
         System.out.println(c.getHealth());
+        System.out.println(c.getX() + "," + c.getY());
+        c.moveDownPath();
+        System.out.println(c.getX() + "," + c.getY());
+        c.moveDownPath();
+        System.out.println(c.getX() + "," + c.getY());
+        c.moveDownPath();
+        c.moveDownPath();
+        c.moveDownPath();
+        System.out.println(c.getX() + "," + c.getY());
     }
 
     /**

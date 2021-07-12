@@ -59,7 +59,7 @@ public abstract class MovingEntity extends Entity {
     }
 
     public Statistics getStats() {
-        return stats;
+        return this.getStats();
     }
     
     public int getHealth() {
@@ -70,6 +70,11 @@ public abstract class MovingEntity extends Entity {
     public int getAttack(){
         Statistics stats = this.getStats();
         return stats.getAttack();
+    }
+    
+    public int getDefense(){
+        Statistics stats = this.getStats();
+        return stats.getDefense();
     }    
 
     public void getAttacked(int attack) {

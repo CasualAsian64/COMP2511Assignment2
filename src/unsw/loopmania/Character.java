@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Character extends MovingEntity {
     private ArrayList<Weapon> weapons;
     private Weapon equippedWeapon;
+    private Equipment equipment;
     private ArrayList<Building> buildingBuffs;
     private ArrayList<AlliedSoldier> allies;
 
@@ -18,7 +19,9 @@ public class Character extends MovingEntity {
         stats = new Statistics(100, 5, 0, 0, 0);
         weapons = new ArrayList<Weapon>();
         equippedWeapon = null;
+        equipment = null;
         allies = new ArrayList<AlliedSoldier>();
+
     }
 
     public void move() {
@@ -38,6 +41,28 @@ public class Character extends MovingEntity {
         return stats;
     }
 
+    @Override
+    public void getAttacked(int attack) {
+        Statistics stats = this.getStats();
+        // Check for weapons
+        // Check for equipment
+        int totalDefense = 0;
+        // Increase defense for character if equipped with an equipment item
+        if (equipment != null) {
+            totalDefense += equipment.getDefense();
+            attack = equipment.reduceAttack(attack);
+        }
+        
+        int totalAttack = attack - totalDefense;
+        if (totalAttack < 0) {
+            totalAttack = 0;
+        }
+        int health = stats.getHealth() - totalAttack;
+        if (health < 0) {
+            health = 0;
+        }
+        stats.setHealth(health);
+  
     public ArrayList<AlliedSoldier> getAllies(){
         return allies;
     }
