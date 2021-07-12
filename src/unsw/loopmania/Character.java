@@ -20,6 +20,8 @@ public class Character extends MovingEntity {
         weapons = new ArrayList<Weapon>();
         equippedWeapon = null;
         equipment = null;
+        allies = new ArrayList<AlliedSoldier>();
+
     }
 
     public void move() {
@@ -60,6 +62,9 @@ public class Character extends MovingEntity {
             health = 0;
         }
         stats.setHealth(health);
+  
+    public ArrayList<AlliedSoldier> getAllies(){
+        return allies;
     }
 
 }
