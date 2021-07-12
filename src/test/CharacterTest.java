@@ -1,52 +1,90 @@
 package test;
 
 import unsw.loopmania.Character;
-import unsw.loopmania.PathPosition;
+import unsw.loopmania.Statistics;
 
-import org.javatuples.Pair;
-import org.json.JSONObject;
 import org.junit.Test;
 
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CharacterTest {
+    private static final int MAP1 = 1;
+    private static final int MAP2 = 2;
 
-    // Multiple setups for enemies, a character, buildings etc.
-    public Character testCharacterSetup() {
+    /**
+     * Unit tests
+     */
+
+     /**
+      * Have the character move around MAP 1 and assert that the character travels down the path correctly
+      */
+    @Test
+    public void test_character_movement_MAP1(){
         Helper helper = new Helper();
-        int height = 14;
-        int width = 8;
-        int start_posX = 0;
-        int start_posY = 0;
-        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        JSONObject path = helper.createJSONMap(start_posX, start_posY, 1);
-        orderedPath = helper.loadPathTiles(path, width, height);
-        // Create a path position where the character is at the first part of the path
-        PathPosition pathPosition = new PathPosition(0, orderedPath);
-        Character c = new Character(pathPosition);
-        return c;
+        Character c = helper.testCharacterSetup(0, MAP1);
+        assertEquals(c.getX(), 0);
+        assertEquals(c.getY(), 0);
+        c.moveDownPath();
+        assertEquals(c.getX(), 1);
+        assertEquals(c.getY(), 0);
+        c.moveDownPath();
+        assertEquals(c.getX(), 2);
+        assertEquals(c.getY(), 0);
+        c.moveDownPath();
+        c.moveDownPath();
+        c.moveDownPath();
+        assertEquals(c.getX(), 4);
+        assertEquals(c.getY(), 1);
     }
 
     /**
-     * Unit test
-     * @throws FileNotFoundException
-     */
+      * Have the character move around MAP 2 and assert that the character travels down the path correctly
+      */
     @Test
-    public void test_character_movement(){
-        Character c = testCharacterSetup();
-        System.out.println(c.getHealth());
-        System.out.println(c.getX() + "," + c.getY());
+    public void test_character_movement_MAP2(){
+        Helper helper = new Helper();
+        Character c = helper.testCharacterSetup(0, MAP2);
+        assertEquals(c.getX(), 0);
+        assertEquals(c.getY(), 0);
         c.moveDownPath();
-        System.out.println(c.getX() + "," + c.getY());
+        assertEquals(c.getX(), 1);
+        assertEquals(c.getY(), 0);
         c.moveDownPath();
-        System.out.println(c.getX() + "," + c.getY());
+        assertEquals(c.getX(), 2);
+        assertEquals(c.getY(), 0);
         c.moveDownPath();
+        assertEquals(c.getX(), 2);
+        assertEquals(c.getY(), 1);
         c.moveDownPath();
+        assertEquals(c.getX(), 2);
+        assertEquals(c.getY(), 2);
         c.moveDownPath();
-        System.out.println(c.getX() + "," + c.getY());
+        assertEquals(c.getX(), 1);
+        assertEquals(c.getY(), 2);
+        c.moveDownPath();
+        assertEquals(c.getX(), 0);
+        assertEquals(c.getY(), 2);
+        c.moveDownPath();
+        assertEquals(c.getX(), 0);
+        assertEquals(c.getY(), 1);
+        c.moveDownPath();
+        assertEquals(c.getX(), 0);
+        assertEquals(c.getY(), 0);
+    }
+
+    /**
+      * Assert that the character's stats when using the constructor are expected values
+      */
+    @Test
+    public void test_character_stats(){
+        Helper helper = new Helper();
+        Character c = helper.testCharacterSetup(0, MAP1);
+        Statistics characterStats = c.getStats();
+        assertEquals(characterStats.getHealth(), 100);
+        assertEquals(characterStats.getAttack(), 5);
+        assertEquals(characterStats.getDefense(), 2);
+        assertEquals(characterStats.getGold(), 0);
+        assertEquals(characterStats.getExp(), 0);
     }
 
     /**

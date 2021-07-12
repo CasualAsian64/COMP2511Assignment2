@@ -16,7 +16,7 @@ public class Character extends MovingEntity {
     
     public Character(PathPosition position) {
         super(position);
-        stats = new Statistics(100, 5, 0, 0, 0);
+        stats = new Statistics(100, 5, 2, 0, 0);
         weapons = new ArrayList<Weapon>();
         equippedWeapon = null;
         equipment = null;
