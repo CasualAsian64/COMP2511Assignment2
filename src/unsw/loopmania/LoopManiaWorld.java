@@ -118,7 +118,7 @@ public class LoopManiaWorld {
         worldGoals = goal;
     }
     public void incrementLoops() {
-        this.numLoops++;
+        this.numLoops++; 
     }
 
     public List<Building> getBuildingEntities() {
@@ -601,7 +601,6 @@ public class LoopManiaWorld {
      * move all enemies
      */
     private void moveEnemies() {
-        // TODO = expand to more types of enemy
         for (Enemy e : enemies) {
             e.move();
         }

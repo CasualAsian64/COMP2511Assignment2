@@ -1,5 +1,7 @@
 package test;
 
+import unsw.loopmania.Character;
+import unsw.loopmania.PathPosition;
 import unsw.loopmania.PathTile;
 
 import org.javatuples.Pair;
@@ -12,6 +14,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Helper {
+    private static final int MAP1 = 1;
+    private static final int MAP2 = 2;
+
+    public Character testCharacterSetup(int currentPositionInPath, int mapNo) {
+        int height = 0;
+        int width = 0;
+        switch(mapNo) {
+            case MAP1:
+                width = 8;
+                height = 14;
+                break;
+            case MAP2:
+                width = 3;
+                height = 3; 
+                break; 
+        }
+        int start_posX = 0;
+        int start_posY = 0;
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        JSONObject path = createJSONMap(start_posX, start_posY, mapNo);
+        orderedPath = loadPathTiles(path, width, height);
+        // Create a path position where the character is at the first part of the path
+        PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
+        Character c = new Character(pathPosition);
+        return c;
+    }
 
     public JSONObject createJSONMap(int start_posX, int start_posY, int pathNo) {
         JSONObject world = new JSONObject();
