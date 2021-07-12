@@ -62,6 +62,7 @@ public class Character extends MovingEntity {
             health = 0;
         }
         stats.setHealth(health);
+    }
   
     public ArrayList<AlliedSoldier> getAllies(){
         return allies;
