@@ -92,7 +92,7 @@ public abstract class LoopManiaWorldLoader {
      * @param height height in number of cells
      * @return list of x, y cell coordinate pairs representing game path
      */
-    private List<Pair<Integer, Integer>>   loadPathTiles(JSONObject path, int width, int height) {
+    private List<Pair<Integer, Integer>> loadPathTiles(JSONObject path, int width, int height) {
         if (!path.getString("type").equals("path_tile")) {
             // ... possible extension
             throw new RuntimeException(
