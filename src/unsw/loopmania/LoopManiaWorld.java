@@ -167,7 +167,7 @@ public class LoopManiaWorld {
         List<Enemy> spawningEnemies = new ArrayList<>();
         if (pos != null) {
             int indexInPath = orderedPath.indexOf(pos);
-            Enemy enemy = new Slug(new PathPosition(indexInPath, orderedPath));
+            Enemy enemy = new Vampire(new PathPosition(indexInPath, orderedPath));
             enemies.add(enemy);
             spawningEnemies.add(enemy);
         }
