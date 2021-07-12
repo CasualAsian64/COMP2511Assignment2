@@ -3,7 +3,7 @@ package unsw.loopmania;
 import java.util.Random;
 
 public class Slug extends Enemy {
-    private static final String type = "slug";
+    private final String type = "Slug";
 
     public Slug(PathPosition position) {
         super(position);
@@ -26,6 +26,10 @@ public class Slug extends Enemy {
 
     public int getBattleRadius() {
         return battleRadius;
+    }
+
+    public String getType() {
+        return type;
     }
 
 }

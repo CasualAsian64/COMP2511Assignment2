@@ -166,9 +166,31 @@ public class LoopManiaWorld {
         List<Enemy> spawningEnemies = new ArrayList<>();
         if (pos != null) {
             int indexInPath = orderedPath.indexOf(pos);
-            Enemy enemy = new Slug(new PathPosition(indexInPath, orderedPath));
-            enemies.add(enemy);
-            spawningEnemies.add(enemy);
+
+            Random rand = new Random();
+            int randomInt = rand.nextInt(3);
+            Enemy enemy;
+            switch (randomInt) {
+                case 0:
+                    enemy = new Slug(new PathPosition(indexInPath, orderedPath));
+                    enemies.add(enemy);
+                    spawningEnemies.add(enemy);
+                    System.out.println("Spawned a slug");
+                    break;
+                case 1:
+                    enemy = new Vampire(new PathPosition(indexInPath, orderedPath));
+                    enemies.add(enemy);
+                    spawningEnemies.add(enemy);
+                    System.out.println("Spawned a vampire");
+                    break;
+                case 2:
+                    enemy = new Zombie(new PathPosition(indexInPath, orderedPath));
+                    enemies.add(enemy);
+                    spawningEnemies.add(enemy);
+                    System.out.println("Spawned a Zombie");
+                    break;
+
+            }
         }
         return spawningEnemies;
     }

@@ -256,6 +256,8 @@ public class LoopManiaWorldController {
         // basicEnemyImage = new Image((new
         // File("src/images/slug.png")).toURI().toString());
         slugImage = new Image((new File("src/images/slug.png")).toURI().toString());
+        vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
+        zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
 
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
@@ -658,9 +660,14 @@ public class LoopManiaWorldController {
      * @param enemy
      */
     private void onLoad(Enemy enemy) {
-        //
-
-        ImageView view = new ImageView(slugImage);
+        ImageView view;
+        if ("Slug".equals(enemy.getType())) {
+            view = new ImageView(slugImage);
+        } else if ("Vampire".equals(enemy.getType())) {
+            view = new ImageView(vampireImage);
+        } else {
+            view = new ImageView(zombieImage);
+        }
         addEntity(enemy, view);
         squares.getChildren().add(view);
     }

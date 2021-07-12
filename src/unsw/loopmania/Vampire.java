@@ -1,9 +1,11 @@
 package unsw.loopmania;
 
 public class Vampire extends Enemy {
+    private final String type = "Vampire";
+
     public Vampire(PathPosition position) {
         super(position);
-        stats = new Statistics(20, 5, 5, 20, 40);
+        stats = new Statistics(50, 7, 5, 25, 20);
         battleRadius = 3;
         supportRadius = 5;
     }
@@ -20,5 +22,13 @@ public class Vampire extends Enemy {
     @Override
     public Statistics getStats() {
         return stats;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getBattleRadius() {
+        return battleRadius;
     }
 }
