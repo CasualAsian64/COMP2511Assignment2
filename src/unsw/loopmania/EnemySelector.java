@@ -1,10 +1,4 @@
-package test;
-
-import unsw.loopmania.Enemy;
-import unsw.loopmania.PathPosition;
-import unsw.loopmania.Slug;
-import unsw.loopmania.Vampire;
-import unsw.loopmania.Zombie;
+package unsw.loopmania;
 
 public class EnemySelector {
 

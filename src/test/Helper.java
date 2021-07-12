@@ -142,4 +142,39 @@ public class Helper {
         return jsonPath;
     }
 
+    public JSONObject goalCondition1() {
+        JSONObject goalCondition = new JSONObject();
+        goalCondition.put("goal", "AND");
+        JSONArray ANDarray = new JSONArray();
+        JSONObject ANDgoals = new JSONObject();
+        ANDgoals.put("goal", "experience");
+        ANDgoals.put("quantity", 100);
+        ANDarray.put(ANDgoals);
+        JSONObject SubGoals = new JSONObject();
+        SubGoals.put("goal", "OR");
+        JSONArray ORArray = new JSONArray();
+        JSONObject ORgoals = new JSONObject();
+        ORgoals.put("goal", "experience");
+        ORgoals.put("quantity", 123456);
+        ORArray.put(ORgoals);
+        JSONObject ORgoals2 = new JSONObject();
+        ORgoals2.put("goal", "gold");
+        ORgoals2.put("quantity", 1000);
+        ORArray.put(ORgoals2);
+        SubGoals.put("subgoals", ORArray);       
+        ANDarray.put(SubGoals);
+        goalCondition.put("subgoals", ANDarray);
+        System.out.println(goalCondition.toString());
+        return goalCondition;
+    }
+
+    public JSONObject goalCondition2() {
+        JSONObject goalCondition = new JSONObject();
+        goalCondition.put("goal","experience");
+        goalCondition.put("quantity", 123456);
+        System.out.println(goalCondition.toString());
+        return goalCondition;
+    }
+
+
 }
