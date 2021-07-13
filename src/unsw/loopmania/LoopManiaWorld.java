@@ -189,11 +189,21 @@ public class LoopManiaWorld {
 
             PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);
             EnemySelector enemySelector = new EnemySelector();
-            Enemy enemy = enemySelector.getEnemy(0, pathPosition, enemies, this);
+            Enemy enemy = enemySelector.getEnemy(0, pathPosition, enemies, numLoops, vampireRespawnLoop, zombieRespawnLoop);
+            updateRespawnLoop(enemy);
             enemies.add(enemy);
             spawningEnemies.add(enemy);
         }
         return spawningEnemies;
+    }
+
+    private void updateRespawnLoop(Enemy enemy) {
+        if (enemy.getType().equals("Vampire")) {
+            vampireRespawnLoop += 5;
+        }
+        if (enemy.getType().equals("Zombie")) {
+            zombieRespawnLoop += 1;
+        }
     }
 
     /**
