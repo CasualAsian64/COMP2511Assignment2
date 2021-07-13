@@ -417,49 +417,49 @@ public class LoopManiaWorldController {
         // TODO = load more types of weapon
         // start by getting first available coordinates
         Sword sword = world.addUnequippedSword();
-        onLoad(sword);
+        onLoad(sword, false);
     }
 
     private void loadStake() {
         // start by getting first available coordinates
         Stake stake = world.addUnequippedStake();
-        onLoad(stake);
+        onLoad(stake, false);
     }
 
     private void loadStaff() {
         // start by getting first available coordinates
         Staff staff = world.addUnequippedStaff();
-        onLoad(staff);
+        onLoad(staff, false);
     }
 
     private void loadArmour() {
         // start by getting first available coordinates
         Armour armour = world.addUnequippedArmour();
-        onLoad(armour);
+        onLoad(armour, false);
     }
 
     private void loadHelmet() {
         // start by getting first available coordinates
         Helmet helmet = world.addUnequippedHelmet();
-        onLoad(helmet);
+        onLoad(helmet, false);
     }
 
     private void loadShield() {
         // start by getting first available coordinates
         Shield shield = world.addUnequippedShield();
-        onLoad(shield);
+        onLoad(shield, false);
     }
 
     private void loadPotion() {
         // start by getting first available coordinates
         HealthPotion potion = world.addUnequippedPotion();
-        onLoad(potion);
+        onLoad(potion, false);
     }
 
     private void loadOneRing() {
         // start by getting first available coordinates
         TheOneRing oneRing = world.addUnequippedOneRing();
-        onLoad(oneRing);
+        onLoad(oneRing, false);
     }
 
     /**
@@ -498,9 +498,7 @@ public class LoopManiaWorldController {
 
         if (randItem == 0) {
             loadSword();
-        }
-
-        if (randItem == 1) {
+        } else if (randItem == 1) {
             loadStake();
         } else if (randItem == 2) {
             loadStaff();
@@ -598,60 +596,120 @@ public class LoopManiaWorldController {
      * 
      * @param sword
      */
-    private void onLoad(Sword sword) {
+    private void onLoadSword(Item sword, boolean equipItem) {
         ImageView view = new ImageView(swordImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(sword, view);
-        unequippedInventory.getChildren().add(view);
+        if (equipItem == true) {
+            equippedItems.getChildren().add(view);
+        }
+        else {
+            unequippedInventory.getChildren().add(view);
+        }
     }
 
-    private void onLoad(Stake stake) {
+    private void onLoadStake(Item stake, boolean equipItem) {
         ImageView view = new ImageView(stakeImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(stake, view);
-        unequippedInventory.getChildren().add(view);
+        if (equipItem == true) {
+            equippedItems.getChildren().add(view);
+        }
+        else {
+            unequippedInventory.getChildren().add(view);
+        }
     }
 
-    private void onLoad(Staff staff) {
+    private void onLoadStaff(Item staff, boolean equipItem) {
         ImageView view = new ImageView(staffImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(staff, view);
-        unequippedInventory.getChildren().add(view);
+        if (equipItem == true) {
+            equippedItems.getChildren().add(view);
+        }
+        else {
+            unequippedInventory.getChildren().add(view);
+        }
     }
 
-    private void onLoad(Armour armour) {
+    private void onLoadArmour(Item armour, boolean equipItem) {
         ImageView view = new ImageView(armourImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(armour, view);
-        unequippedInventory.getChildren().add(view);
+        if (equipItem == true) {
+            equippedItems.getChildren().add(view);
+        }
+        else {
+            unequippedInventory.getChildren().add(view);
+        }
     }
 
-    private void onLoad(Helmet helmet) {
+    private void onLoadHelmet(Item helmet, boolean equipItem) {
         ImageView view = new ImageView(helmetImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(helmet, view);
-        unequippedInventory.getChildren().add(view);
+        if (equipItem == true) {
+            equippedItems.getChildren().add(view);
+        }
+        else {
+            unequippedInventory.getChildren().add(view);
+        }
     }
 
-    private void onLoad(Shield shield) {
+    private void onLoadShield(Item shield, boolean equipItem) {
         ImageView view = new ImageView(shieldImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(shield, view);
-        unequippedInventory.getChildren().add(view);
+        if (equipItem == true) {
+            equippedItems.getChildren().add(view);
+        }
+        else {
+            unequippedInventory.getChildren().add(view);
+        }
     }
 
-    private void onLoad(HealthPotion potion) {
+    private void onLoadHealthPotion(Item potion, boolean equipItem) {
         ImageView view = new ImageView(potionImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(potion, view);
-        unequippedInventory.getChildren().add(view);
+        if (equipItem == true) {
+            equippedItems.getChildren().add(view);
+        }
+        else {
+            unequippedInventory.getChildren().add(view);
+        }
     }
 
-    private void onLoad(TheOneRing oneRing) {
+    private void onLoadOneRing(Item oneRing, boolean equipItem) {
         ImageView view = new ImageView(oneRingImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(oneRing, view);
-        unequippedInventory.getChildren().add(view);
+        if (equipItem == true) {
+            equippedItems.getChildren().add(view);
+        }
+        else {
+            unequippedInventory.getChildren().add(view);
+        }
+    }
+
+    private void onLoad(Item item, boolean equipItem) {
+        if (item.getType().equals("Sword")) {
+            onLoadSword(item, equipItem);
+        } else if (item.getType().equals("Stake")) {
+            onLoadStake(item, equipItem);
+        } else if (item.getType().equals("Staff")) {
+            onLoadStaff(item, equipItem);
+        } else if (item.getType().equals("Armour")) {
+            onLoadArmour(item, equipItem);
+        } else if (item.getType().equals("Shield")) {
+            onLoadShield(item, equipItem);
+        } else if (item.getType().equals("Helmet")) {
+            onLoadHelmet(item, equipItem);
+        } else if (item.getType().equals("HealthPotion")) {
+            onLoadHealthPotion(item, equipItem);
+        } else if (item.getType().equals("OneRing")) {
+            onLoadOneRing(item, equipItem);
+        }
     }
 
     /**
@@ -824,8 +882,14 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn an item in the new location. The above code for spawning a
                                 // building will help, it is very similar
-                                removeItemByCoordinates(nodeX, nodeY);
-                                targetGridPane.add(image, x, y, 1, 1);
+
+                                //getUnequippedInventoryItemEntityByCoordinates
+
+                                Item item = removeItemByCoordinates(nodeX, nodeY);
+
+                                onLoad(item, true);
+                                
+                                //targetGridPane.add(image, x, y, 1, 1); 
                                 break;
                             default:
                                 break;
@@ -920,9 +984,10 @@ public class LoopManiaWorldController {
      * 
      * @param nodeX x coordinate from 0 to unequippedInventoryWidth-1
      * @param nodeY y coordinate from 0 to unequippedInventoryHeight-1
+     * @return 
      */
-    private void removeItemByCoordinates(int nodeX, int nodeY) {
-        world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
+    private Item removeItemByCoordinates(int nodeX, int nodeY) {
+        return world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     }
 
     /**
@@ -1060,7 +1125,9 @@ public class LoopManiaWorldController {
                 } else {
                     pause();
                 }
-                break;
+            case H:
+
+                System.out.println("healing");
             default:
                 break;
         }

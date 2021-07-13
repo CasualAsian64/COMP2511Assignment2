@@ -10,5 +10,16 @@ public class Shield extends Equipment {
     public Shield(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.type = "Shield";
-    }    
+        stats = new Statistics(0, 0, 3, 0, 0);
+    }
+
+    @Override
+    public Statistics getStats() {
+        return stats;
+    }
+
+    @Override
+    public int reduceAttack(int attack) {
+        return 0;
+    }
 }

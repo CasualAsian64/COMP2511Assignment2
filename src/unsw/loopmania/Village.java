@@ -38,6 +38,5 @@ public class Village extends Building {
         System.out.println("The characters health after healing is " + stats.getHealth());
 
         System.out.println("");
-
     }
 }

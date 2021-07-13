@@ -10,5 +10,16 @@ public class Armour extends Equipment {
     public Armour(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.type = "Armour";
+        stats = new Statistics(0, 0, 5, 0, 0);
+    }
+
+    @Override
+    public Statistics getStats() {
+        return stats;
+    }
+
+    @Override
+    public int reduceAttack(int attack) {
+        return 0;
     }
 }

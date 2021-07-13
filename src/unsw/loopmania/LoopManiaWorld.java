@@ -66,8 +66,14 @@ public class LoopManiaWorld {
     private List<Card> cardEntities;
 
     // TODO = expand the range of items
-    private List<Entity> unequippedInventoryItems;
-    // private List<Item> unequippedInventoryItems;
+    private List<Item> unequippedInventoryItems;
+    /* Potentially use to ensure only particular items can be placed in certain slots
+    private List<Weapon> unequippedWeapons;
+    private List<Consumable> unequippedConsumables;
+    private List<Equipment> unequippedEquipment;
+    */
+
+    private List<Item> equippedInventoryItems;
 
     // TODO = expand the range of buildings
     private List<Building> buildingEntities;
@@ -99,6 +105,12 @@ public class LoopManiaWorld {
         numLoops = 0;
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
+
+        unequippedInventoryItems = new ArrayList<>();
+        equippedInventoryItems = new ArrayList<>();
+        //unequippedWeapons = new ArrayList<>();
+        //unequippedConsumables = new ArrayList<>();
+        //unequippedEquipment = new ArrayList<>();    
     }
 
     public int getWidth() {
@@ -145,6 +157,10 @@ public class LoopManiaWorld {
 
     public List<Building> getBuildingEntities() {
         return buildingEntities;
+    }
+
+    public List<Item> getItemEntities() {
+        return unequippedInventoryItems;
     }
 
     public int getNumLoops() {
@@ -386,6 +402,7 @@ public class LoopManiaWorld {
         Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                 new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(sword);
+        //equippedInventoryItems.add(sword);
         return sword;
     }
 
@@ -405,6 +422,7 @@ public class LoopManiaWorld {
         Stake stake = new Stake(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                 new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(stake);
+        //unequippedWeapons.add(stake);
         return stake;
     }
 
@@ -424,6 +442,7 @@ public class LoopManiaWorld {
         Staff staff = new Staff(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                 new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(staff);
+        //unequippedWeapons.add(staff);
         return staff;
     }
 
@@ -443,6 +462,7 @@ public class LoopManiaWorld {
         Armour armour = new Armour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                 new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(armour);
+        //unequippedEquipment.add(armour);
         return armour;
     }
 
@@ -462,6 +482,7 @@ public class LoopManiaWorld {
         Helmet helmet = new Helmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                 new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(helmet);
+        //unequippedEquipment.add(helmet);
         return helmet;
     }
 
@@ -481,6 +502,7 @@ public class LoopManiaWorld {
         Shield shield = new Shield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                 new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(shield);
+        //unequippedEquipment.add(shield);
         return shield;
     }
 
@@ -500,6 +522,7 @@ public class LoopManiaWorld {
         HealthPotion potion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                 new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(potion);
+        //unequippedConsumables.add(potion);
         return potion;
     }
 
@@ -519,6 +542,7 @@ public class LoopManiaWorld {
         TheOneRing oneRing = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                 new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(oneRing);
+        //unequippedConsumables.add(oneRing);
         return oneRing;
     }
 
@@ -528,9 +552,12 @@ public class LoopManiaWorld {
      * @param x x coordinate from 0 to width-1
      * @param y y coordinate from 0 to height-1
      */
-    public void removeUnequippedInventoryItemByCoordinates(int x, int y) {
-        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+    public Item removeUnequippedInventoryItemByCoordinates(int x, int y) {
+        Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+
         removeUnequippedInventoryItem(item);
+
+        return item;
     }
 
     /**
@@ -620,10 +647,10 @@ public class LoopManiaWorld {
      * @param y y index from 0 to height-1
      * @return unequipped inventory item at the input position
      */
-    private Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
-        for (Entity e : unequippedInventoryItems) {
-            if ((e.getX() == x) && (e.getY() == y)) {
-                return e;
+    private Item getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
+        for (Item i : unequippedInventoryItems) {
+            if ((i.getX() == x) && (i.getY() == y)) {
+                return i;
             }
         }
         return null;
@@ -698,7 +725,7 @@ public class LoopManiaWorld {
         int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
         // TODO = change based on spec
         // spawn 4 enemies
-        if ((choice == 0) && (enemies.size() < 4)) {
+        if ((choice == 0) && (enemies.size() < 10)) {
             List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
             int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
             // inclusive start and exclusive end of range of positions not allowed
@@ -845,7 +872,5 @@ public class LoopManiaWorld {
         }
 
         return b;
-
     }
-
 }
