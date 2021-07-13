@@ -815,10 +815,11 @@ public class LoopManiaWorldController {
                             case CARD:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn a building here of different types
-
+                                // if x and y are on path
                                 Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
-
-                                onLoad(newBuilding);
+                                if (newBuilding != null) {
+                                    onLoad(newBuilding);
+                                }
                                 break;
                             case ITEM:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
