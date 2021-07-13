@@ -234,7 +234,8 @@ public class LoopManiaWorldController {
         trapCardImage = new Image((new File("src/images/trap_card.png")).toURI().toString());
         campfireCardImage = new Image((new File("src/images/campfire_card.png")).toURI().toString());
 
-        vampireCastleImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        vampireCastleImage = new Image(
+                (new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         zombiePitImage = new Image((new File("src/images/zombie_pit.png")).toURI().toString());
         towerImage = new Image((new File("src/images/tower.png")).toURI().toString());
         villageImage = new Image((new File("src/images/village.png")).toURI().toString());
@@ -252,8 +253,11 @@ public class LoopManiaWorldController {
         potionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
         oneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
 
-        //basicEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
+        // basicEnemyImage = new Image((new
+        // File("src/images/slug.png")).toURI().toString());
         slugImage = new Image((new File("src/images/slug.png")).toURI().toString());
+        vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
+        zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
 
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
@@ -297,10 +301,9 @@ public class LoopManiaWorldController {
         }
 
         // Load the Hero's Castle at spot (0,0)
-        HerosCastle herosCastle =  new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        HerosCastle herosCastle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
         onLoadHerosCastle(herosCastle);
         world.getBuildingEntities().add(herosCastle);
-        
 
         // add the empty slot images for the unequipped inventory
         for (int x = 0; x < LoopManiaWorld.unequippedInventoryWidth; x++) {
@@ -417,37 +420,43 @@ public class LoopManiaWorldController {
         onLoad(sword);
     }
 
-    private void loadStake(){
+    private void loadStake() {
         // start by getting first available coordinates
         Stake stake = world.addUnequippedStake();
         onLoad(stake);
     }
-    private void loadStaff(){
+
+    private void loadStaff() {
         // start by getting first available coordinates
         Staff staff = world.addUnequippedStaff();
         onLoad(staff);
     }
-    private void loadArmour(){
+
+    private void loadArmour() {
         // start by getting first available coordinates
         Armour armour = world.addUnequippedArmour();
         onLoad(armour);
     }
-    private void loadHelmet(){
+
+    private void loadHelmet() {
         // start by getting first available coordinates
         Helmet helmet = world.addUnequippedHelmet();
         onLoad(helmet);
     }
-    private void loadShield(){
+
+    private void loadShield() {
         // start by getting first available coordinates
         Shield shield = world.addUnequippedShield();
         onLoad(shield);
-    }    
-    private void loadPotion(){
+    }
+
+    private void loadPotion() {
         // start by getting first available coordinates
         HealthPotion potion = world.addUnequippedPotion();
         onLoad(potion);
     }
-    private void loadOneRing(){
+
+    private void loadOneRing() {
         // start by getting first available coordinates
         TheOneRing oneRing = world.addUnequippedOneRing();
         onLoad(oneRing);
@@ -464,7 +473,6 @@ public class LoopManiaWorldController {
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
-        
 
         Random randomCard = new Random();
         Random randomItem = new Random();
@@ -474,51 +482,39 @@ public class LoopManiaWorldController {
 
         if (randCard == 0) {
             loadVampireCard();
-        }
-        else if (randCard == 1) {
+        } else if (randCard == 1) {
             loadZombieCard();
-        }
-        else if (randCard == 2) {
+        } else if (randCard == 2) {
             loadTowerCard();
-        }
-        else if (randCard == 3) {
+        } else if (randCard == 3) {
             loadVillageCard();
-        }
-        else if (randCard == 4) {
+        } else if (randCard == 4) {
             loadBarracksCard();
-        }
-        else if (randCard == 5) {
-           loadTrapCard();
-        }
-        else if (randCard == 6) {
-           loadCampfireCard();
+        } else if (randCard == 5) {
+            loadTrapCard();
+        } else if (randCard == 6) {
+            loadCampfireCard();
         }
 
         if (randItem == 0) {
             loadSword();
         }
-        
+
         if (randItem == 1) {
             loadStake();
-        }
-        else if (randItem == 2) {
+        } else if (randItem == 2) {
             loadStaff();
-        }
-        else if (randItem == 3) {
+        } else if (randItem == 3) {
             loadArmour();
-        }
-        else if (randItem == 4) {
+        } else if (randItem == 4) {
             loadHelmet();
-        }
-        else if (randItem == 5) {
-           loadShield();
-        }
-        else if (randItem == 6) {
-           loadPotion();
-        }
-        else if (randItem == 7) {
+        } else if (randItem == 5) {
+            loadShield();
+        } else if (randItem == 6) {
+            loadPotion();
+        } else if (randItem == 7) {
             loadOneRing();
-         }
+        }
     }
 
     /**
@@ -558,7 +554,6 @@ public class LoopManiaWorldController {
         addEntity(towerCard, view);
         cards.getChildren().add(view);
     }
-
 
     private void onLoad(VillageCard villageCard) {
         ImageView view = new ImageView(villageCardImage);
@@ -609,42 +604,49 @@ public class LoopManiaWorldController {
         addEntity(sword, view);
         unequippedInventory.getChildren().add(view);
     }
+
     private void onLoad(Stake stake) {
         ImageView view = new ImageView(stakeImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(stake, view);
         unequippedInventory.getChildren().add(view);
     }
+
     private void onLoad(Staff staff) {
         ImageView view = new ImageView(staffImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(staff, view);
         unequippedInventory.getChildren().add(view);
     }
+
     private void onLoad(Armour armour) {
         ImageView view = new ImageView(armourImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(armour, view);
         unequippedInventory.getChildren().add(view);
     }
+
     private void onLoad(Helmet helmet) {
         ImageView view = new ImageView(helmetImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(helmet, view);
         unequippedInventory.getChildren().add(view);
     }
+
     private void onLoad(Shield shield) {
         ImageView view = new ImageView(shieldImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(shield, view);
         unequippedInventory.getChildren().add(view);
     }
+
     private void onLoad(HealthPotion potion) {
         ImageView view = new ImageView(potionImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(potion, view);
         unequippedInventory.getChildren().add(view);
     }
+
     private void onLoad(TheOneRing oneRing) {
         ImageView view = new ImageView(oneRingImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
@@ -658,7 +660,14 @@ public class LoopManiaWorldController {
      * @param enemy
      */
     private void onLoad(Enemy enemy) {
-        ImageView view = new ImageView(slugImage);
+        ImageView view;
+        if ("Slug".equals(enemy.getType())) {
+            view = new ImageView(slugImage);
+        } else if ("Vampire".equals(enemy.getType())) {
+            view = new ImageView(vampireImage);
+        } else {
+            view = new ImageView(zombieImage);
+        }
         addEntity(enemy, view);
         squares.getChildren().add(view);
     }
@@ -668,54 +677,61 @@ public class LoopManiaWorldController {
      * 
      * @param building
      */
-    private void onLoadVampireCastle(Building building){
+    private void onLoadVampireCastle(Building building) {
         ImageView view = new ImageView(vampireCastleImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoadZombiePit(Building building){
+
+    private void onLoadZombiePit(Building building) {
         ImageView view = new ImageView(zombiePitImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoadTower(Building building){
+
+    private void onLoadTower(Building building) {
         ImageView view = new ImageView(towerImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
+
     // private void onLoadVillage(Village building){
-    //     ImageView view = new ImageView(villageImage);
-    //     addEntity(building, view);
-    //     squares.getChildren().add(view);
+    // ImageView view = new ImageView(villageImage);
+    // addEntity(building, view);
+    // squares.getChildren().add(view);
     // }
-    private void onLoadVillage(Building building){
+    private void onLoadVillage(Building building) {
         ImageView view = new ImageView(villageImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoadBarracks(Building building){
+
+    private void onLoadBarracks(Building building) {
         ImageView view = new ImageView(barracksImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoadTrap(Building building){
+
+    private void onLoadTrap(Building building) {
         ImageView view = new ImageView(trapImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoadCampfire(Building building){
+
+    private void onLoadCampfire(Building building) {
         ImageView view = new ImageView(campfireImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
 
-    private void onLoadHerosCastle(Building building){
+    private void onLoadHerosCastle(Building building) {
         ImageView view = new ImageView(herosCastleImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
-    private void onLoad(Building building){
-        
+
+    private void onLoad(Building building) {
+
         if (building.getType().equals("VampireCastle")) {
             onLoadVampireCastle(building);
         }
@@ -743,12 +759,11 @@ public class LoopManiaWorldController {
         if (building.getType().equals("Campfire")) {
             onLoadCampfire(building);
         }
-        
+
         // ImageView view = new ImageView(villageImage);
         // addEntity(building, view);
         // squares.getChildren().add(view);
     }
-
 
     /**
      * add drag event handlers for dropping into gridpanes, dragging over the
@@ -801,9 +816,8 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn a building here of different types
 
-
                                 Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
-                                
+
                                 onLoad(newBuilding);
                                 break;
                             case ITEM:
@@ -895,7 +909,8 @@ public class LoopManiaWorldController {
      *                      where the building will spawn, from 0 to height-1
      * @return building entity returned from the world
      */
-    private Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
+    private Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX,
+            int buildingNodeY) {
         return world.convertCardToBuildingByCoordinates(cardNodeX, cardNodeY, buildingNodeX, buildingNodeY);
     }
 
@@ -943,10 +958,10 @@ public class LoopManiaWorldController {
                 switch (draggableType) {
                     case CARD:
 
-                        // maybe add more cases? 
+                        // maybe add more cases?
                         // draggedEntity.setImage(vampireCastleCardImage);
 
-                        //TODO -revisit this idk what this does
+                        // TODO -revisit this idk what this does
                         draggedEntity.setImage(villageCardImage);
                         break;
                     case ITEM:
@@ -1150,9 +1165,11 @@ public class LoopManiaWorldController {
      * EventHandlers will run on the application thread.
      */
     private void printThreadingNotes(String currentMethodLabel) {
-        //System.out.println("\n###########################################");
-        //System.out.println("current method = " + currentMethodLabel);
-        //System.out.println("In application thread? = " + Platform.isFxApplicationThread());
-        //System.out.println("Current system time = " + java.time.LocalDateTime.now().toString().replace('T', ' '));
+        // System.out.println("\n###########################################");
+        // System.out.println("current method = " + currentMethodLabel);
+        // System.out.println("In application thread? = " +
+        // Platform.isFxApplicationThread());
+        // System.out.println("Current system time = " +
+        // java.time.LocalDateTime.now().toString().replace('T', ' '));
     }
 }
