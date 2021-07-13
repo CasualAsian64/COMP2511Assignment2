@@ -19,7 +19,9 @@ public class LoopManiaWorld {
 
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
-
+    private static final int SLUG = 0;
+    private static final int ZOMBIE = 1;
+    private static final int VAMPIRE = 2;
     /**
      * width of the world in GridPane cells
      */
@@ -123,22 +125,6 @@ public class LoopManiaWorld {
         worldGoals = goal;
     }
 
-    public void setVampireRespawnLoop(int loop) {
-        vampireRespawnLoop = loop;
-    }
-
-    public void setZombieRespawnLoop(int loop) {
-        zombieRespawnLoop = loop;
-    }
-
-    public int getVampireRespawnLoop() {
-        return vampireRespawnLoop;
-    }
-
-    public int getZombieRespawnLoop() {
-        return zombieRespawnLoop;
-    }
-
     public void incrementLoops() {
         numLoops++;
     }
@@ -181,29 +167,73 @@ public class LoopManiaWorld {
      * 
      * @return
      */
-    public List<Enemy> possiblySpawnEnemies() {
-        Pair<Integer, Integer> pos = possiblyGetEnemySpawnPosition();
-        List<Enemy> spawningEnemies = new ArrayList<>();
-        if (pos != null) {
-            int indexInPath = orderedPath.indexOf(pos);
+    private boolean zombieSpawned = false;
+    private boolean vampireSpawned = false;
+    private boolean specialEnemySpawned = false;
 
-            PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);
-            EnemySelector enemySelector = new EnemySelector();
-            Enemy enemy = enemySelector.getEnemy(0, pathPosition, enemies, numLoops, vampireRespawnLoop, zombieRespawnLoop);
-            updateRespawnLoop(enemy);
-            enemies.add(enemy);
-            spawningEnemies.add(enemy);
+    public List<Enemy> possiblySpawnEnemies() {
+        int enemySelection = SLUG;
+        if (numLoops % 5 == 0 && !checkVampireSpawned() && numLoops == vampireRespawnLoop && checkVampireBuilding()) {
+            enemySelection = VAMPIRE;
+            vampireRespawnLoop = numLoops + 5;
+            vampireSpawned = true;
+            specialEnemySpawned = true;
+        } else if (!checkZombieSpawned() && numLoops == zombieRespawnLoop && checkZombiePit()) {
+            enemySelection = ZOMBIE;
+            zombieRespawnLoop = numLoops + 1;
+            zombieSpawned = true;
+            specialEnemySpawned = true;
+            System.out.println("Zombie chosen");
+        }
+        List<Pair<Integer, Integer>> positions = possiblyGetEnemySpawnPosition(enemySelection);
+        List<Enemy> spawningEnemies = new ArrayList<>();
+        if (positions != null) {
+            for (Pair<Integer, Integer> pos : positions) {
+                int indexInPath = orderedPath.indexOf(pos);
+                PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);
+                EnemySelector enemySelector = new EnemySelector();
+                Enemy enemy = enemySelector.getEnemy(enemySelection, pathPosition);
+                enemies.add(enemy);
+                spawningEnemies.add(enemy);
+            }
         }
         return spawningEnemies;
     }
 
-    private void updateRespawnLoop(Enemy enemy) {
-        if (enemy.getType().equals("Vampire")) {
-            vampireRespawnLoop += 5;
+    public boolean checkVampireBuilding() {
+        for (Building b : buildingEntities) {
+            if (b.getType().equals("VampireCastle")) {
+                return true;
+            }
         }
-        if (enemy.getType().equals("Zombie")) {
-            zombieRespawnLoop += 1;
+        return false;
+    }
+
+    public boolean checkZombiePit() {
+        for (Building b : buildingEntities) {
+            if (b.getType().equals("ZombiePit")) {
+                return true;
+            }
         }
+        return false;
+    }
+
+    public boolean checkVampireSpawned() {
+        for (Enemy e: enemies) {
+            if (e.getType().equals("Vampire")){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkZombieSpawned() {
+        for (Enemy e: enemies) {
+            if (e.getType().equals("Zombie")){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -236,8 +266,8 @@ public class LoopManiaWorld {
                 while (e.getHealth() != 0) {
                     e.getAttacked(character.getAttack());
                     character.getAttacked(e.getAttack());
-                    System.out.println();
-                    System.out.println("Character's health is: " + character.getHealth());
+                    //System.out.println();
+                    //System.out.println("Character's health is: " + character.getHealth());
                 }
                 character.collectRewards(e);
                 defeatedEnemies.add(e);
@@ -558,11 +588,20 @@ public class LoopManiaWorld {
                 if (b.getType().equals("HerosCastle")) {
                     System.out.println();
                     System.out.println("The character visited the Hero's Castle");
+                    if (!zombieSpawned) {
+                        zombieRespawnLoop += 1;
+                    }
+
+                    if (!vampireSpawned && numLoops % 5 == 0 && numLoops != 0) {
+                        vampireRespawnLoop += 5;
+                    }
                     incrementLoops();
                     System.out.println("The number of loops completed is now " + getNumLoops());
-
                     System.out.println();
                     worldGoals.printAllGoals();
+                    System.out.println();
+                    System.out.println("Zombie respawn loop: " + zombieRespawnLoop);
+                    System.out.println("Vampire respawn loop: " + vampireRespawnLoop);
                     System.out.println();
 
                 }
@@ -689,33 +728,87 @@ public class LoopManiaWorld {
      * @return null if random choice is that wont be spawning an enemy or it isn't
      *         possible, or random coordinate pair if should go ahead
      */
-    private Pair<Integer, Integer> possiblyGetEnemySpawnPosition() {
-        // TODO = modify this
-
-        // has a chance spawning an enemy on a tile the character isn't on or
-        // immediately before or after (currently space required = 2)...
+    private List<Pair<Integer, Integer>> possiblyGetEnemySpawnPosition(int enemySelection) {
         Random rand = new Random();
-        int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
-        // TODO = change based on spec
+        int choice = rand.nextInt(2);
         // spawn 4 enemies
-        if ((choice == 0) && (enemies.size() < 4)) {
-            List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
-            int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
-            // inclusive start and exclusive end of range of positions not allowed
-            int startNotAllowed = (indexPosition - 2 + orderedPath.size()) % orderedPath.size();
-            int endNotAllowed = (indexPosition + 3) % orderedPath.size();
-            // note terminating condition has to be != rather than < since wrap around...
-            for (int i = endNotAllowed; i != startNotAllowed; i = (i + 1) % orderedPath.size()) {
-                orderedPathSpawnCandidates.add(orderedPath.get(i));
+        choice = 0;
+        List<Pair<Integer, Integer>> spawnPositions = new ArrayList<>();
+        if ((choice == 0) && ((enemies.size() < 4) || specialEnemySpawned)) {
+            if (specialEnemySpawned) {
+                specialEnemySpawned = false;
+                System.out.println("Special enemy spawned set to false");
+            }
+            Pair<Integer, Integer> spawnPosition = null;
+            if (enemySelection == 0) {
+                List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
+                int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
+                // inclusive start and exclusive end of range of positions not allowed
+                int startNotAllowed = (indexPosition - 2 + orderedPath.size()) % orderedPath.size();
+                int endNotAllowed = (indexPosition + 3) % orderedPath.size();
+                // note terminating condition has to be != rather than < since wrap around...
+                for (int i = endNotAllowed; i != startNotAllowed; i = (i + 1) % orderedPath.size()) {
+                    orderedPathSpawnCandidates.add(orderedPath.get(i));
+                }
+
+                // choose random choice
+                spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
+                spawnPositions.add(spawnPosition);
+            } 
+            if (enemySelection == 1) {
+                spawnPositions = getZombieSpawn();
             }
 
-            // choose random choice
-            Pair<Integer, Integer> spawnPosition = orderedPathSpawnCandidates
-                    .get(rand.nextInt(orderedPathSpawnCandidates.size()));
-
-            return spawnPosition;
+            if (enemySelection == 2) {
+                spawnPositions = getVampireSpawn();
+            }
+            return spawnPositions;
         }
         return null;
+    }
+
+    public List<Pair<Integer, Integer>> getZombieSpawn() {
+        List<Pair<Integer, Integer>> zombieSpawns = new ArrayList<>();
+        List<Pair<Integer, Integer>> allZombieBuildings = new ArrayList<>();
+        for (Building b : buildingEntities) {
+            if (b.getType().equals("ZombiePit")) {
+                allZombieBuildings.add(new Pair<Integer, Integer>(b.getX(), b.getY()));
+            }
+        }
+        for (Pair<Integer, Integer> building : allZombieBuildings) {
+            for (int i = 0; i < orderedPath.size(); i++) {
+                Pair<Integer, Integer> cell = orderedPath.get(i);
+                if ((cell.getValue0() == building.getValue0() + 1 && cell.getValue1() == building.getValue1()) || (cell.getValue0() == building.getValue0() - 1 && cell.getValue1() == building.getValue1())  
+                    || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() + 1)  || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() - 1)){
+                    zombieSpawns.add(cell);
+                    break;
+                }
+            }
+        }
+        return zombieSpawns;
+    }
+
+    public List<Pair<Integer, Integer>> getVampireSpawn() {
+        List<Pair<Integer, Integer>> vampireSpawns = new ArrayList<>();
+        List<Pair<Integer, Integer>> allVampireBuildings = new ArrayList<>();
+        for (Building b : buildingEntities) {
+            if (b.getType().equals("VampireCastle")) {
+                allVampireBuildings.add(new Pair<Integer, Integer>(b.getX(), b.getY()));
+                System.out.println("Vampire pit building at (" + b.getX() + "," + b.getY() + ")");
+            }
+        }
+        for (Pair<Integer, Integer> building : allVampireBuildings) {
+            for (int i = 0; i < orderedPath.size(); i++) {
+                Pair<Integer, Integer> cell = orderedPath.get(i);
+                if ((cell.getValue0() == building.getValue0() + 1 && cell.getValue1() == building.getValue1()) || (cell.getValue0() == building.getValue0() - 1 && cell.getValue1() == building.getValue1())  
+                    || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() + 1)  || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() - 1)){
+                    System.out.println("Vampire spawned at (" + cell.getValue0() + "," + cell.getValue1() + ")");
+                    vampireSpawns.add(cell);
+                    break;
+                }
+            }
+        }
+        return vampireSpawns;
     }
 
     /**
@@ -738,10 +831,6 @@ public class LoopManiaWorld {
         }
 
         Building b = null;
-
-        // Call card.getType() to determine which building to create and add
-
-        ///////////////
 
         if (card.getCardType().equals("VampireCastleCard")) {
             VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),

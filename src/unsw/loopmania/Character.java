@@ -32,8 +32,8 @@ public class Character extends MovingEntity {
         Statistics eStats = e.getStats();
         stats.setGold(eStats.getGold() + stats.getGold());
         stats.setExp(eStats.getExp() + stats.getExp());
-        System.out.println("The characters gold: " + stats.getGold());
-        System.out.println("The characters exp: " + stats.getExp());
+        //System.out.println("The characters gold: " + stats.getGold());
+        //System.out.println("The characters exp: " + stats.getExp());
     }
 
     @Override
