@@ -36,6 +36,15 @@ public class LoopManiaWorld {
     static int numLoops;
 
     /**
+     * Number of loops for when the vampire will respawn
+     */
+    private int vampireRespawnLoop = 5;
+
+    /**
+     * Number of loops for when the zombie will respawn
+     */
+    private int zombieRespawnLoop = 0;
+    /**
      * number of loops the character has completed
      */
     private Goals worldGoals;
@@ -100,10 +109,6 @@ public class LoopManiaWorld {
         return height;
     }
 
-    public List<Pair<Integer, Integer>> getOrderedPath() {
-        return orderedPath;
-    }
-
     /**
      * set the character. This is necessary because it is loaded as a special entity
      * out of the file
@@ -116,6 +121,22 @@ public class LoopManiaWorld {
 
     public void setWorldGoals(Goals goal) {
         worldGoals = goal;
+    }
+
+    public void setVampireRespawnLoop(int loop) {
+        vampireRespawnLoop = loop;
+    }
+
+    public void setZombieRespawnLoop(int loop) {
+        zombieRespawnLoop = loop;
+    }
+
+    public int getVampireRespawnLoop() {
+        return vampireRespawnLoop;
+    }
+
+    public int getZombieRespawnLoop() {
+        return zombieRespawnLoop;
     }
 
     public void incrementLoops() {
@@ -161,36 +182,16 @@ public class LoopManiaWorld {
      * @return
      */
     public List<Enemy> possiblySpawnEnemies() {
-        // TODO = expand this very basic version
         Pair<Integer, Integer> pos = possiblyGetEnemySpawnPosition();
         List<Enemy> spawningEnemies = new ArrayList<>();
         if (pos != null) {
             int indexInPath = orderedPath.indexOf(pos);
 
-            Random rand = new Random();
-            int randomInt = rand.nextInt(3);
-            Enemy enemy;
-            switch (randomInt) {
-                case 0:
-                    enemy = new Slug(new PathPosition(indexInPath, orderedPath));
-                    enemies.add(enemy);
-                    spawningEnemies.add(enemy);
-                    System.out.println("Spawned a slug");
-                    break;
-                case 1:
-                    enemy = new Vampire(new PathPosition(indexInPath, orderedPath));
-                    enemies.add(enemy);
-                    spawningEnemies.add(enemy);
-                    System.out.println("Spawned a vampire");
-                    break;
-                case 2:
-                    enemy = new Zombie(new PathPosition(indexInPath, orderedPath));
-                    enemies.add(enemy);
-                    spawningEnemies.add(enemy);
-                    System.out.println("Spawned a Zombie");
-                    break;
-
-            }
+            PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);
+            EnemySelector enemySelector = new EnemySelector();
+            Enemy enemy = enemySelector.getEnemy(0, pathPosition, enemies, this);
+            enemies.add(enemy);
+            spawningEnemies.add(enemy);
         }
         return spawningEnemies;
     }
@@ -687,7 +688,7 @@ public class LoopManiaWorld {
         int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
         // TODO = change based on spec
         // spawn 4 enemies
-        if ((choice == 0) && (enemies.size() < 2)) {
+        if ((choice == 0) && (enemies.size() < 4)) {
             List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
             int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
             // inclusive start and exclusive end of range of positions not allowed
