@@ -185,15 +185,17 @@ public class LoopManiaWorld {
             specialEnemySpawned = true;
             System.out.println("Zombie chosen");
         }
-        Pair<Integer, Integer> pos = possiblyGetEnemySpawnPosition(enemySelection);
+        List<Pair<Integer, Integer>> positions = possiblyGetEnemySpawnPosition(enemySelection);
         List<Enemy> spawningEnemies = new ArrayList<>();
-        if (pos != null) {
-            int indexInPath = orderedPath.indexOf(pos);
-            PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);
-            EnemySelector enemySelector = new EnemySelector();
-            Enemy enemy = enemySelector.getEnemy(enemySelection, pathPosition);
-            enemies.add(enemy);
-            spawningEnemies.add(enemy);
+        if (positions != null) {
+            for (Pair<Integer, Integer> pos : positions) {
+                int indexInPath = orderedPath.indexOf(pos);
+                PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);
+                EnemySelector enemySelector = new EnemySelector();
+                Enemy enemy = enemySelector.getEnemy(enemySelection, pathPosition);
+                enemies.add(enemy);
+                spawningEnemies.add(enemy);
+            }
         }
         return spawningEnemies;
     }
@@ -726,11 +728,12 @@ public class LoopManiaWorld {
      * @return null if random choice is that wont be spawning an enemy or it isn't
      *         possible, or random coordinate pair if should go ahead
      */
-    private Pair<Integer, Integer> possiblyGetEnemySpawnPosition(int enemySelection) {
+    private List<Pair<Integer, Integer>> possiblyGetEnemySpawnPosition(int enemySelection) {
         Random rand = new Random();
         int choice = rand.nextInt(2);
         // spawn 4 enemies
         choice = 0;
+        List<Pair<Integer, Integer>> spawnPositions = new ArrayList<>();
         if ((choice == 0) && ((enemies.size() < 4) || specialEnemySpawned)) {
             if (specialEnemySpawned) {
                 specialEnemySpawned = false;
@@ -750,42 +753,62 @@ public class LoopManiaWorld {
 
                 // choose random choice
                 spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
+                spawnPositions.add(spawnPosition);
             } 
             if (enemySelection == 1) {
-                spawnPosition = getZombieSpawn();
+                spawnPositions = getZombieSpawn();
             }
 
             if (enemySelection == 2) {
-                spawnPosition = getVampireSpawn();
+                spawnPositions = getVampireSpawn();
             }
-            return spawnPosition;
+            return spawnPositions;
         }
         return null;
     }
 
-    public Pair<Integer, Integer> getZombieSpawn() {
-        int buildingX = 0;
-        int buildingY = 0;
+    public List<Pair<Integer, Integer>> getZombieSpawn() {
+        List<Pair<Integer, Integer>> zombieSpawns = new ArrayList<>();
+        List<Pair<Integer, Integer>> allZombieBuildings = new ArrayList<>();
         for (Building b : buildingEntities) {
             if (b.getType().equals("ZombiePit")) {
-                buildingX = b.getX();
-                buildingY = b.getY();
-                System.out.println("Zombie pit building at (" + b.getX() + "," + b.getY() + ")");
+                allZombieBuildings.add(new Pair<Integer, Integer>(b.getX(), b.getY()));
             }
         }
-        for (int i = 0; i < orderedPath.size(); i++) {
-            Pair<Integer, Integer> cell = orderedPath.get(i);
-            if ((cell.getValue0() == buildingX + 1 && cell.getValue1() == buildingY) || (cell.getValue0() == buildingX - 1 && cell.getValue1() == buildingY)  
-                || (cell.getValue0() == buildingX && cell.getValue1() == buildingY + 1)  || (cell.getValue0() == buildingX && cell.getValue1() == buildingY - 1)){
-                System.out.println("Zombie spawned at (" + cell.getValue0() + "," + cell.getValue1() + ")");
-                return cell;
+        for (Pair<Integer, Integer> building : allZombieBuildings) {
+            for (int i = 0; i < orderedPath.size(); i++) {
+                Pair<Integer, Integer> cell = orderedPath.get(i);
+                if ((cell.getValue0() == building.getValue0() + 1 && cell.getValue1() == building.getValue1()) || (cell.getValue0() == building.getValue0() - 1 && cell.getValue1() == building.getValue1())  
+                    || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() + 1)  || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() - 1)){
+                    zombieSpawns.add(cell);
+                    break;
+                }
             }
         }
-        return null;
+        return zombieSpawns;
     }
 
-    public Pair<Integer, Integer> getVampireSpawn() {
-        return null;
+    public List<Pair<Integer, Integer>> getVampireSpawn() {
+        List<Pair<Integer, Integer>> vampireSpawns = new ArrayList<>();
+        List<Pair<Integer, Integer>> allVampireBuildings = new ArrayList<>();
+        for (Building b : buildingEntities) {
+            if (b.getType().equals("VampireCastle")) {
+                allVampireBuildings.add(new Pair<Integer, Integer>(b.getX(), b.getY()));
+                System.out.println("Vampire pit building at (" + b.getX() + "," + b.getY() + ")");
+            }
+        }
+        for (Pair<Integer, Integer> building : allVampireBuildings) {
+            for (int i = 0; i < orderedPath.size(); i++) {
+                Pair<Integer, Integer> cell = orderedPath.get(i);
+                if ((cell.getValue0() == building.getValue0() + 1 && cell.getValue1() == building.getValue1()) || (cell.getValue0() == building.getValue0() - 1 && cell.getValue1() == building.getValue1())  
+                    || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() + 1)  || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() - 1)){
+                    System.out.println("Vampire spawned at (" + cell.getValue0() + "," + cell.getValue1() + ")");
+                    vampireSpawns.add(cell);
+                    break;
+                }
+            }
+        }
+        return vampireSpawns;
     }
 
     /**
