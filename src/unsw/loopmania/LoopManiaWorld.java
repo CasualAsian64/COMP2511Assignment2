@@ -283,6 +283,20 @@ public class LoopManiaWorld {
         return defeatedEnemies;
     }
 
+    public Card loadCard() {
+        if (cardEntities.size() >= getWidth()) {
+            Card card = cardEntities.get(0);
+            //card.removeCardAward(character);
+            removeCard(0);
+        }
+        Random randomCard = new Random();
+        int randCard = randomCard.nextInt(7);
+        CardSelector cardSelector = new CardSelector();
+        Card card = cardSelector.getCard(randCard, cardEntities.size());
+        cardEntities.add(card);
+        return card;
+    }
+
     /**
      * spawn a card in the world and return the card entity
      * 
@@ -317,8 +331,8 @@ public class LoopManiaWorld {
     public TowerCard loadTowerCard() {
         // if adding more cards than have, remove the first card...
         if (cardEntities.size() >= getWidth()) {
-            // TODO = give some cash/experience/item rewards for the discarding of the
-            // oldest card
+            Card card = cardEntities.get(0);
+            //card.removeCardAward(character);
             removeCard(0);
         }
         TowerCard TowerCard = new TowerCard(new SimpleIntegerProperty(cardEntities.size()),
@@ -810,7 +824,7 @@ public class LoopManiaWorld {
         }
         return vampireSpawns;
     }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * remove a card by its x, y coordinates
      * 
@@ -833,17 +847,22 @@ public class LoopManiaWorld {
         Building b = null;
 
         if (card.getCardType().equals("VampireCastleCard")) {
-            VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
+            if (!checkBuildingOnPath(buildingNodeX, buildingNodeY)) {
+                b = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
                     new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
+            
+                buildingEntities.add(b);
+                card.destroy();
+                cardEntities.remove(card);
+                shiftCardsDownFromXCoordinate(cardNodeX);
+            } else {
+                for (Card c : cardEntities) {
+                    System.out.println(c.getCardType());
+                }
+            }
 
             // Return the building to be added
-            return newBuilding;
+            return b;
         }
 
         if (card.getCardType().equals("ZombiePitCard")) {
