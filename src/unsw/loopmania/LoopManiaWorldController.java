@@ -816,6 +816,7 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn a building here of different types
                                 // if x and y are on path
+                                boolean buildingOnPath = checkBuildingOnPath(x, y);
                                 Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
                                 if (newBuilding != null) {
                                     onLoad(newBuilding);
@@ -894,6 +895,10 @@ public class LoopManiaWorldController {
                 event.consume();
             }
         });
+    }
+
+    protected boolean checkBuildingOnPath(int x, int y) {
+        return world.checkBuildingOnPath(x, y);
     }
 
     /**
