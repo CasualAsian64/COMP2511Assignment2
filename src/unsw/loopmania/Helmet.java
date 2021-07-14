@@ -18,9 +18,9 @@ public class Helmet extends Equipment {
         return stats;
     }
 
-    @Override
-    public int reduceAttack(int attack) {
-        return attack - 3;
-    }
+    //@Override
+    //public int reduceAttack(int attack) {
+     //   return attack - 3;
+    //}
     
 }
