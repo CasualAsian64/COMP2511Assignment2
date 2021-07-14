@@ -45,7 +45,7 @@ public class LoopManiaWorld {
     /**
      * Number of loops for when the zombie will respawn
      */
-    private int zombieRespawnLoop = 0;
+    private int zombieRespawnLoop = 1;
     /**
      * number of loops the character has completed
      */
@@ -183,7 +183,6 @@ public class LoopManiaWorld {
             zombieRespawnLoop = numLoops + 1;
             zombieSpawned = true;
             specialEnemySpawned = true;
-            System.out.println("Zombie chosen");
         }
         List<Pair<Integer, Integer>> positions = possiblyGetEnemySpawnPosition(enemySelection);
         List<Enemy> spawningEnemies = new ArrayList<>();
@@ -588,7 +587,7 @@ public class LoopManiaWorld {
                 if (b.getType().equals("HerosCastle")) {
                     System.out.println();
                     System.out.println("The character visited the Hero's Castle");
-                    if (!zombieSpawned) {
+                    if (!zombieSpawned && numLoops != 0) {
                         zombieRespawnLoop += 1;
                     }
 
@@ -732,12 +731,13 @@ public class LoopManiaWorld {
         Random rand = new Random();
         int choice = rand.nextInt(2);
         // spawn 4 enemies
-        choice = 0;
+        if (specialEnemySpawned) {
+            choice = 0;
+        }
         List<Pair<Integer, Integer>> spawnPositions = new ArrayList<>();
-        if ((choice == 0) && ((enemies.size() < 4) || specialEnemySpawned)) {
+        if ((choice == 0) && ((enemies.size() < 2) || specialEnemySpawned)) {
             if (specialEnemySpawned) {
                 specialEnemySpawned = false;
-                System.out.println("Special enemy spawned set to false");
             }
             Pair<Integer, Integer> spawnPosition = null;
             if (enemySelection == 0) {
@@ -935,6 +935,16 @@ public class LoopManiaWorld {
 
         return b;
 
+    }
+
+    public boolean checkBuildingOnPath(int x, int y) {
+        for (int i = 0; i < orderedPath.size(); i++) {
+            Pair<Integer,Integer> cell = orderedPath.get(i);
+            if (cell.getValue0() == x && cell.getValue1() == y) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
