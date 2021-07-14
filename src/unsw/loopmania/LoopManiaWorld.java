@@ -303,7 +303,7 @@ public class LoopManiaWorld {
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
-        System.out.println("First available slot at: " + firstAvailableSlot.getValue0() + "," + firstAvailableSlot.getValue1());
+        //System.out.println("First available slot at: " + firstAvailableSlot.getValue0() + "," + firstAvailableSlot.getValue1());
         ItemSelector itemSelector = new ItemSelector();
         Random randomItem = new Random();
         int randItem = randomItem.nextInt(8);
@@ -610,7 +610,7 @@ public class LoopManiaWorld {
 
         if (card.getCardType().equals("VampireCastleCard")) {
             if (!checkBuildingOnPath(buildingNodeX, buildingNodeY)) {
-                b = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
+                b = new VampireCastle(new SimpleIntegerProperty(buildingNodeX),
                     new SimpleIntegerProperty(buildingNodeY));
             
                 buildingEntities.add(b);
