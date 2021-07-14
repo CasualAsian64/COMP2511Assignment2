@@ -50,7 +50,7 @@ public class Character extends MovingEntity {
         // Increase defense for character if equipped with an equipment item
         if (equipment != null) {
             totalDefense += equipment.getDefense();
-            attack = equipment.reduceAttack(attack);
+            //attack = equipment.reduceAttack(attack);
         }
         
         int totalAttack = attack - totalDefense;

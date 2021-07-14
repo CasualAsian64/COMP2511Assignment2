@@ -12,13 +12,33 @@ public class ItemSelector {
     private static final int STAFF = 6;
     private static final int ONERING = 7;
 
-    public Item getItem(int itemSelection, boolean rareItem, int x, int y) {
+    public Item getItem(int itemSelection, boolean rareItem, SimpleIntegerProperty x, SimpleIntegerProperty y) {
         Item item;
         switch(itemSelection) {
             case SWORD:
-                item = new Sword(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+                item = new Sword(x, y);
+                return item;
             case STAKE:
-                item = new Stake(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+                item = new Stake(x, y);
+                return item;
+            case ARMOUR:
+                item = new Armour(x, y);
+                return item;
+            case HELMET:
+                item = new Helmet(x, y);
+                return item;
+            case SHIELD:
+                item = new Shield(x, y);
+                return item;
+            case POTION:
+                item = new HealthPotion(x, y);
+                return item;
+            case STAFF:
+                item = new Staff(x, y);
+                return item;
+            case ONERING:
+                item = new TheOneRing(x, y);
+                return item;
         }
         return null;
     }

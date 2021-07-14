@@ -172,6 +172,7 @@ public class LoopManiaWorldController {
 
     List<Image> allImages;
     List<Image> allBuildingImages;
+    List<Image> allItemImages;
 
     /**
      * the image currently being dragged, if there is one, otherwise null. Holding
@@ -267,7 +268,8 @@ public class LoopManiaWorldController {
                                     swordImage, stakeImage, staffImage, shieldImage, armourImage, helmetImage, potionImage, oneRingImage,
                                     slugImage, vampireImage, zombieImage);
         allBuildingImages = Arrays.asList(vampireCastleCardImage, zombiePitCardImage, towerCardImage, villageCardImage, barracksCardImage, trapCardImage, campfireCardImage);
-                                    
+        
+        allItemImages = Arrays.asList(swordImage, stakeImage, staffImage, shieldImage, armourImage, helmetImage, potionImage, oneRingImage);
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -385,57 +387,12 @@ public class LoopManiaWorldController {
         onLoadCard(card);
     }
 
-    /**
-     * load a sword from the world, and pair it with an image in the GUI
-     */
-    private void loadSword() {
-        // TODO = load more types of weapon
-        // start by getting first available coordinates
-        Sword sword = world.addUnequippedSword();
-        onLoad(sword);
+    private void loadItem() {
+        Item item = world.addUnequippedItem();
+        System.out.println("Spawned a:" + item.getType());
+        onLoadItem(item);
     }
 
-    private void loadStake() {
-        // start by getting first available coordinates
-        Stake stake = world.addUnequippedStake();
-        onLoad(stake);
-    }
-
-    private void loadStaff() {
-        // start by getting first available coordinates
-        Staff staff = world.addUnequippedStaff();
-        onLoad(staff);
-    }
-
-    private void loadArmour() {
-        // start by getting first available coordinates
-        Armour armour = world.addUnequippedArmour();
-        onLoad(armour);
-    }
-
-    private void loadHelmet() {
-        // start by getting first available coordinates
-        Helmet helmet = world.addUnequippedHelmet();
-        onLoad(helmet);
-    }
-
-    private void loadShield() {
-        // start by getting first available coordinates
-        Shield shield = world.addUnequippedShield();
-        onLoad(shield);
-    }
-
-    private void loadPotion() {
-        // start by getting first available coordinates
-        HealthPotion potion = world.addUnequippedPotion();
-        onLoad(potion);
-    }
-
-    private void loadOneRing() {
-        // start by getting first available coordinates
-        TheOneRing oneRing = world.addUnequippedOneRing();
-        onLoad(oneRing);
-    }
 
     /**
      * run GUI events after an enemy is defeated, such as spawning
@@ -454,9 +411,8 @@ public class LoopManiaWorldController {
 
         
         loadCard();
-
-
-        // loadItem()
+        loadItem();
+        /*
         if (randItem == 0) {
             loadSword();
         }
@@ -474,7 +430,7 @@ public class LoopManiaWorldController {
             loadPotion();
         } else if (randItem == 7) {
             loadOneRing();
-        }
+        }*/
     }
 
     private void onLoadCard(Card card) {
@@ -488,66 +444,12 @@ public class LoopManiaWorldController {
         cards.getChildren().add(view);
     }
 
-    /**
-     * load a sword into the GUI. Particularly, we must connect to the drag
-     * detection event handler, and load the image into the unequippedInventory
-     * GridPane.
-     * 
-     * @param sword
-     */
-    private void onLoad(Sword sword) {
-        ImageView view = new ImageView(swordImage);
+    private void onLoadItem(Item item) {
+        ImageSelector imageSelector = new ImageSelector();
+        Image image = imageSelector.getImage(item, allItemImages);
+        ImageView view = new ImageView(image);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(sword, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(Stake stake) {
-        ImageView view = new ImageView(stakeImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(stake, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(Staff staff) {
-        ImageView view = new ImageView(staffImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(staff, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(Armour armour) {
-        ImageView view = new ImageView(armourImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(armour, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(Helmet helmet) {
-        ImageView view = new ImageView(helmetImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(helmet, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(Shield shield) {
-        ImageView view = new ImageView(shieldImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(shield, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(HealthPotion potion) {
-        ImageView view = new ImageView(potionImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(potion, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(TheOneRing oneRing) {
-        ImageView view = new ImageView(oneRingImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(oneRing, view);
+        addEntity(item, view);
         unequippedInventory.getChildren().add(view);
     }
 
