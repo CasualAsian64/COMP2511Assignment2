@@ -583,17 +583,6 @@ public class LoopManiaWorldController {
     protected boolean checkBuildingOnPath(int x, int y) {
         return world.checkBuildingOnPath(x, y);
     }
-    /*
-    public Card getCard(int cardNodeX, int cardNodeY) {
-        Card card = new Card();
-        for (Card c : world.getCardEntities()) {
-            if ((c.getX() == cardNodeX) && (c.getY() == cardNodeY)) {
-                card = c;
-                return card;
-            }
-        }
-        return c;
-    }*/
 
     /**
      * remove the card from the world, and spawn and return a building instead where
