@@ -18,6 +18,30 @@ public class BuildingSelector {
             case CAMPFIRE:
                 building = new Campfire(x, y);
                 return building;
+
+            case TRAP:
+                building = new Trap(x, y);
+                return building;
+
+            case VILLAGE:
+                building = new Village(x, y);
+                return building;
+
+            case ZOMBIEPIT:
+                building = new ZombiePit(x, y);
+                return building;
+
+            case VAMPIRECASTLE:
+                building = new VampireCastle(x, y);
+                return building;
+
+            case TOWER:
+                building = new Tower(x, y);
+                return building;
+
+            case BARRACKS:
+                building = new Barracks(x, y);
+                return building;
         }
 
         return null;
