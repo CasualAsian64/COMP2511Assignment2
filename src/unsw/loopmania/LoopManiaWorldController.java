@@ -279,7 +279,6 @@ public class LoopManiaWorldController {
 
     @FXML
     public void initialize() {
-        // TODO = load more images/entities during initialization
 
         Image pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
         Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
@@ -307,8 +306,8 @@ public class LoopManiaWorldController {
             cards.add(groundView, x, 0);
         }
 
-        // Load the Hero's Castle at spot (0,0)
-        HerosCastle herosCastle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        // Load the Hero's Castle
+        HerosCastle herosCastle = new HerosCastle(new SimpleIntegerProperty(world.getCastleX()), new SimpleIntegerProperty(world.getCastleY()));
         onLoadHerosCastle(herosCastle);
         world.getBuildingEntities().add(herosCastle);
 
@@ -387,7 +386,6 @@ public class LoopManiaWorldController {
         Item item = world.addUnequippedItem();
         onLoadItem(item);
     }
-
 
     /**
      * run GUI events after an enemy is defeated, such as spawning

@@ -83,6 +83,11 @@ public class LoopManiaWorld {
      */
     private List<Pair<Integer, Integer>> orderedPath;
 
+    private int shopCounter = 1;
+    private int shopIncrement = 1;
+
+    private int castleX;
+    private int castleY;
     /**
      * create the world (constructor)
      *  
@@ -103,6 +108,10 @@ public class LoopManiaWorld {
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
         allRareItems = new ArrayList<>();
+    }
+    public void increaseShopLoops() {
+        shopCounter += shopIncrement;
+        shopIncrement += 1;
     }
 
     public int getWidth() {
@@ -420,6 +429,10 @@ public class LoopManiaWorld {
                         vampireRespawnLoop += 5;
                     }
                     incrementLoops();
+                    increaseShopLoops();
+                    if (numLoops == shopCounter) {
+                        System.out.println("Shop is opened");
+                    }
                     System.out.println("The number of loops completed is now " + getNumLoops());
                     System.out.println();
                     worldGoals.printAllGoals();
@@ -709,11 +722,7 @@ public class LoopManiaWorld {
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
-        } else {
-            //card.destroy();
-            //cardEntities.remove(card);
-            //shiftCardsDownFromXCoordinate(cardNodeX);
-        }
+        } 
         return building;
 
     }
@@ -743,6 +752,19 @@ public class LoopManiaWorld {
         for (int i = 0; i < jsonRareItems.length(); i++) {
             allRareItems.add(jsonRareItems.getString(i));
         }
+    }
+
+    public void setCastleCoordinates(int x, int y) {
+        castleX = x;
+        castleY = y;
+    }
+
+    public int getCastleX() {
+        return castleX;
+    }
+
+    public int getCastleY() {
+        return castleY;
     }
 
 }
