@@ -10,4 +10,5 @@ public class Campfire extends Building {
         super(x, y);
         this.type = "Campfire";
     }    
+
 }

@@ -14,6 +14,9 @@ public abstract class Enemy extends MovingEntity {
         charStats.reduceHealth(attack);
     }
 
+    public void runAway(){
+    }
+
     public abstract void move();
 
     public abstract int getBattleRadius();
