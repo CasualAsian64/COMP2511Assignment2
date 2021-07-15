@@ -57,23 +57,41 @@ public class BuildingSelector {
                 }
                 break;
             case "ZombiePitCard":
-                building = new ZombiePit(x, y);
-                return building;
+                if (!buildingOnPath) {
+                    building = new ZombiePit(x, y);
+                    return building;
+                }
+                break;
             case "TowerCard":
-                building = new Tower(x, y);
-                return building;
+                if (!buildingOnPath) {
+                    building = new Tower(x, y);
+                    return building;
+                }
+                break;
             case "VillageCard":
-                building = new Village(x, y);
-                return building;
+                if (buildingOnPath) {
+                    building = new Village(x, y);
+                    return building;
+                }
+                break;
             case "BarracksCard":
-                building = new Barracks(x, y);
-                return building;
+                if (buildingOnPath) {
+                    building = new Barracks(x, y);
+                    return building;
+                }
+                break;
             case "TrapCard":
-                building = new Trap(x, y);
-                return building;
+                if (buildingOnPath) {
+                    building = new Trap(x, y);
+                    return building;
+                }
+                break;
             case "CampfireCard":
-                building = new Campfire(x, y);
-                return building;
+                if (!buildingOnPath) {
+                    building = new Campfire(x, y);
+                    return building;
+                }
+                break;
         }
         return null;
     }
