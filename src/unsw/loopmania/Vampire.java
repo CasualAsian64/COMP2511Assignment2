@@ -30,4 +30,10 @@ public class Vampire extends Enemy {
     public int getBattleRadius() {
         return battleRadius;
     }
+
+    @Override
+    public void runAway() {
+        moveDownPath();
+        moveDownPath();
+    }
 }

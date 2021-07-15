@@ -255,7 +255,7 @@ public class LoopManiaWorld {
 
         // Before simulating combat, detect if the character is in radius of any campfire
         // for now, the radius of the campfire is 4
-        
+
         // 
         boolean buffed = false;
 
@@ -448,12 +448,19 @@ public class LoopManiaWorld {
 
         ArrayList<Enemy> enemiesInRange = new ArrayList<Enemy>();
         ArrayList<Enemy> killedEnemies = new ArrayList<Enemy>();
+        ArrayList<Enemy> vampires = new ArrayList<Enemy>();
 
+        ArrayList<Building> campfires = new ArrayList<Building>();
 
         for (Building b : buildingEntities) {
-            
+
+            if (b.getType().equals("Campfire")) {
+                campfires.add(b);
+            }
+
             for (Enemy e: enemies) { 
 
+                // TOWER
                 // Pythagoras calculation to see if enemy in range. 
                 if (b.getType().equals("Tower") && Math.pow((b.getX() - e.getX()), 2) + Math.pow((b.getY() - e.getY()), 2) < e.getBattleRadius()) {
                     
@@ -464,6 +471,14 @@ public class LoopManiaWorld {
                     if (enemyKilledByTower) {
                         killedEnemies.add(e);
                     }
+                }
+
+                // CAMPFIRE
+
+                
+                if (b.getType().equals("Campfire") && e.getType().equals("Vampire") && Math.pow((b.getX() - e.getX()), 2) + Math.pow((b.getY() - e.getY()), 2) < e.getBattleRadius()) {
+                    e.runAway();
+
                 }
             }
         }

@@ -11,11 +11,4 @@ public class Campfire extends Building {
         this.type = "Campfire";
     }    
 
-
-
-    // need to figure out how to 
-    // public boolean performActionOnEnemy(Enemy enemy) {
-
-
-    // }
 }
