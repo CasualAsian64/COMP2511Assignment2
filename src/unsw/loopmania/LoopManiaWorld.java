@@ -402,7 +402,7 @@ public class LoopManiaWorld {
         Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                 new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(sword);
-        //equippedInventoryItems.add(sword);
+        equippedInventoryItems.add(sword);
         return sword;
     }
 
@@ -462,7 +462,7 @@ public class LoopManiaWorld {
         Armour armour = new Armour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                 new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(armour);
-        //unequippedEquipment.add(armour);
+        equippedEquipment.add(armour);
         return armour;
     }
 
