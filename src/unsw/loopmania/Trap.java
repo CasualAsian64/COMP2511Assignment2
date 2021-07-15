@@ -42,7 +42,6 @@ public class Trap extends Building {
 
             return false;
         }
-
     }
 
 
