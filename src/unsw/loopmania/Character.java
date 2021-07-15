@@ -32,8 +32,8 @@ public class Character extends MovingEntity {
         Statistics eStats = e.getStats();
         stats.setGold(eStats.getGold() + stats.getGold());
         stats.setExp(eStats.getExp() + stats.getExp());
-        System.out.println("The characters gold: " + stats.getGold());
-        System.out.println("The characters exp: " + stats.getExp());
+        //System.out.println("The characters gold: " + stats.getGold());
+        //System.out.println("The characters exp: " + stats.getExp());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Character extends MovingEntity {
     public void attack(Enemy enemy, Statistics enemyStats) {
         int attack = stats.getAttack();
         if (equipment != null) {
-            attack += equippedWeapon.getAttackIncrease(enemy);
+            attack = equipment.reduceAttack(attack);
         }
         enemyStats.reduceHealth(attack);
     }

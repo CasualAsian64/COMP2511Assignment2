@@ -21,5 +21,6 @@ public abstract class Card extends StaticEntity {
         return cardType;
     }
 
+    //public abstract void removeCardAward(Character character);
     
 }

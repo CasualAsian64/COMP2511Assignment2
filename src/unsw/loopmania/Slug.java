@@ -1,7 +1,5 @@
 package unsw.loopmania;
 
-import java.util.Random;
-
 public class Slug extends Enemy {
     private final String type = "Slug";
 

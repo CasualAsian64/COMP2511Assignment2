@@ -1,7 +1,5 @@
 package unsw.loopmania;
 
-import javafx.beans.property.SimpleIntegerProperty;
-
 /**
  * Statistics for each entity
  */

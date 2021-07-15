@@ -13,6 +13,7 @@ public class Goals {
     private int ORLoops;
     private int ORGold;
     private int ORExp;
+    private JSONObject allGoals;
     private boolean ORGoalsActive;
 
     public Goals(JSONObject goal_condition){
@@ -23,6 +24,7 @@ public class Goals {
         this.ORGold = 0;
         this.ORExp = 0;
         this.ORGoalsActive = false;
+        allGoals = new JSONObject();
         int quantity = 0;
 
         String goal = goal_condition.getString("goal");
@@ -40,18 +42,21 @@ public class Goals {
                         quantity = ORGoal.getInt("quantity");
                         this.setGoals(goal, quantity);
                     }
-                    System.out.println("OR");
                 } else {
                     quantity = ANDGoal.getInt("quantity");
                     this.setGoals(goal, quantity);
                 }
             }
-            System.out.println("AND");
         } else {
             quantity = goal_condition.getInt("quantity");
             this.setGoals(goal, quantity);
         }
-        
+        allGoals.put("ANDLoops", ANDLoops);
+        allGoals.put("ANDExp", ANDExp);
+        allGoals.put("ANDGold", ANDGold);
+        allGoals.put("ORLoops", ORLoops);
+        allGoals.put("ORExp", ORExp);
+        allGoals.put("ORGold", ORGold);
     }
 
     // Sets the goals for the character to achieve
@@ -81,34 +86,37 @@ public class Goals {
     // Prints out all goals for the world
     public void printAllGoals() {
         System.out.println("Mandatory goals");
-        System.out.println("Loops required: " + this.ANDLoops);
-        System.out.println("Experience required: " + this.ANDExp);
-        System.out.println("Gold required: " + this.ANDGold);
+        System.out.println("Loops required: " + ANDLoops);
+        System.out.println("Experience required: " + ANDExp);
+        System.out.println("Gold required: " + ANDGold);
         System.out.println();
         System.out.println("Optional goals");
-        System.out.println("Loops: " + this.ORLoops);
-        System.out.println("Experience : " + this.ORExp);
-        System.out.println("Gold : " + this.ORGold);
+        System.out.println("Loops: " + ORLoops);
+        System.out.println("Experience : " + ORExp);
+        System.out.println("Gold : " + ORGold);
         System.out.println();
     }
 
     // Checks if the goals have been met
-    public void checkGoalsMet(Statistics stats, int numLoops) {
+    public boolean checkGoalsMet(Statistics stats, int numLoops) {
         int exp = stats.getExp();
         int gold = stats.getGold();
         if(checkANDGoals(exp, gold, numLoops)) {
             if (ORGoalsActive) {
                 if (checkORGoals(exp, gold, numLoops)){
-                    System.out.println("====================");
-                    System.out.println("You've won the game!");
-                    System.out.println("====================");
+                    //System.out.println("====================");
+                    //System.out.println("You've won the game!");
+                    //System.out.println("====================");
+                    return true;
                 }
             } else {
-                System.out.println("====================");
-                System.out.println("You've won the game!");
-                System.out.println("====================");
+                //System.out.println("====================");
+                //System.out.println("You've won the game!");
+                //System.out.println("====================");
+                return true;
             }
         }
+        return false;
     }
 
     public boolean checkStats(int current, int target) {
@@ -127,6 +135,10 @@ public class Goals {
             return true;
         }
         return false;
+    }
+
+    public JSONObject getAllGoals() {
+        return allGoals;
     }
 
 }
