@@ -4,8 +4,7 @@ public class Slug extends Enemy {
     private final String type = "Slug";
 
     public Slug(PathPosition position) {
-        super(position);
-        stats = new Statistics(10, 3, 3, 20, 40);
+        super(position, new Statistics(10, 3, 3, 20, 40));
         battleRadius = 2;
         supportRadius = 2;
     }

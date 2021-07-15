@@ -5,8 +5,7 @@ public class Zombie extends Enemy {
     private int stepCounter;
 
     public Zombie(PathPosition position) {
-        super(position);
-        stats = new Statistics(20, 5, 2, 15, 10);
+        super(position, new Statistics(20, 5, 2, 15, 10));
         stepCounter = 0;
         battleRadius = 3;
         supportRadius = 3;

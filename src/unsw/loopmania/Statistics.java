@@ -3,7 +3,7 @@ package unsw.loopmania;
 /**
  * Statistics for each entity
  */
-public class Statistics{
+public class Statistics {
     private int health;
     private int attack;
     private int defense;
@@ -26,40 +26,47 @@ public class Statistics{
         this.gold = gold;
     }
 
-    public int getHealth(){
+    public int getHealth() {
         return health;
     }
 
-    public int getAttack(){
+    public int getAttack() {
         return attack;
     }
 
-    public int getGold(){
+    public int getGold() {
         return gold;
     }
 
-    public int getExp(){
+    public int getExp() {
         return exp;
     }
 
-    public void setHealth(int health){
+    public void setHealth(int health) {
         this.health = health;
     }
 
-    public void setAttack(int attack){
+    public void setAttack(int attack) {
         this.attack = attack;
     }
 
-    public void setGold(int gold){
+    public void setGold(int gold) {
         this.gold = gold;
     }
 
-    public void setExp(int exp){
+    public void setExp(int exp) {
         this.exp = exp;
     }
 
     public int getDefense() {
         return defense;
+    }
+
+    public void reduceHealth(int value) {
+        health = health - value;
+        if (health < 0) {
+            health = 0;
+        }
     }
 
 }

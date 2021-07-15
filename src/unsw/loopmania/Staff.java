@@ -10,5 +10,9 @@ public class Staff extends Weapon {
     public Staff(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.type = "Staff";
-    }    
+    }
+
+    public int getAttackIncrease(Enemy enemy) {
+        return 2;
+    }
 }

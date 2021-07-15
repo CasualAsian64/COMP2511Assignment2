@@ -73,7 +73,7 @@
                   <!-- blankCell is an empty cell -->
                   <ImageView id="blankCell"  xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" GridPane.columnIndex="1" GridPane.rowIndex="0">    
                      <image>
-                        <Image url="@../../images/image_just_black_tiny.png"/>
+                        <Image url="@../../images/sword_unequipped.png"/>
                      </image>
                   </ImageView>
                   <!-- shieldCell is the cell where a shield intended to be equipped will be dragged by the human player -->
