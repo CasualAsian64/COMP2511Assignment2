@@ -74,6 +74,8 @@ public class LoopManiaWorld {
     // TODO = expand the range of buildings
     private List<Building> buildingEntities;
 
+    private List<Gold> goldEntities;
+
     
     private List<String> allRareItems;
 
@@ -107,6 +109,7 @@ public class LoopManiaWorld {
         numLoops = 0;
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
+        goldEntities = new ArrayList<>();
         allRareItems = new ArrayList<>();
     }
     public void increaseShopLoops() {
@@ -444,7 +447,6 @@ public class LoopManiaWorld {
                     System.out.println("Zombie respawn loop: " + zombieRespawnLoop);
                     System.out.println("Vampire respawn loop: " + vampireRespawnLoop);
                     System.out.println();
-
                 }
             }
         }
@@ -615,6 +617,8 @@ public class LoopManiaWorld {
      * @return null if random choice is that wont be spawning an enemy or it isn't
      *         possible, or random coordinate pair if should go ahead
      */
+    Pair<Integer, Integer> goldPosition;
+
     private List<Pair<Integer, Integer>> possiblyGetEnemySpawnPosition(int enemySelection) {
         Random rand = new Random();
         int choice = rand.nextInt(2);
@@ -623,7 +627,7 @@ public class LoopManiaWorld {
             choice = 0;
         }
         List<Pair<Integer, Integer>> spawnPositions = new ArrayList<>();
-        if ((choice == 0) && ((enemies.size() < 2) || specialEnemySpawned)) {
+        if ((choice == 0) && ((enemies.size() < 4) || specialEnemySpawned)) {
             if (specialEnemySpawned) {
                 specialEnemySpawned = false;
             }
@@ -641,6 +645,7 @@ public class LoopManiaWorld {
 
                 // choose random choice
                 spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
+                goldPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
                 spawnPositions.add(spawnPosition);
             } 
             if (enemySelection == 1) {
@@ -769,6 +774,20 @@ public class LoopManiaWorld {
 
     public int getCastleY() {
         return castleY;
+    }
+
+    public Gold possiblySpawnGold() {
+        Random randSpawn = new Random();
+        int goldSpawn = randSpawn.nextInt(10);
+        if (goldPosition != null && goldSpawn == 0) {
+            int indexInPath = orderedPath.indexOf(goldPosition);
+            PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);
+            Statistics stats = new Statistics(0, 0, 0, 0, 100);
+            Gold gold = new Gold(pathPosition, stats);
+            goldEntities.add(gold);
+            return gold;
+        }
+        return null;
     }
 
 }

@@ -168,6 +168,9 @@ public class LoopManiaWorldController {
     private Image zombieImage;
     private Image vampireImage;
 
+    // Image for gold
+    private Image goldImage;
+
     List<Image> allImages;
     List<Image> allBuildingCardImages;
     List<Image> allPlacedBuildingImages;
@@ -261,6 +264,8 @@ public class LoopManiaWorldController {
         vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
 
+        goldImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
+
         allBuildingCardImages = Arrays.asList(vampireCastleCardImage, zombiePitCardImage, towerCardImage, villageCardImage, barracksCardImage, trapCardImage, campfireCardImage);
         allItemImages = Arrays.asList(swordImage, stakeImage, staffImage, shieldImage, armourImage, helmetImage, potionImage, oneRingImage);
         allPlacedBuildingImages = Arrays.asList(vampireCastleImage, zombiePitImage, towerImage, villageImage, barracksImage, trapImage, campfireImage, herosCastleImage);
@@ -345,10 +350,20 @@ public class LoopManiaWorldController {
             for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
+            Gold gold = world.possiblySpawnGold();
+            if (gold != null) {
+                onLoadGold(gold);
+            }
             printThreadingNotes("HANDLED TIMER");
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+
+    private void onLoadGold(Gold gold) {
+        ImageView view = new ImageView(goldImage);
+        addEntity(gold, view);
+        squares.getChildren().add(view);
     }
 
     /**
