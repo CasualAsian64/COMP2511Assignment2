@@ -379,12 +379,16 @@ public class LoopManiaWorldController {
 
     private void loadCard() {
         Card card = world.loadCard();
-        onLoadCard(card);
+        if (card != null) {
+            onLoadCard(card);
+        }
     }
 
     private void loadItem() {
         Item item = world.addUnequippedItem();
-        onLoadItem(item);
+        if (item != null) {
+            onLoadItem(item);
+        }
     }
 
     /**

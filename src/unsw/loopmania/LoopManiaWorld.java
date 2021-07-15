@@ -333,10 +333,12 @@ public class LoopManiaWorld {
             removeCard(0);
         }
         Random randomCard = new Random();
-        int randCard = randomCard.nextInt(7);
+        int randCard = randomCard.nextInt(12);
         CardSelector cardSelector = new CardSelector();
         Card card = cardSelector.getCard(randCard, cardEntities.size());
-        cardEntities.add(card);
+        if(card != null) {
+            cardEntities.add(card);
+        }
         return card;
     }
 
@@ -363,10 +365,12 @@ public class LoopManiaWorld {
         //System.out.println("First available slot at: " + firstAvailableSlot.getValue0() + "," + firstAvailableSlot.getValue1());
         ItemSelector itemSelector = new ItemSelector();
         Random randomItem = new Random();
-        int randItem = randomItem.nextInt(8);
+        int randItem = randomItem.nextInt(12);
         // Change true later
         Item item = itemSelector.getItem(randItem, allRareItems, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-        unequippedInventoryItems.add(item);
+        if (item != null) {
+            unequippedInventoryItems.add(item);
+        }
         return item;
     }
 
