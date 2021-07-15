@@ -355,6 +355,10 @@ public class LoopManiaWorld {
         moveEnemies();
         detectCharacterisOnTile();
         detectEnemyisOnTile();
+        
+        for (Building b: buildingEntities) {
+            b.detectEnemyInRadius(enemies);
+        }
         // Everytime the character moves, check if the character has acheieved the world
         // goals
         worldGoals.checkGoalsMet(character.getStats(), numLoops);

@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import java.util.List;
+
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -18,6 +20,8 @@ public abstract class Building extends StaticEntity {
         return type;
     }
 
+    
+
     public void performActionOnCharacter(Character character) {
     }
 
@@ -25,6 +29,8 @@ public abstract class Building extends StaticEntity {
         return false;
     }
 
+    public void detectEnemyInRadius(List<Enemy> enemies){
 
+    }
     
 }
