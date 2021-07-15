@@ -18,9 +18,10 @@ public abstract class MovingEntity extends Entity {
      * 
      * @param position represents the current position in the path
      */
-    public MovingEntity(PathPosition position) {
+    public MovingEntity(PathPosition position, Statistics stats) {
         super();
         this.position = position;
+        this.stats = stats;
     }
 
     /**
@@ -59,30 +60,21 @@ public abstract class MovingEntity extends Entity {
     }
 
     public Statistics getStats() {
-        return this.getStats();
+        return stats;
     }
-    
+
     public int getHealth() {
         Statistics stats = this.getStats();
         return stats.getHealth();
     }
 
-    public int getAttack(){
+    public int getAttack() {
         Statistics stats = this.getStats();
         return stats.getAttack();
     }
-    
-    public int getDefense(){
+
+    public int getDefense() {
         Statistics stats = this.getStats();
         return stats.getDefense();
-    }    
-
-    public void getAttacked(int attack) {
-        Statistics stats = this.getStats();
-        int health = stats.getHealth() - attack;
-        if (health < 0) {
-            health = 0;
-        }
-        stats.setHealth(health);
     }
 }

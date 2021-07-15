@@ -65,7 +65,7 @@ public class LoopManiaApplication extends Application {
         gameRoot.requestFocus();
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+
     }
 
     @Override

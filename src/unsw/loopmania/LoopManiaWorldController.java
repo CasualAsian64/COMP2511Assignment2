@@ -165,7 +165,6 @@ public class LoopManiaWorldController {
     private Image oneRingImage;
 
     // Enemy Images
-    private Image basicEnemyImage;
     private Image slugImage;
     private Image zombieImage;
     private Image vampireImage;

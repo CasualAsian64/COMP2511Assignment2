@@ -222,9 +222,17 @@ public class LoopManiaWorld {
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < e
                     .getBattleRadius()) {
                 // fight...
-                while (e.getHealth() != 0) {
-                    e.getAttacked(character.getAttack());
-                    character.getAttacked(e.getAttack());
+                // if enemy instanceof zombie && allied exists: attack allied
+                while (true) {
+                    character.attack(e, e.getStats());
+                    if (e.getHealth() == 0) {
+                        break;
+                    }
+                    e.attack(character, character.getStats());
+                    // if (character.getHealth() == 0) {
+                    // break;
+                    // // end the game
+                    // }
                     System.out.println();
                     System.out.println("Character's health is: " + character.getHealth());
                 }
