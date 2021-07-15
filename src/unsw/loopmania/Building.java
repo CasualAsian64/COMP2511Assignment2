@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import java.util.List;
+
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -17,6 +19,8 @@ public abstract class Building extends StaticEntity {
     public String getType() {
         return type;
     }
+
+    
 
     public void performActionOnCharacter(Character character) {
     }

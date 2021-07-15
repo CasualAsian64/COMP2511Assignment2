@@ -355,6 +355,7 @@ public class LoopManiaWorld {
         moveEnemies();
         detectCharacterisOnTile();
         detectEnemyisOnTile();
+        detectEnemyInRadius();
         // Everytime the character moves, check if the character has acheieved the world
         // goals
         worldGoals.checkGoalsMet(character.getStats(), numLoops);
@@ -418,6 +419,40 @@ public class LoopManiaWorld {
             killEnemy(e);
         }
     }
+
+	public void detectEnemyInRadius() {
+
+        ArrayList<Enemy> enemiesInRange = new ArrayList<Enemy>();
+        ArrayList<Enemy> killedEnemies = new ArrayList<Enemy>();
+
+
+        for (Building b : buildingEntities) {
+            
+            for (Enemy e: enemies) { 
+
+                // Pythagoras calculation to see if enemy in range. 
+                if (b.getType().equals("Tower") && Math.pow((b.getX() - e.getX()), 2) + Math.pow((b.getY() - e.getY()), 2) < e.getBattleRadius()) {
+                    
+                    enemiesInRange.add(e);
+
+                    boolean enemyKilledByTower = b.performActionOnEnemy(e);
+
+                    if (enemyKilledByTower) {
+                        killedEnemies.add(e);
+                    }
+                }
+            }
+        }
+
+        // Loop through enemies killed by tower and 
+        for (Enemy e : killedEnemies) {
+            killEnemy(e);
+        }
+
+
+    }
+
+
 
     private void destroyBuilding(Building building) {
         building.destroy();
