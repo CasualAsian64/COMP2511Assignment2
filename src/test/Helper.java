@@ -1,8 +1,13 @@
 package test;
 
 import unsw.loopmania.Character;
+import unsw.loopmania.Goals;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.PathTile;
+import unsw.loopmania.Slug;
+import unsw.loopmania.Vampire;
+import unsw.loopmania.Zombie;
 
 import org.javatuples.Pair;
 import org.json.JSONArray;
@@ -13,9 +18,35 @@ import javafx.beans.property.SimpleIntegerProperty;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.html.parser.Entity;
+
 public class Helper {
     private static final int MAP1 = 1;
     private static final int MAP2 = 2;
+
+    public LoopManiaWorld createWorld(int currentPositionInPath, int mapNo) {
+        int height = 0;
+        int width = 0;
+        switch(mapNo) {
+            case MAP1:
+                width = 8;
+                height = 14;
+                break;
+            case MAP2:
+                width = 3;
+                height = 3; 
+                break; 
+        }
+        int start_posX = 0;
+        int start_posY = 0;
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        JSONObject path = createJSONMap(start_posX, start_posY, mapNo);
+        orderedPath = loadPathTiles(path, width, height);
+        // Create a path position where the character is at the first part of the path
+        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath);
+
+        return world;
+    }
 
     public Character testCharacterSetup(int currentPositionInPath, int mapNo) {
         int height = 0;
@@ -39,6 +70,96 @@ public class Helper {
         PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
         Character c = new Character(pathPosition);
         return c;
+    }
+
+    /**
+     * Function to create Slug entity on the first tile path
+     * @param currentPositionInPath
+     * @param mapNo
+     * @return
+     */
+    public Slug testSlugSetup(int currentPositionInPath, int mapNo) {
+        int height = 0;
+        int width = 0;
+        switch(mapNo) {
+            case MAP1:
+                width = 8;
+                height = 14;
+                break;
+            case MAP2:
+                width = 3;
+                height = 3; 
+                break; 
+        }
+        int start_posX = 0;
+        int start_posY = 0;
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        JSONObject path = createJSONMap(start_posX, start_posY, mapNo);
+        orderedPath = loadPathTiles(path, width, height);
+        // Create a path position where the Slug is at the first part of the path
+        PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
+        Slug slug = new Slug(pathPosition);
+        return slug;
+    }
+
+    /**
+     * Function to create Zombie entity on the first tile path
+     * @param currentPositionInPath
+     * @param mapNo
+     * @return
+     */
+    public Zombie testZombieSetup(int currentPositionInPath, int mapNo) {
+        int height = 0;
+        int width = 0;
+        switch(mapNo) {
+            case MAP1:
+                width = 8;
+                height = 14;
+                break;
+            case MAP2:
+                width = 3;
+                height = 3; 
+                break; 
+        }
+        int start_posX = 0;
+        int start_posY = 0;
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        JSONObject path = createJSONMap(start_posX, start_posY, mapNo);
+        orderedPath = loadPathTiles(path, width, height);
+        // Create a path position where the Slug is at the first part of the path
+        PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
+        Zombie zombie = new Zombie(pathPosition);
+        return zombie;
+    }
+
+    /**
+     * Function to create Vampire entity on the first tile path
+     * @param currentPositionInPath
+     * @param mapNo
+     * @return
+     */
+    public Vampire testVampireSetup(int currentPositionInPath, int mapNo) {
+        int height = 0;
+        int width = 0;
+        switch(mapNo) {
+            case MAP1:
+                width = 8;
+                height = 14;
+                break;
+            case MAP2:
+                width = 3;
+                height = 3; 
+                break; 
+        }
+        int start_posX = 0;
+        int start_posY = 0;
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        JSONObject path = createJSONMap(start_posX, start_posY, mapNo);
+        orderedPath = loadPathTiles(path, width, height);
+        // Create a path position where the Slug is at the first part of the path
+        PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
+        Vampire vampire = new Vampire(pathPosition);
+        return vampire;
     }
 
     public JSONObject createJSONMap(int start_posX, int start_posY, int pathNo) {

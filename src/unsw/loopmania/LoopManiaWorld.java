@@ -82,7 +82,7 @@ public class LoopManiaWorld {
 
     /**
      * create the world (constructor)
-     * 
+     *  
      * @param width       width of world in number of cells
      * @param height      height of world in number of cells
      * @param orderedPath ordered list of x, y coordinate pairs representing

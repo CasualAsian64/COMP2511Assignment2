@@ -11,4 +11,10 @@ public class Armour extends Equipment {
         super(x, y);
         this.type = "Armour";
     }
+
+    @Override
+    public int reduceAttack(int attack) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }
