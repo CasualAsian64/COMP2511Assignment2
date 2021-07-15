@@ -6,6 +6,7 @@ import unsw.loopmania.HerosCastle;
 import unsw.loopmania.Slug;
 import unsw.loopmania.Trap;
 import unsw.loopmania.Vampire;
+import unsw.loopmania.Village;
 
 import org.junit.Test;
 
@@ -73,7 +74,7 @@ public class BuildingTest {
      * Test if trap inflicts damage on enemy
      */
     @Test
-    public void trapTest() {
+    public void trapDamageTest() {
         // create enemies and the trap
         Helper helper = new Helper();
         SimpleIntegerProperty x = new SimpleIntegerProperty();
@@ -91,5 +92,36 @@ public class BuildingTest {
         assertEquals(vampire.getHealth(), 50);
         assertEquals(trap.inflictDamage(vampire, vampire.getStats()), false);
         assertEquals(vampire.getHealth(), 25);
+    }
+
+    /**
+     * Test if village heals player character
+     */
+    @Test
+    public void villageHealTest() {
+        // create enemies and the trap
+        Helper helper = new Helper();
+        SimpleIntegerProperty x = new SimpleIntegerProperty();
+        SimpleIntegerProperty y = new SimpleIntegerProperty();
+        
+        Character character = helper.testCharacterSetup(0, MAP1);
+
+        // assert that player's health is intially fully
+        assertEquals(character.getHealth(), 100);
+
+        // check character's health after being intially attacked
+        character.getAttacked(5);
+        assertEquals(character.getHealth(), 95);
+
+        Village village = new Village(x, y);
+
+        // heal character from 95 health. should be 100 as health is capped at 100
+        village.performActionOnCharacter(character);
+        assertEquals(character.getHealth(), 100);
+        
+        // heal character when health is below 90. should heal 10 health
+        character.getAttacked(50);
+        village.performActionOnCharacter(character);
+        assertEquals(character.getHealth(), 60);
     }
 }
