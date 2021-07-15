@@ -3,6 +3,7 @@ package unsw.loopmania;
 public class Vampire extends Enemy {
     private final String type = "Vampire";
     private boolean direction = true;
+    
     public Vampire(PathPosition position) {
         super(position, new Statistics(50, 7, 5, 25, 20));
         battleRadius = 3;

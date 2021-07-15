@@ -38,4 +38,32 @@ public class CardSelector {
         }
         return null;
     }
+
+    public Card getCard(String cardSelection, int cardSize) {
+        Card card;
+        switch(cardSelection) {
+            case "CampfireCard":
+                card = new CampfireCard(new SimpleIntegerProperty(cardSize), new SimpleIntegerProperty(0));
+                return card;
+            case "TrapCard":
+                card = new TrapCard(new SimpleIntegerProperty(cardSize), new SimpleIntegerProperty(0));
+                return card;
+            case "VillageCard":
+                card = new VillageCard(new SimpleIntegerProperty(cardSize), new SimpleIntegerProperty(0));
+                return card;
+            case "ZombiePitCard":
+                card = new ZombiePitCard(new SimpleIntegerProperty(cardSize), new SimpleIntegerProperty(0));
+                return card;
+            case "VampireCastleCard":
+                card = new VampireCastleCard(new SimpleIntegerProperty(cardSize), new SimpleIntegerProperty(0));
+                return card;
+            case "TowerCard":
+                card = new TowerCard(new SimpleIntegerProperty(cardSize), new SimpleIntegerProperty(0));
+                return card;
+            case "BarracksCard":
+                card = new BarracksCard(new SimpleIntegerProperty(cardSize), new SimpleIntegerProperty(0));
+                return card;
+        }
+        return null;
+    }
 }

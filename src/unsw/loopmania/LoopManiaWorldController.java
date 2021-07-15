@@ -408,9 +408,7 @@ public class LoopManiaWorldController {
         ImageSelector imageSelector = new ImageSelector();
         Image image = imageSelector.getImage(card, allBuildingCardImages);
         ImageView view = new ImageView(image);
-
         addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
-
         addEntity(card, view);
         cards.getChildren().add(view);
     }
@@ -503,6 +501,11 @@ public class LoopManiaWorldController {
                                 Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
                                 if (newBuilding != null) {
                                     onLoadBuilding(newBuilding);
+                                } else {
+                                    // Removes transparent image upon placing the building
+                                    node.setOpacity(1);
+                                    Card card = world.getCard(nodeX, nodeY, x, y);
+                                    onLoadCard(card);
                                 }
                                 break;
                             case ITEM:

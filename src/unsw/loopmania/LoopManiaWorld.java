@@ -331,6 +331,25 @@ public class LoopManiaWorld {
         return card;
     }
 
+    public Card getCard(int cardNodeX, int cardNodeY, int buildingNodeX,
+    int buildingNodeY) {
+        // start by getting card
+        Card card = null;
+        for (Card c : cardEntities) {
+            if ((c.getX() == cardNodeX) && (c.getY() == cardNodeY)) {
+                card = c;
+                break;
+            }
+        }
+        CardSelector cardSelector = new CardSelector();
+        Card cardCopy = cardSelector.getCard(card.getCardType(), cardEntities.size());
+        cardEntities.add(cardCopy);
+        card.destroy();
+        cardEntities.remove(card);
+        shiftCardsDownFromXCoordinate(cardNodeX);
+        return cardCopy;
+    }
+
     public Item addUnequippedItem() {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null) {
@@ -479,7 +498,6 @@ public class LoopManiaWorld {
                 // Campfire
                 if (b.getType().equals("Campfire") && e.getType().equals("Vampire") && Math.pow((b.getX() - e.getX()), 2) + Math.pow((b.getY() - e.getY()), 2) < e.getBattleRadius()) {
                     e.reverseDirection();
-
                 }
             }
         }
@@ -696,6 +714,10 @@ public class LoopManiaWorld {
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
+        } else {
+            //card.destroy();
+            //cardEntities.remove(card);
+            //shiftCardsDownFromXCoordinate(cardNodeX);
         }
         return building;
 
