@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.javatuples.Pair;
+import org.json.JSONArray;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -73,7 +74,8 @@ public class LoopManiaWorld {
     // TODO = expand the range of buildings
     private List<Building> buildingEntities;
 
-    //
+    
+    private List<String> allRareItems;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
@@ -100,6 +102,7 @@ public class LoopManiaWorld {
         numLoops = 0;
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
+        allRareItems = new ArrayList<>();
     }
 
     public int getWidth() {
@@ -316,7 +319,7 @@ public class LoopManiaWorld {
         Random randomItem = new Random();
         int randItem = randomItem.nextInt(8);
         // Change true later
-        Item item = itemSelector.getItem(randItem, true, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        Item item = itemSelector.getItem(randItem, allRareItems, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(item);
         return item;
     }
@@ -769,6 +772,12 @@ public class LoopManiaWorld {
             }
         }
         return false;
+    }
+
+    public void setRareItems(JSONArray jsonRareItems) {
+        for (int i = 0; i < jsonRareItems.length(); i++) {
+            allRareItems.add(jsonRareItems.getString(i));
+        }
     }
 
 }
