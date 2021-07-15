@@ -18,37 +18,35 @@ public class Tower extends Building {
     // add the enemy to the list
     // then then tower will deal damage to each enemy in the radius, potentially killing 
     // and removing the enemy from the LMW's list of enemies. 
-    private ArrayList<Enemy> enemiesInRange = new ArrayList<Enemy>();
 
 
-    // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-	// Use the pythagoras stuff 
-	@Override
-	public void detectEnemyInRadius(List<Enemy> enemies) {
 
-        // Loop through all the enemies in LoopManiaWorld
-        for (Enemy e: enemies){ 
-            if (Math.pow((this.getX() - e.getX()), 2) + Math.pow((this.getY() - e.getY()), 2) < e.getBattleRadius()) {
-                enemiesInRange.add(e);
-            }
-	    }
-
-        for (Enemy e: enemiesInRange) {
-
-            towerInflictDamage(e.getStats());
-
-        }
+    @Override
+    public boolean performActionOnEnemy(Enemy e) {
+        return towerInflictDamage(e.getStats());
     }
 
 
-    public void towerInflictDamage(Statistics s) {
+    public boolean towerInflictDamage(Statistics s) {
         
-        System.out.println("Before being attacked the enemy has health " + s.getHealth());
+        System.out.println("Before being attacked by the tower, the enemy has health " + s.getHealth());
 
-        // deal 5 damage 
-        s.setHealth(s.getHealth() - 5 ); 
+        // Killed the enemy 
+        if (s.getHealth() - 5  <= 0) {
 
-        System.out.println("An enemy within the radius took damage from the tower and now has health" + s.getHealth());
+            System.out.println("The tower killed the enemy!");
+            return true; 
+        }
+
+
+        // else deal 5 damage 
+        else { 
+            s.setHealth(s.getHealth() - 5 ); 
+    
+            System.out.println("An enemy within the radius took damage from the tower and now has health " + s.getHealth());
+
+            return false;
+        }
     }
 	
 

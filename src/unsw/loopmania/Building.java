@@ -29,8 +29,6 @@ public abstract class Building extends StaticEntity {
         return false;
     }
 
-    public void detectEnemyInRadius(List<Enemy> enemies){
 
-    }
     
 }

@@ -43,9 +43,9 @@ public class Character extends MovingEntity {
 
     public void attack(Enemy enemy, Statistics enemyStats) {
         int attack = stats.getAttack();
-        if (equipment != null) {
-            attack = equipment.reduceAttack(attack);
-        }
+        // if (equipment != null) {
+        //     attack = equipment.reduceAttack(attack);
+        // }
         enemyStats.reduceHealth(attack);
     }
 
