@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * Represents a vampire castle card in the backend game world
  */
-public class AlliedSoldier{
+public class AlliedSoldier {
     private int battleRadius;
     private int supportRadius;
     private Statistics stats;

@@ -12,11 +12,11 @@ public class Character extends MovingEntity {
     private ArrayList<Building> buildingBuffs;
     private ArrayList<AlliedSoldier> allies;
 
-    // TODO = potentially implement relationships between this class and other classes
-    
+    // TODO = potentially implement relationships between this class and other
+    // classes
+
     public Character(PathPosition position) {
-        super(position);
-        stats = new Statistics(100, 5, 2, 0, 0);
+        super(position, new Statistics(100, 5, 2, 0, 0));
         weapons = new ArrayList<Weapon>();
         equippedWeapon = null;
         equipment = null;
@@ -28,12 +28,12 @@ public class Character extends MovingEntity {
 
     }
 
-    public void collectRewards(Enemy e){
+    public void collectRewards(Enemy e) {
         Statistics eStats = e.getStats();
         stats.setGold(eStats.getGold() + stats.getGold());
         stats.setExp(eStats.getExp() + stats.getExp());
-        System.out.println("The characters gold: " + stats.getGold());
-        System.out.println("The characters exp: " + stats.getExp());
+        //System.out.println("The characters gold: " + stats.getGold());
+        //System.out.println("The characters exp: " + stats.getExp());
     }
 
     @Override
@@ -41,30 +41,38 @@ public class Character extends MovingEntity {
         return stats;
     }
 
-    @Override
-    public void getAttacked(int attack) {
-        Statistics stats = this.getStats();
-        // Check for weapons
-        // Check for equipment
-        int totalDefense = 0;
-        // Increase defense for character if equipped with an equipment item
-        if (equipment != null) {
-            totalDefense += equipment.getDefense();
-            attack = equipment.reduceAttack(attack);
-        }
-        
-        int totalAttack = attack - totalDefense;
-        if (totalAttack < 0) {
-            totalAttack = 0;
-        }
-        int health = stats.getHealth() - totalAttack;
-        if (health < 0) {
-            health = 0;
-        }
-        stats.setHealth(health);
+    public void attack(Enemy enemy, Statistics enemyStats) {
+        int attack = stats.getAttack();
+        // if (equipment != null) {
+        //     attack = equipment.reduceAttack(attack);
+        // }
+        enemyStats.reduceHealth(attack);
     }
-  
-    public ArrayList<AlliedSoldier> getAllies(){
+
+    // @Override
+    // public void getAttacked(int attack) {
+    // Statistics stats = this.getStats();
+    // // Check for weapons
+    // // Check for equipment
+    // int totalDefense = 0;
+    // // Increase defense for character if equipped with an equipment item
+    // if (equipment != null) {
+    // totalDefense += equipment.getDefense();
+    // attack = equipment.reduceAttack(attack);
+    // }
+
+    // int totalAttack = attack - totalDefense;
+    // if (totalAttack < 0) {
+    // totalAttack = 0;
+    // }
+    // int health = stats.getHealth() - totalAttack;
+    // if (health < 0) {
+    // health = 0;
+    // }
+    // stats.setHealth(health);
+    // }
+
+    public ArrayList<AlliedSoldier> getAllies() {
         return allies;
     }
 

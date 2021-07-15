@@ -48,7 +48,8 @@ public abstract class LoopManiaWorldLoader {
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(world, jsonEntities.getJSONObject(i), orderedPath);
         }
-
+        JSONArray jsonRareItems = json.getJSONArray("rare_items");
+        world.setRareItems(jsonRareItems);
         JSONObject goal_condition = json.getJSONObject("goal-condition");
         // Reads in the goal conditon from the world then sets it in LoopManiaWorld
         Goals worldGoal = new Goals(goal_condition);

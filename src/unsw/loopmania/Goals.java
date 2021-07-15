@@ -104,15 +104,15 @@ public class Goals {
         if(checkANDGoals(exp, gold, numLoops)) {
             if (ORGoalsActive) {
                 if (checkORGoals(exp, gold, numLoops)){
-                    System.out.println("====================");
-                    System.out.println("You've won the game!");
-                    System.out.println("====================");
+                    //System.out.println("====================");
+                    //System.out.println("You've won the game!");
+                    //System.out.println("====================");
                     return true;
                 }
             } else {
-                System.out.println("====================");
-                System.out.println("You've won the game!");
-                System.out.println("====================");
+                //System.out.println("====================");
+                //System.out.println("You've won the game!");
+                //System.out.println("====================");
                 return true;
             }
         }

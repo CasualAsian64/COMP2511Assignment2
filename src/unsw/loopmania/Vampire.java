@@ -4,8 +4,7 @@ public class Vampire extends Enemy {
     private final String type = "Vampire";
 
     public Vampire(PathPosition position) {
-        super(position);
-        stats = new Statistics(50, 7, 5, 25, 20);
+        super(position, new Statistics(50, 7, 5, 25, 20));
         battleRadius = 3;
         supportRadius = 5;
     }

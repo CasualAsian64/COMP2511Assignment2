@@ -11,4 +11,12 @@ public class Stake extends Weapon {
         super(x, y);
         this.type = "Stake";
     }
+
+    public int getAttackIncrease(Enemy enemy) {
+        if (enemy instanceof Vampire) {
+            return 15;
+        } else {
+            return 5;
+        }
+    }
 }
