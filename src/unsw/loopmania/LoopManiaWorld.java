@@ -702,7 +702,8 @@ public class LoopManiaWorld {
         }
         Building building = null;
         BuildingSelector buildingSelector = new BuildingSelector();
-        building = buildingSelector.getBuilding(card.getCardType(), new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), checkBuildingOnPath(buildingNodeX, buildingNodeY));
+        building = buildingSelector.getBuilding(card.getCardType(), new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), 
+                                                checkBuildingOnPath(buildingNodeX, buildingNodeY), checkBuildingNextToPath(buildingNodeX, buildingNodeY));
         if (building != null) {
             buildingEntities.add(building);
             card.destroy();
@@ -721,6 +722,17 @@ public class LoopManiaWorld {
         for (int i = 0; i < orderedPath.size(); i++) {
             Pair<Integer,Integer> cell = orderedPath.get(i);
             if (cell.getValue0() == x && cell.getValue1() == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkBuildingNextToPath(int x, int y) {
+        for (int i = 0; i < orderedPath.size(); i++) {
+            Pair<Integer,Integer> cell = orderedPath.get(i);
+            if ((cell.getValue0() == x + 1 && cell.getValue1() == y) || (cell.getValue0() == x - 1 && cell.getValue1() == y) ||
+                (cell.getValue0() == x && cell.getValue1() == y + 1) || (cell.getValue0() == x && cell.getValue1() == y - 1)) {
                 return true;
             }
         }

@@ -462,27 +462,9 @@ public class LoopManiaWorldController {
      */
     private void buildNonEntityDragHandlers(DRAGGABLE_TYPE draggableType, GridPane sourceGridPane,
             GridPane targetGridPane) {
-        // TODO = be more selective about where something can be dropped
-        // for example, in the specification, villages can only be dropped on path,
-        // whilst vampire castles cannot go on the path
-
         gridPaneSetOnDragDropped.put(draggableType, new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                // TODO = for being more selective about where something can be dropped,
-                // consider applying additional if-statement logic
-                /*
-                 * you might want to design the application so dropping at an invalid location
-                 * drops at the most recent valid location hovered over, or simply allow the
-                 * card/item to return to its slot (the latter is easier, as you won't have to
-                 * store the last valid drop location!)
-                 */
                 if (currentlyDraggedType == draggableType) {
-                    // problem = event is drop completed is false when should be true...
-                    // https://bugs.openjdk.java.net/browse/JDK-8117019
-                    // putting drop completed at start not making complete on VLAB...
-
-                    // Data dropped
-                    // If there is an image on the dragboard, read it and use it
                     Dragboard db = event.getDragboard();
                     Node node = event.getPickResult().getIntersectedNode();
                     if (node != targetGridPane && db.hasImage()) {
@@ -581,10 +563,6 @@ public class LoopManiaWorldController {
                 event.consume();
             }
         });
-    }
-
-    protected boolean checkBuildingOnPath(int x, int y) {
-        return world.checkBuildingOnPath(x, y);
     }
 
     /**
