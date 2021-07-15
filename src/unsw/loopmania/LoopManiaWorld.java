@@ -651,116 +651,16 @@ public class LoopManiaWorld {
                 break;
             }
         }
-
-        Building b = null;
-
-        if (card.getCardType().equals("VampireCastleCard")) {
-            if (!checkBuildingOnPath(buildingNodeX, buildingNodeY)) {
-                b = new VampireCastle(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            
-                buildingEntities.add(b);
-                card.destroy();
-                cardEntities.remove(card);
-                shiftCardsDownFromXCoordinate(cardNodeX);
-            } else {
-                for (Card c : cardEntities) {
-                    System.out.println(c.getCardType());
-                }
-            }
-
-            // Return the building to be added
-            return b;
-        }
-
-        if (card.getCardType().equals("ZombiePitCard")) {
-            ZombiePit newBuilding = new ZombiePit(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
+        Building building = null;
+        BuildingSelector buildingSelector = new BuildingSelector();
+        building = buildingSelector.getBuilding(card.getCardType(), new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), checkBuildingOnPath(buildingNodeX, buildingNodeY));
+        if (building != null) {
+            buildingEntities.add(building);
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
         }
-
-        if (card.getCardType().equals("TowerCard")) {
-            Tower newBuilding = new Tower(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
-        }
-
-        // Village
-        if (card.getCardType().equals("VillageCard")) {
-            Village newBuilding = new Village(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Village newBuilding = createVillage(buildingNodeX, buildingNodeY);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
-        }
-
-        if (card.getCardType().equals("BarracksCard")) {
-            Barracks newBuilding = new Barracks(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
-        }
-
-        if (card.getCardType().equals("TrapCard")) {
-            Trap newBuilding = new Trap(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
-        }
-
-        if (card.getCardType().equals("CampfireCard")) {
-            Campfire newBuilding = new Campfire(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
-        }
-
-        return b;
+        return building;
 
     }
 
