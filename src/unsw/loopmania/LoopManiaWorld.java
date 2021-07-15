@@ -475,12 +475,10 @@ public class LoopManiaWorld {
                         killedEnemies.add(e);
                     }
                 }
-
-                // CAMPFIRE
-
                 
+                // Campfire
                 if (b.getType().equals("Campfire") && e.getType().equals("Vampire") && Math.pow((b.getX() - e.getX()), 2) + Math.pow((b.getY() - e.getY()), 2) < e.getBattleRadius()) {
-                    e.runAway();
+                    e.reverseDirection();
 
                 }
             }
