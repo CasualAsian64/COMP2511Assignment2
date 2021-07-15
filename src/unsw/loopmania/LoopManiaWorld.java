@@ -341,13 +341,7 @@ public class LoopManiaWorld {
                 break;
             }
         }
-        CardSelector cardSelector = new CardSelector();
-        Card cardCopy = cardSelector.getCard(card.getCardType(), cardEntities.size());
-        cardEntities.add(cardCopy);
-        card.destroy();
-        cardEntities.remove(card);
-        shiftCardsDownFromXCoordinate(cardNodeX);
-        return cardCopy;
+        return card;
     }
 
     public Item addUnequippedItem() {
