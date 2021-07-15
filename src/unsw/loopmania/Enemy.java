@@ -10,7 +10,7 @@ public abstract class Enemy extends MovingEntity {
     }
 
     // If an enemy dies early, it's attack should be set to 0
-    public void getAttacked(int attack) {
+    public void getAttacked(int attack, Character character) {
         Statistics stats = this.getStats();
         int health = stats.getHealth() - attack;
         if (health <= 0) {

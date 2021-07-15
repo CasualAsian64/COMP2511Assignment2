@@ -21,7 +21,6 @@ public class Character extends MovingEntity {
         equippedWeapon = null;
         equipment = null;
         allies = new ArrayList<AlliedSoldier>();
-
     }
 
     public void move() {

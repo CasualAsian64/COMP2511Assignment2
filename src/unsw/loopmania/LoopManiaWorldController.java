@@ -168,7 +168,6 @@ public class LoopManiaWorldController {
     private Image zombieImage;
     private Image vampireImage;
 
-    List<Image> allImages;
     List<Image> allBuildingCardImages;
     List<Image> allPlacedBuildingImages;
     List<Image> allItemImages;
@@ -499,10 +498,13 @@ public class LoopManiaWorldController {
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         switch (draggableType) {
                             case CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
                                 if (newBuilding != null) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     onLoadBuilding(newBuilding);
+                                } else {
+                                    //draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
+                                    //image.setVisible(true);
                                 }
                                 break;
                             case ITEM:

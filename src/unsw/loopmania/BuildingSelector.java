@@ -46,4 +46,34 @@ public class BuildingSelector {
 
         return null;
     }
+
+    public Building getBuilding(String buildingSelector, SimpleIntegerProperty x, SimpleIntegerProperty y, boolean buildingOnPath) {
+        Building building;
+        switch(buildingSelector) {
+            case "VampireCastleCard":
+                if (!buildingOnPath) {
+                    building = new VampireCastle(x, y);
+                }
+                break;
+            case "ZombiePitCard":
+                building = new ZombiePit(x, y);
+                return building;
+            case "TowerCard":
+                building = new Tower(x, y);
+                return building;
+            case "VillageCard":
+                building = new Village(x, y);
+                return building;
+            case "BarracksCard":
+                building = new Barracks(x, y);
+                return building;
+            case "TrapCard":
+                building = new Trap(x, y);
+                return building;
+            case "CampfireCard":
+                building = new Campfire(x, y);
+                return building;
+        }
+        return null;
+    }
 }

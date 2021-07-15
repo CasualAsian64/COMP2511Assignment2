@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.javatuples.Pair;
+import org.json.JSONArray;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -73,7 +74,7 @@ public class LoopManiaWorld {
     // TODO = expand the range of buildings
     private List<Building> buildingEntities;
 
-    //
+    private List<String> allRareItems;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
@@ -100,6 +101,7 @@ public class LoopManiaWorld {
         numLoops = 0;
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
+        allRareItems = new ArrayList<String>();
     }
 
     public int getWidth() {
@@ -285,7 +287,7 @@ public class LoopManiaWorld {
     public Card loadCard() {
         if (cardEntities.size() >= getWidth()) {
             Card card = cardEntities.get(0);
-            //card.removeCardAward(character);
+            card.removeCardAward(character.getStats());
             removeCard(0);
         }
         Random randomCard = new Random();
@@ -308,7 +310,7 @@ public class LoopManiaWorld {
         Random randomItem = new Random();
         int randItem = randomItem.nextInt(8);
         // Change true later
-        Item item = itemSelector.getItem(randItem, true, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        Item item = itemSelector.getItem(randItem, allRareItems, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(item);
         return item;
     }
@@ -606,116 +608,16 @@ public class LoopManiaWorld {
             }
         }
 
-        Building b = null;
-
-        if (card.getCardType().equals("VampireCastleCard")) {
-            if (!checkBuildingOnPath(buildingNodeX, buildingNodeY)) {
-                b = new VampireCastle(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            
-                buildingEntities.add(b);
-                card.destroy();
-                cardEntities.remove(card);
-                shiftCardsDownFromXCoordinate(cardNodeX);
-            } else {
-                for (Card c : cardEntities) {
-                    System.out.println(c.getCardType());
-                }
-            }
-
-            // Return the building to be added
-            return b;
-        }
-
-        if (card.getCardType().equals("ZombiePitCard")) {
-            ZombiePit newBuilding = new ZombiePit(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
+        Building building = null;
+        BuildingSelector buildingSelector = new BuildingSelector();
+        building = buildingSelector.getBuilding(card.getCardType(), new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), checkBuildingOnPath(buildingNodeX, buildingNodeY));
+        if (building != null) {
+            buildingEntities.add(building);
             card.destroy();
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
         }
-
-        if (card.getCardType().equals("TowerCard")) {
-            Tower newBuilding = new Tower(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
-        }
-
-        // Village
-        if (card.getCardType().equals("VillageCard")) {
-            Village newBuilding = new Village(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Village newBuilding = createVillage(buildingNodeX, buildingNodeY);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
-        }
-
-        if (card.getCardType().equals("BarracksCard")) {
-            Barracks newBuilding = new Barracks(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
-        }
-
-        if (card.getCardType().equals("TrapCard")) {
-            Trap newBuilding = new Trap(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
-        }
-
-        if (card.getCardType().equals("CampfireCard")) {
-            Campfire newBuilding = new Campfire(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            buildingEntities.add(newBuilding);
-
-            // Remove the card
-            card.destroy();
-            cardEntities.remove(card);
-            shiftCardsDownFromXCoordinate(cardNodeX);
-
-            // Return the building to be added
-            return newBuilding;
-        }
-
-        return b;
-
+        return building;
     }
 
     public boolean checkBuildingOnPath(int x, int y) {
@@ -726,6 +628,12 @@ public class LoopManiaWorld {
             }
         }
         return false;
+    }
+
+    public void setRareItems(JSONArray jsonRareItems) {
+        for (int i = 0; i < jsonRareItems.length(); i++) {
+            allRareItems.add(jsonRareItems.getString(i));
+        }
     }
 
 }

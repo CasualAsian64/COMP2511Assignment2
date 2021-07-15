@@ -7,6 +7,8 @@ import javafx.beans.property.SimpleIntegerProperty;
  * which doesn't move
  */
 public abstract class Card extends StaticEntity {
+    private static final int EXPREWARD = 20;
+    private static final int GOLDREWARD = 100;
     // TODO = implement other varieties of card than VampireCastleCard
     public Card(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
@@ -21,6 +23,9 @@ public abstract class Card extends StaticEntity {
         return cardType;
     }
 
-    //public abstract void removeCardAward(Character character);
+    public void removeCardAward(Statistics stats) {
+        stats.setExp(stats.getExp() + EXPREWARD);
+        stats.setGold(stats.getGold() + GOLDREWARD);
+    }
     
 }
