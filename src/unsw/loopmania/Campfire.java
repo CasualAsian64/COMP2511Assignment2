@@ -12,21 +12,10 @@ public class Campfire extends Building {
     }    
 
 
-    @Override
-    public void performActionOnCharacter(Character character) {
-        amplifyDamage(character.getStats());
-    }
-
-
-    // only a temporary buff, will have to revert statistics back once outside of the radius
-    public void amplifyDamage(Statistics s){ 
-
-
-    }
 
     // need to figure out how to 
-    public void performActionOnEnemy(Enemy enemy) {
+    // public boolean performActionOnEnemy(Enemy enemy) {
 
 
-    }
+    // }
 }

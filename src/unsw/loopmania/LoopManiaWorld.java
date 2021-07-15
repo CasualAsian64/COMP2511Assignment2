@@ -252,6 +252,24 @@ public class LoopManiaWorld {
     public List<Enemy> runBattles() {
         // TODO = modify this - currently the character automatically wins all battles
         // without any damage!
+
+        // Before simulating combat, detect if the character is in radius of any campfire
+        // for now, the radius of the campfire is 4
+        
+        // 
+        boolean buffed = false;
+
+        for (Building b: buildingEntities) {
+            if (b.getType().equals("Campfire")) {
+
+                if (Math.pow((character.getX() - b.getX()), 2) + Math.pow((character.getY() - b.getY()), 2) < 4) {
+                    buffed = true; 
+                    character.getStats().setAttack(character.getAttack()*2);
+                    break;
+                }
+            }
+        }
+
         List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
         for (Enemy e : enemies) {
             // Pythagoras: a^2+b^2 < radius^2 to see if within radius
@@ -287,6 +305,12 @@ public class LoopManiaWorld {
             // due to mutating list we're iterating over
             killEnemy(e);
         }
+
+        // Revert back to normal damage after battle has finished. 
+        if (buffed) {
+            character.getStats().setAttack(character.getAttack()/2);
+        }
+
         return defeatedEnemies;
     }
 
