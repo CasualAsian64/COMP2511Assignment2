@@ -417,12 +417,12 @@ public class LoopManiaWorld {
         worldGoals.checkGoalsMet(character.getStats(), numLoops);
     }
 
-    // loop through all buildings and see if Character is onTile
+    // loop through all buildings and gold entities and see if Character is onTile
     public void detectCharacterisOnTile() {
         for (Building b : buildingEntities) {
             // if building X coordinate == character X coordinate &&
             // building Y coordinate == character Y coordinate
-            if (b.getX() == (this.character.getX()) && b.getY() == (this.character.getY())) {
+            if (b.getX() == (character.getX()) && b.getY() == (character.getY())) {
                 b.performActionOnCharacter(this.character);
 
                 if (b.getType().equals("HerosCastle")) {
@@ -448,6 +448,13 @@ public class LoopManiaWorld {
                     System.out.println("Vampire respawn loop: " + vampireRespawnLoop);
                     System.out.println();
                 }
+            }
+        }
+        for (Gold g : goldEntities) {
+            if (g.getX() == (character.getX()) && g.getY() == (character.getY())) {
+                Statistics stats = character.getStats();
+                stats.setGold(stats.getGold() + g.getGold());
+                destroyGold(g);
             }
         }
     }
@@ -479,6 +486,10 @@ public class LoopManiaWorld {
         }
     }
 
+    public void destroyGold(Gold gold) {
+        gold.destroy();
+        goldEntities.remove(gold);
+    }
 	public void detectEnemyInRadius() {
 
         ArrayList<Enemy> enemiesInRange = new ArrayList<Enemy>();
@@ -778,7 +789,7 @@ public class LoopManiaWorld {
 
     public Gold possiblySpawnGold() {
         Random randSpawn = new Random();
-        int goldSpawn = randSpawn.nextInt(10);
+        int goldSpawn = randSpawn.nextInt(40);
         if (goldPosition != null && goldSpawn == 0) {
             int indexInPath = orderedPath.indexOf(goldPosition);
             PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);

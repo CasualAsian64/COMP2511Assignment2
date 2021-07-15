@@ -8,4 +8,8 @@ public class Gold extends MovingEntity{
 
     @Override
     public void move() {        
+    }
+
+    public int getGold() {
+        return 100;
     }}
