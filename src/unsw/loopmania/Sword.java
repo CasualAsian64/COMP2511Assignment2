@@ -17,3 +17,4 @@ public class Sword extends Weapon {
         return 10;
     }
 }
+

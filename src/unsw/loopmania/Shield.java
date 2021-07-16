@@ -10,5 +10,11 @@ public class Shield extends Equipment {
     public Shield(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.type = "Shield";
+    }
+
+    @Override
+    public int reduceAttack(int attack) {
+        // TODO Auto-generated method stub
+        return 0;
     }    
 }

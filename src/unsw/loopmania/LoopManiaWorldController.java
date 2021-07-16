@@ -168,6 +168,9 @@ public class LoopManiaWorldController {
     private Image zombieImage;
     private Image vampireImage;
 
+    // Image for gold
+    private Image goldImage;
+
     List<Image> allImages;
     List<Image> allBuildingCardImages;
     List<Image> allPlacedBuildingImages;
@@ -261,6 +264,8 @@ public class LoopManiaWorldController {
         vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
 
+        goldImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
+
         allBuildingCardImages = Arrays.asList(vampireCastleCardImage, zombiePitCardImage, towerCardImage,
                 villageCardImage, barracksCardImage, trapCardImage, campfireCardImage);
         allItemImages = Arrays.asList(swordImage, stakeImage, staffImage, shieldImage, armourImage, helmetImage,
@@ -282,7 +287,6 @@ public class LoopManiaWorldController {
 
     @FXML
     public void initialize() {
-        // TODO = load more images/entities during initialization
 
         Image pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
         Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
@@ -310,8 +314,9 @@ public class LoopManiaWorldController {
             cards.add(groundView, x, 0);
         }
 
-        // Load the Hero's Castle at spot (0,0)
-        HerosCastle herosCastle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        // Load the Hero's Castle
+        HerosCastle herosCastle = new HerosCastle(new SimpleIntegerProperty(world.getCastleX()),
+                new SimpleIntegerProperty(world.getCastleY()));
         onLoadHerosCastle(herosCastle);
         world.getBuildingEntities().add(herosCastle);
 
@@ -349,10 +354,20 @@ public class LoopManiaWorldController {
             for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
+            Gold gold = world.possiblySpawnGold();
+            if (gold != null) {
+                onLoadGold(gold);
+            }
             printThreadingNotes("HANDLED TIMER");
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+
+    private void onLoadGold(Gold gold) {
+        ImageView view = new ImageView(goldImage);
+        addEntity(gold, view);
+        squares.getChildren().add(view);
     }
 
     /**
@@ -383,12 +398,16 @@ public class LoopManiaWorldController {
 
     private void loadCard() {
         Card card = world.loadCard();
-        onLoadCard(card);
+        if (card != null) {
+            onLoadCard(card);
+        }
     }
 
     private void loadItem() {
         Item item = world.addUnequippedItem();
-        onLoadItem(item);
+        if (item != null) {
+            onLoadItem(item);
+        }
     }
 
     /**
@@ -410,9 +429,7 @@ public class LoopManiaWorldController {
         ImageSelector imageSelector = new ImageSelector();
         Image image = imageSelector.getImage(card, allBuildingCardImages);
         ImageView view = new ImageView(image);
-
         addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
-
         addEntity(card, view);
         cards.getChildren().add(view);
     }
@@ -465,27 +482,9 @@ public class LoopManiaWorldController {
      */
     private void buildNonEntityDragHandlers(DRAGGABLE_TYPE draggableType, GridPane sourceGridPane,
             GridPane targetGridPane) {
-        // TODO = be more selective about where something can be dropped
-        // for example, in the specification, villages can only be dropped on path,
-        // whilst vampire castles cannot go on the path
-
         gridPaneSetOnDragDropped.put(draggableType, new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                // TODO = for being more selective about where something can be dropped,
-                // consider applying additional if-statement logic
-                /*
-                 * you might want to design the application so dropping at an invalid location
-                 * drops at the most recent valid location hovered over, or simply allow the
-                 * card/item to return to its slot (the latter is easier, as you won't have to
-                 * store the last valid drop location!)
-                 */
                 if (currentlyDraggedType == draggableType) {
-                    // problem = event is drop completed is false when should be true...
-                    // https://bugs.openjdk.java.net/browse/JDK-8117019
-                    // putting drop completed at start not making complete on VLAB...
-
-                    // Data dropped
-                    // If there is an image on the dragboard, read it and use it
                     Dragboard db = event.getDragboard();
                     Node node = event.getPickResult().getIntersectedNode();
                     if (node != targetGridPane && db.hasImage()) {
@@ -504,6 +503,11 @@ public class LoopManiaWorldController {
                                 Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
                                 if (newBuilding != null) {
                                     onLoadBuilding(newBuilding);
+                                } else {
+                                    // Removes transparent image upon placing the building
+                                    node.setOpacity(1);
+                                    Card card = world.getCard(nodeX, nodeY, x, y);
+                                    onLoadCard(card);
                                 }
                                 break;
                             case ITEM:
@@ -579,10 +583,6 @@ public class LoopManiaWorldController {
                 event.consume();
             }
         });
-    }
-
-    protected boolean checkBuildingOnPath(int x, int y) {
-        return world.checkBuildingOnPath(x, y);
     }
 
     /**

@@ -19,7 +19,7 @@ public class CharacterTest {
       * Have the character move around MAP 1 and assert that the character travels down the path correctly
       */
     @Test
-    public void test_character_movement_MAP1(){
+    public void test_character_movement_MAP1(){ 
         Helper helper = new Helper();
         Character c = helper.testCharacterSetup(0, MAP1);
         assertEquals(c.getX(), 0);

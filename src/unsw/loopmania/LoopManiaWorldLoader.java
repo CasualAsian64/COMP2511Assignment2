@@ -43,12 +43,20 @@ public abstract class LoopManiaWorldLoader {
         LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
-
+        int castleX = 0;
+        int castleY = 0;
         // load non-path entities later so that they're shown on-top
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(world, jsonEntities.getJSONObject(i), orderedPath);
+            if (jsonEntities.getJSONObject(i).getString("type").equals("hero_castle")) {
+                castleX = jsonEntities.getJSONObject(i).getInt("x");
+                castleY = jsonEntities.getJSONObject(i).getInt("y");
+            }
         }
+        world.setCastleCoordinates(castleX, castleY);
 
+        JSONArray jsonRareItems = json.getJSONArray("rare_items");
+        world.setRareItems(jsonRareItems);
         JSONObject goal_condition = json.getJSONObject("goal-condition");
         // Reads in the goal conditon from the world then sets it in LoopManiaWorld
         Goals worldGoal = new Goals(goal_condition);

@@ -2,7 +2,8 @@ package unsw.loopmania;
 
 public class Vampire extends Enemy {
     private final String type = "Vampire";
-
+    private boolean direction = true;
+    
     public Vampire(PathPosition position) {
         super(position, new Statistics(50, 7, 5, 25, 20));
         battleRadius = 3;
@@ -14,8 +15,13 @@ public class Vampire extends Enemy {
      */
     @Override
     public void move() {
-        moveUpPath();
-        moveUpPath();
+        if (direction) {
+            moveUpPath();
+            moveUpPath();
+        } else {
+            moveDownPath();
+            moveDownPath();
+        }
     }
 
     @Override
@@ -29,5 +35,13 @@ public class Vampire extends Enemy {
 
     public int getBattleRadius() {
         return battleRadius;
+    }
+
+    public void reverseDirection() {
+        if (direction) {
+            direction = false;
+        } else {
+            direction = true;
+        }
     }
 }

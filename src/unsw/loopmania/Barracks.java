@@ -16,7 +16,7 @@ public class Barracks extends Building {
     @Override
     public void performActionOnCharacter(Character character) {
         spawnAlliedSoldier(character.getAllies());
-    }
+    } 
 
     public void spawnAlliedSoldier(ArrayList<AlliedSoldier> allies) {
         AlliedSoldier newAlly = new AlliedSoldier();
@@ -24,6 +24,5 @@ public class Barracks extends Building {
         allies.add(newAlly);
         System.out.println("The character visited the Barracks");
         System.out.println("The number of allies the character has is " + allies.size());
-
     }
 }

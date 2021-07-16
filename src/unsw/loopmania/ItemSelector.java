@@ -1,5 +1,8 @@
 package unsw.loopmania;
 
+import java.util.List;
+import java.util.Random;
+
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class ItemSelector {
@@ -12,8 +15,12 @@ public class ItemSelector {
     private static final int STAFF = 6;
     private static final int ONERING = 7;
 
-    public Item getItem(int itemSelection, boolean rareItem, SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public Item getItem(int itemSelection, List<String> allRareItems, SimpleIntegerProperty x, SimpleIntegerProperty y) {
         Item item;
+        if (itemSelection == ONERING && !allRareItems.contains("TheOneRing")) {
+            Random randomItem = new Random();
+            itemSelection = randomItem.nextInt(7);
+        }
         switch(itemSelection) {
             case SWORD:
                 item = new Sword(x, y);

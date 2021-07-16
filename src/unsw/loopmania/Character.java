@@ -36,24 +36,14 @@ public class Character extends MovingEntity {
         // System.out.println("The characters exp: " + stats.getExp());
     }
 
-    @Override
-    public Statistics getStats() {
-        return stats;
-    }
-
     public void attack(Statistics opponentStats) {
         int attack = stats.getAttack();
         if (equipment != null) {
-            attack = equipment.reduceAttack(attack);
+            attack += equipment.getAttack();
         }
         opponentStats.reduceHealth(attack);
     }
 
-    // @Override
-    // public void getAttacked(int attack) {
-    // Statistics stats = this.getStats();
-    // // Check for weapons
-    // // Check for equipment
     // int totalDefense = 0;
     // // Increase defense for character if equipped with an equipment item
     // if (equipment != null) {
