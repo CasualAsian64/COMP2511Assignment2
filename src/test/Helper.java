@@ -28,6 +28,9 @@ public class Helper {
     private static final int MAP1 = 1;
     private static final int MAP2 = 2;
 
+    private static final int GOAL1 = 1;
+    private static final int GOAL2 = 2;
+
     private static final int NORTH = 1;
     private static final int SOUTH = 2;
     private static final int EAST = 3;
@@ -130,6 +133,23 @@ public class Helper {
         Building building = buildingSelector.getBuilding(buildingSelection, xCoord, yCoord, buildingOnPath, buildingNextToPath);
         world.addBuilding(building);
         return building;
+    }
+
+    public Goals createGoalsSetup(int goalSelection, LoopManiaWorld world) {
+        Goals goals = null;
+        switch (goalSelection) {
+            case GOAL1:
+                goals = new Goals(goalCondition1());
+                break;
+            case GOAL2:
+                goals = new Goals(goalCondition2());
+                break;
+        }
+        if (goals != null) {
+            world.setWorldGoals(goals);
+            return goals;
+        }
+        return null;
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
