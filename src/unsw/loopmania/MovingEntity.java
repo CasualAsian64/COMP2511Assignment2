@@ -36,6 +36,8 @@ public abstract class MovingEntity extends Entity {
         position.moveDownPath();
     }
 
+    public abstract void attack(Statistics opponentStats);
+
     /**
      * move anticlockwise through the path
      */

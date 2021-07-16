@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
 
 import org.javatuples.Pair;
@@ -59,6 +60,7 @@ public class LoopManiaWorld {
 
     // TODO = add more lists for other entities, for equipped inventory items,
     // etc...
+    private Item equippedWeapon;
 
     // TODO = expand the range of enemies
     private List<Enemy> enemies;
@@ -217,8 +219,8 @@ public class LoopManiaWorld {
     }
 
     public boolean checkVampireSpawned() {
-        for (Enemy e: enemies) {
-            if (e.getType().equals("Vampire")){
+        for (Enemy e : enemies) {
+            if (e.getType().equals("Vampire")) {
                 return true;
             }
         }
@@ -226,8 +228,8 @@ public class LoopManiaWorld {
     }
 
     public boolean checkZombieSpawned() {
-        for (Enemy e: enemies) {
-            if (e.getType().equals("Zombie")){
+        for (Enemy e : enemies) {
+            if (e.getType().equals("Zombie")) {
                 return true;
             }
         }
@@ -244,6 +246,65 @@ public class LoopManiaWorld {
         enemies.remove(enemy);
     }
 
+    private void soldierEnemyBattle(AlliedSoldier soldier, Enemy e, ArrayList<AlliedSoldier> toRemoveAllies) {
+        while (soldier.getHealth() > 0) {
+            soldier.attack(e.getStats());
+            if (e.getHealth() == 0) {
+                // a dead enemy can no longer attack
+                break;
+            }
+            e.attack(soldier.getStats());
+            System.out.println("Soldier's health is: " + soldier.getHealth());
+
+            if (e instanceof Zombie) {
+                Zombie zombie = (Zombie) e;
+                zombie.turnSoldier(soldier);
+                toRemoveAllies.add(soldier);
+                // break since the allied soldier can no longer fight the enemy
+                break;
+            } else if (soldier.getHealth() == 0) {
+                toRemoveAllies.add(soldier);
+            }
+        }
+    }
+
+    private void alliedZombieCharacterBattle(AlliedSoldier soldier) {
+        while (soldier.getHealth() > 0) {
+            character.attack(soldier.getStats());
+            System.out.println("Soldier's - zombie - health is: " + soldier.getHealth());
+            // the allied-zombie has been killed, it can no longer attack
+            // therefore, break the loop
+            if (soldier.getHealth() == 0) {
+                System.out.println("soldier is killed ");
+                break;
+            }
+            soldier.attack(character.getStats());
+            // if (character.getHealth() == 0) {
+            // break;
+            // // end the game
+            // }
+        }
+    }
+
+    private void enemyCharacterBattle(Enemy e) {
+        // condition e.getHealth() > 0 so that if enemy has been killed by soldier, this
+        // loop
+        // will not run
+        while (true) {
+            character.attack(e.getStats());
+            if (e.getHealth() == 0) {
+                break;
+            }
+            e.attack(character.getStats());
+            // if (character.getHealth() == 0) {
+            // break;
+            // // end the game
+            // }
+            System.out.println();
+            System.out.println("Character's health is: " + character.getHealth());
+        }
+    }
+
     /**
      * run the expected battles in the world, based on current world state
      * 
@@ -253,6 +314,7 @@ public class LoopManiaWorld {
         // TODO = modify this - currently the character automatically wins all battles
         // without any damage!
         List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
+        ArrayList<AlliedSoldier> toRemoveAllies = new ArrayList<AlliedSoldier>();
         for (Enemy e : enemies) {
             // Pythagoras: a^2+b^2 < radius^2 to see if within radius
             // TODO = you should implement different RHS on this inequality, based on
@@ -260,25 +322,21 @@ public class LoopManiaWorld {
 
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < e
                     .getBattleRadius()) {
-                // fight...
-                // if enemy instanceof zombie && allied exists: attack allied
-                while (true) {
-                    character.attack(e, e.getStats());
-                    if (e.getHealth() == 0) {
-                        break;
+                if (character.alliedSoldierExists()) {
+                    AlliedSoldier soldier = character.getAnAlliedSoldier();
+                    soldierEnemyBattle(soldier, e, toRemoveAllies);
+                    if (soldier.getIsZombie()) {
+                        alliedZombieCharacterBattle(soldier);
                     }
-                    e.attack(character, character.getStats());
-                    // if (character.getHealth() == 0) {
-                    // break;
-                    // // end the game
-                    // }
-                    System.out.println();
-                    System.out.println("Character's health is: " + character.getHealth());
+                    enemyCharacterBattle(e);
                 }
                 character.collectRewards(e);
                 defeatedEnemies.add(e);
             }
         }
+
+        character.removeSoldiers(toRemoveAllies);
+
         for (Enemy e : defeatedEnemies) {
             // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from
             // the enemies list
@@ -293,7 +351,7 @@ public class LoopManiaWorld {
     public Card loadCard() {
         if (cardEntities.size() >= getWidth()) {
             Card card = cardEntities.get(0);
-            //card.removeCardAward(character);
+            // card.removeCardAward(character);
             removeCard(0);
         }
         Random randomCard = new Random();
@@ -307,16 +365,18 @@ public class LoopManiaWorld {
     public Item addUnequippedItem() {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null) {
-            //Give some reward for removing the card
+            // Give some reward for removing the card
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
-        //System.out.println("First available slot at: " + firstAvailableSlot.getValue0() + "," + firstAvailableSlot.getValue1());
+        // System.out.println("First available slot at: " +
+        // firstAvailableSlot.getValue0() + "," + firstAvailableSlot.getValue1());
         ItemSelector itemSelector = new ItemSelector();
         Random randomItem = new Random();
         int randItem = randomItem.nextInt(8);
         // Change true later
-        Item item = itemSelector.getItem(randItem, true, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        Item item = itemSelector.getItem(randItem, true, new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(item);
         return item;
     }
@@ -538,7 +598,7 @@ public class LoopManiaWorld {
                 // choose random choice
                 spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
                 spawnPositions.add(spawnPosition);
-            } 
+            }
             if (enemySelection == 1) {
                 spawnPositions = getZombieSpawn();
             }
@@ -562,8 +622,10 @@ public class LoopManiaWorld {
         for (Pair<Integer, Integer> building : allZombieBuildings) {
             for (int i = 0; i < orderedPath.size(); i++) {
                 Pair<Integer, Integer> cell = orderedPath.get(i);
-                if ((cell.getValue0() == building.getValue0() + 1 && cell.getValue1() == building.getValue1()) || (cell.getValue0() == building.getValue0() - 1 && cell.getValue1() == building.getValue1())  
-                    || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() + 1)  || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() - 1)){
+                if ((cell.getValue0() == building.getValue0() + 1 && cell.getValue1() == building.getValue1())
+                        || (cell.getValue0() == building.getValue0() - 1 && cell.getValue1() == building.getValue1())
+                        || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() + 1)
+                        || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() - 1)) {
                     zombieSpawns.add(cell);
                     break;
                 }
@@ -584,8 +646,10 @@ public class LoopManiaWorld {
         for (Pair<Integer, Integer> building : allVampireBuildings) {
             for (int i = 0; i < orderedPath.size(); i++) {
                 Pair<Integer, Integer> cell = orderedPath.get(i);
-                if ((cell.getValue0() == building.getValue0() + 1 && cell.getValue1() == building.getValue1()) || (cell.getValue0() == building.getValue0() - 1 && cell.getValue1() == building.getValue1())  
-                    || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() + 1)  || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() - 1)){
+                if ((cell.getValue0() == building.getValue0() + 1 && cell.getValue1() == building.getValue1())
+                        || (cell.getValue0() == building.getValue0() - 1 && cell.getValue1() == building.getValue1())
+                        || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() + 1)
+                        || (cell.getValue0() == building.getValue0() && cell.getValue1() == building.getValue1() - 1)) {
                     System.out.println("Vampire spawned at (" + cell.getValue0() + "," + cell.getValue1() + ")");
                     vampireSpawns.add(cell);
                     break;
@@ -594,7 +658,8 @@ public class LoopManiaWorld {
         }
         return vampireSpawns;
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * remove a card by its x, y coordinates
      * 
@@ -619,8 +684,8 @@ public class LoopManiaWorld {
         if (card.getCardType().equals("VampireCastleCard")) {
             if (!checkBuildingOnPath(buildingNodeX, buildingNodeY)) {
                 b = new VampireCastle(new SimpleIntegerProperty(buildingNodeX),
-                    new SimpleIntegerProperty(buildingNodeY));
-            
+                        new SimpleIntegerProperty(buildingNodeY));
+
                 buildingEntities.add(b);
                 card.destroy();
                 cardEntities.remove(card);
@@ -726,9 +791,18 @@ public class LoopManiaWorld {
 
     }
 
+    public Item convertToItem(int nodeX, int nodeY) {
+        for (Entity item : unequippedInventoryItems) {
+            if (nodeX == item.getX() && nodeY == item.getY()) {
+                Item matchingItem = item;
+                return 
+            }
+        }
+    }
+
     public boolean checkBuildingOnPath(int x, int y) {
         for (int i = 0; i < orderedPath.size(); i++) {
-            Pair<Integer,Integer> cell = orderedPath.get(i);
+            Pair<Integer, Integer> cell = orderedPath.get(i);
             if (cell.getValue0() == x && cell.getValue1() == y) {
                 return true;
             }

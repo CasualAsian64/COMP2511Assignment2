@@ -11,13 +11,12 @@ public class Barracks extends Building {
     public Barracks(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.type = "Barracks";
-    }  
-    
+    }
+
     @Override
     public void performActionOnCharacter(Character character) {
         spawnAlliedSoldier(character.getAllies());
     }
-
 
     public void spawnAlliedSoldier(ArrayList<AlliedSoldier> allies) {
         AlliedSoldier newAlly = new AlliedSoldier();

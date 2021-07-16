@@ -237,7 +237,7 @@ public class LoopManiaWorldController {
         barracksCardImage = new Image((new File("src/images/barracks_card.png")).toURI().toString());
         trapCardImage = new Image((new File("src/images/trap_card.png")).toURI().toString());
         campfireCardImage = new Image((new File("src/images/campfire_card.png")).toURI().toString());
-        
+
         vampireCastleImage = new Image(
                 (new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         zombiePitImage = new Image((new File("src/images/zombie_pit.png")).toURI().toString());
@@ -261,9 +261,12 @@ public class LoopManiaWorldController {
         vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
 
-        allBuildingCardImages = Arrays.asList(vampireCastleCardImage, zombiePitCardImage, towerCardImage, villageCardImage, barracksCardImage, trapCardImage, campfireCardImage);
-        allItemImages = Arrays.asList(swordImage, stakeImage, staffImage, shieldImage, armourImage, helmetImage, potionImage, oneRingImage);
-        allPlacedBuildingImages = Arrays.asList(vampireCastleImage, zombiePitImage, towerImage, villageImage, barracksImage, trapImage, campfireImage, herosCastleImage);
+        allBuildingCardImages = Arrays.asList(vampireCastleCardImage, zombiePitCardImage, towerCardImage,
+                villageCardImage, barracksCardImage, trapCardImage, campfireCardImage);
+        allItemImages = Arrays.asList(swordImage, stakeImage, staffImage, shieldImage, armourImage, helmetImage,
+                potionImage, oneRingImage);
+        allPlacedBuildingImages = Arrays.asList(vampireCastleImage, zombiePitImage, towerImage, villageImage,
+                barracksImage, trapImage, campfireImage, herosCastleImage);
         allEnemyImages = Arrays.asList(slugImage, zombieImage, vampireImage);
 
         currentlyDraggedImage = null;
@@ -388,7 +391,6 @@ public class LoopManiaWorldController {
         onLoadItem(item);
     }
 
-
     /**
      * run GUI events after an enemy is defeated, such as spawning
      * items/experience/gold
@@ -436,7 +438,6 @@ public class LoopManiaWorldController {
         addEntity(enemy, view);
         squares.getChildren().add(view);
     }
-
 
     private void onLoadBuilding(Building building) {
         ImageSelector imageSelector = new ImageSelector();

@@ -18,7 +18,25 @@ public class AlliedSoldier {
         isZombie = false;
     }
 
+    public void attack(Statistics enemyStats) {
+        int attack = stats.getAttack();
+        enemyStats.reduceHealth(attack);
+    }
+
     public Statistics getStats() {
         return stats;
+    }
+
+    public int getHealth() {
+        return stats.getHealth();
+    }
+
+    public void setIsZombie() {
+        isZombie = true;
+        stats.setAttack(5);
+    }
+
+    public boolean getIsZombie() {
+        return isZombie;
     }
 }

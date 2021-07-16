@@ -32,8 +32,8 @@ public class Character extends MovingEntity {
         Statistics eStats = e.getStats();
         stats.setGold(eStats.getGold() + stats.getGold());
         stats.setExp(eStats.getExp() + stats.getExp());
-        //System.out.println("The characters gold: " + stats.getGold());
-        //System.out.println("The characters exp: " + stats.getExp());
+        // System.out.println("The characters gold: " + stats.getGold());
+        // System.out.println("The characters exp: " + stats.getExp());
     }
 
     @Override
@@ -41,12 +41,12 @@ public class Character extends MovingEntity {
         return stats;
     }
 
-    public void attack(Enemy enemy, Statistics enemyStats) {
+    public void attack(Statistics opponentStats) {
         int attack = stats.getAttack();
         if (equipment != null) {
             attack = equipment.reduceAttack(attack);
         }
-        enemyStats.reduceHealth(attack);
+        opponentStats.reduceHealth(attack);
     }
 
     // @Override
@@ -74,6 +74,23 @@ public class Character extends MovingEntity {
 
     public ArrayList<AlliedSoldier> getAllies() {
         return allies;
+    }
+
+    public boolean alliedSoldierExists() {
+        if (allies.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public AlliedSoldier getAnAlliedSoldier() {
+        return allies.get(0);
+    }
+
+    public void removeSoldiers(ArrayList<AlliedSoldier> deadSoldiers) {
+        for (AlliedSoldier soldier : deadSoldiers) {
+            allies.remove(soldier);
+        }
     }
 
 }

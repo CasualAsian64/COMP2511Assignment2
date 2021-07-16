@@ -9,9 +9,9 @@ public abstract class Enemy extends MovingEntity {
         super(position, stats);
     }
 
-    public void attack(Character character, Statistics charStats) {
+    public void attack(Statistics opponentStats) {
         int attack = stats.getAttack();
-        charStats.reduceHealth(attack);
+        opponentStats.reduceHealth(attack);
     }
 
     public abstract void move();
