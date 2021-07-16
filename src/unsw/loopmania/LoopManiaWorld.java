@@ -112,6 +112,11 @@ public class LoopManiaWorld {
         goldEntities = new ArrayList<>();
         allRareItems = new ArrayList<>();
     }
+
+    public List<Pair<Integer, Integer>> getOrderedPath() {
+        return orderedPath;
+    }
+
     public void increaseShopLoops() {
         shopCounter += shopIncrement;
         shopIncrement += 1;
@@ -453,7 +458,9 @@ public class LoopManiaWorld {
         for (Gold g : goldEntities) {
             if (g.getX() == (character.getX()) && g.getY() == (character.getY())) {
                 Statistics stats = character.getStats();
+                System.out.println("Character's original gold: " + stats.getGold());
                 stats.setGold(stats.getGold() + g.getGold());
+                System.out.println("Character's new gold: " + stats.getGold());
                 destroyGold(g);
             }
         }
@@ -789,7 +796,7 @@ public class LoopManiaWorld {
 
     public Gold possiblySpawnGold() {
         Random randSpawn = new Random();
-        int goldSpawn = randSpawn.nextInt(40);
+        int goldSpawn = randSpawn.nextInt(30);
         if (goldPosition != null && goldSpawn == 0) {
             int indexInPath = orderedPath.indexOf(goldPosition);
             PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);
@@ -799,6 +806,10 @@ public class LoopManiaWorld {
             return gold;
         }
         return null;
+    }
+
+    public void addEnemy(Enemy enemy) {
+        enemies.add(enemy);
     }
 
 }

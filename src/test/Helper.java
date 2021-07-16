@@ -1,6 +1,8 @@
 package test;
 
 import unsw.loopmania.Character;
+import unsw.loopmania.Enemy;
+import unsw.loopmania.EnemySelector;
 import unsw.loopmania.Goals;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
@@ -24,7 +26,7 @@ public class Helper {
     private static final int MAP1 = 1;
     private static final int MAP2 = 2;
 
-    public LoopManiaWorld createWorld(int currentPositionInPath, int mapNo) {
+    public LoopManiaWorld createWorld(int mapNo) {
         int height = 0;
         int width = 0;
         switch(mapNo) {
@@ -70,6 +72,23 @@ public class Helper {
         PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
         Character c = new Character(pathPosition);
         return c;
+    }
+
+    public Enemy createEnemySetup(int enemySelection, int currentPositionInPath, LoopManiaWorld world) {
+        List<Pair<Integer, Integer>> orderedPath = world.getOrderedPath();
+        PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
+        EnemySelector enemySelector = new EnemySelector();
+        Enemy enemy = enemySelector.getEnemy(enemySelection, pathPosition);
+        world.addEnemy(enemy);
+        return enemy;
+    }
+
+    public Character createCharacterSetup(int currentPositionInPath, LoopManiaWorld world) {
+        List<Pair<Integer, Integer>> orderedPath = world.getOrderedPath();
+        PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
+        Character character = new Character(pathPosition);
+        world.setCharacter(character);
+        return character;
     }
 
     /**
