@@ -12,7 +12,7 @@ import unsw.loopmania.Enemy;
 
 public class BattleTest {
     @Test
-    public void battleWithSlug() {
+    public void basicBattleWithSlug() {
         Helper helper = new Helper();
         //  First create world based on map in helper
         LoopManiaWorld world = helper.createWorld(1);

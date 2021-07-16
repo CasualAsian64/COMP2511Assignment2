@@ -2,7 +2,9 @@ package test;
 
 import unsw.loopmania.Character;
 import unsw.loopmania.Barracks;
+import unsw.loopmania.Building;
 import unsw.loopmania.HerosCastle;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Slug;
 import unsw.loopmania.Trap;
 import unsw.loopmania.Vampire;
@@ -15,12 +17,57 @@ import javafx.beans.property.SimpleIntegerProperty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuildingTest {
+    private static final int CURRENT = 0;
+    private static final int NORTH = 1;
+    private static final int SOUTH = 2;
+    private static final int EAST = 3;
+    private static final int WEST = 4;
+
     /**
      * Tests for all building types (barracks, campfire, heroscastle, tower, trap, vampirecastle, village, zombiepit)
      */  
  
     private static final int MAP1 = 1;
 
+    @Test
+    public void testHelperBuilding() {
+        Helper helper = new Helper();
+        LoopManiaWorld world = helper.createWorld(1);
+        // Build a Barracks. Must pass in the card to make the barracks card and perform checks
+        Building building = helper.createBuildingSetup("BarracksCard", 30, world, CURRENT);
+        // Check that building is placed in the correct CURRENT position.
+        assertEquals(3, building.getX());
+        assertEquals(3, building.getY());
+        assertEquals("Barracks", building.getType());
+
+        building = helper.createBuildingSetup("VampireCastleCard", 30, world, NORTH);
+         // Check that building is placed in the correct NORTH position.
+         assertEquals(3, building.getX());
+         assertEquals(2, building.getY());
+         assertEquals("VampireCastle", building.getType());
+
+         building = helper.createBuildingSetup("ZombiePitCard", 30, world, SOUTH);
+         // Check that building is placed in the correct SOUTH position.
+         assertEquals(3, building.getX());
+         assertEquals(4, building.getY());
+         assertEquals("ZombiePit", building.getType());
+
+         building = helper.createBuildingSetup("VillageCard", 30, world, EAST);
+         // Check that building is placed in the correct EAST position.
+         assertEquals(4, building.getX());
+         assertEquals(3, building.getY());
+         assertEquals("Village", building.getType());
+
+         building = helper.createBuildingSetup("TrapCard", 30, world, WEST);
+         // Check that building is placed in the correct WEST position.
+         assertEquals(2, building.getX());
+         assertEquals(3, building.getY());
+         assertEquals("Trap", building.getType());
+
+         building = helper.createBuildingSetup("CampfireCard", 30, world, WEST);
+         // Campfire card cannot be placed on the pathway, so the building will return null
+         assertEquals(building, null);
+    }
     /**
      * Test if barracks spawn allies
      */

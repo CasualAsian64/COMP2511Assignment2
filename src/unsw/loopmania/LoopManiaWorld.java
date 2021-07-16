@@ -812,4 +812,8 @@ public class LoopManiaWorld {
         enemies.add(enemy);
     }
 
+    public void addBuilding(Building building) {
+        buildingEntities.add(building);
+    }
+
 }
