@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="228.0" prefWidth="135.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView id="healthCell" layoutX="15.0" layoutY="26.0">
+         <image>
+            <Image url="@../../images/heart.png" />
+         </image>
+      </ImageView>
+      <TextField layoutX="59.0" layoutY="26.0" prefHeight="32.0" prefWidth="62.0" />
+      <ImageView id="goldCell" layoutX="15.0" layoutY="77.0">
+         <image>
+            <Image url="@../../images/gold_pile.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="13.0" layoutY="130.0" text="EXP" textFill="#bf0465">
+         <font>
+            <Font name="FontAwesome" size="19.0" />
+         </font>
+      </Label>
+      <TextField layoutX="59.0" layoutY="77.0" prefHeight="32.0" prefWidth="62.0" />
+      <TextField layoutX="59.0" layoutY="125.0" prefHeight="32.0" prefWidth="62.0" />
+      <ImageView id="alliedSoldierCell" layoutX="15.0" layoutY="169.0">
+         <image>
+            <Image url="@../../images/deep_elf_master_archer.png" />
+         </image>
+      </ImageView>
+      <TextField layoutX="59.0" layoutY="169.0" prefHeight="32.0" prefWidth="62.0" />
+   </children>
+</AnchorPane>
