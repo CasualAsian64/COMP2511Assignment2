@@ -14,6 +14,7 @@ public class Statistics {
     private int gold;
     private SimpleIntegerProperty healthValue = new SimpleIntegerProperty(this, "healthValue");
     private SimpleIntegerProperty goldValue = new SimpleIntegerProperty(this, "goldValue");
+    private SimpleIntegerProperty expValue = new SimpleIntegerProperty(this, "expValue");
 
 
     // Default constructor
@@ -32,6 +33,7 @@ public class Statistics {
         this.gold = gold;
         this.healthValue.set(health);
         this.goldValue.set(gold);
+        this.goldValue.set(exp);
     }
 
     public int getHealth() {
@@ -67,6 +69,7 @@ public class Statistics {
     }
 
     public void setExp(int exp) {
+        setExpProperty(exp);
         this.exp = exp;
     }
 
@@ -111,4 +114,17 @@ public class Statistics {
     public void setGoldProperty(int gold){ 
         this.goldValue.set(gold);
     }
+
+    public IntegerProperty expValueProperty() { 
+        return expValue;
+    }
+
+    public int getExpProperty(){
+        return expValue.get();
+    }
+
+    public void setExpProperty(int exp){ 
+        this.expValue.set(exp);
+    }
+
 }
