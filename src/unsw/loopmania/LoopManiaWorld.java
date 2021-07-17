@@ -20,7 +20,7 @@ public class LoopManiaWorld {
 
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
-    public static final int equippedInventoryLength = 3;
+    public static final int equippedInventoryLength = 4;
     private static final int SLUG = 0;
     private static final int ZOMBIE = 1;
     private static final int VAMPIRE = 2;
@@ -491,6 +491,14 @@ public class LoopManiaWorld {
                     }
                     break;
                 case 1:
+                    if (item.getItemType().equals("Weapon") && !checkItemInEquippedInventory(item.getType())) {
+                        equippedInventoryItems.set(x, item);
+                        System.out.println("Weapon: " + item.getType() + " has been added");
+                    } else {
+                        item = null;
+                    }
+                    break;
+                case 2:
                     if (item.getItemType().equals("Equipment") && !checkItemInEquippedInventory(item.getType())) {
                         equippedInventoryItems.set(x, item);
                         System.out.println("Equipment: " + item.getType() + " has been added");
@@ -498,7 +506,7 @@ public class LoopManiaWorld {
                         item = null;
                     }
                     break;
-                case 2:
+                case 3:
                     if (item.getItemType().equals("Equipment") && !checkItemInEquippedInventory(item.getType())) {
                         equippedInventoryItems.set(x, item);
                         System.out.println("Equipment: " + item.getType() + " has been added");
