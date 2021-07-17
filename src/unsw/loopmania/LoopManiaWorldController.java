@@ -27,7 +27,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import java.util.EnumMap;
@@ -131,6 +134,10 @@ public class LoopManiaWorldController {
     private Label alliesLabel = new Label();
     @FXML
     private Label loopsLabel = new Label();
+    @FXML
+    private Label attackLabel = new Label();
+    @FXML
+    private Label defenseLabel = new Label();
 
     @FXML
     private Label requiredGoldLabel = new Label();
@@ -147,6 +154,13 @@ public class LoopManiaWorldController {
     private Label optionalLoopsLabel = new Label();
 
 
+    @FXML
+    private Label gameOverScreen = new Label();
+    @FXML
+    private Label gameSuccessScreen = new Label();
+
+    @FXML 
+    private StackPane screenBackground = new StackPane();
  
     // all image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
@@ -364,12 +378,17 @@ public class LoopManiaWorldController {
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
 
+        gameOverScreen.setVisible(false);
+        gameSuccessScreen.setVisible(false);
+
         // bind the labels to the characters stats 
         healthLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().HealthValueProperty()));
         goldLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().goldValueProperty()));
         expLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().expValueProperty()));
         alliesLabel.textProperty().bind(Bindings.convert(world.getCharacter().alliesNumValueProperty()));
         loopsLabel.textProperty().bind(Bindings.convert(world.LoopsValueProperty()));
+        attackLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().attackValueProperty()));
+        defenseLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().defenseValueProperty()));
 
         requiredGoldLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDGoldValueProperty()));
         requiredExpLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDExpValueProperty()));
@@ -396,16 +415,17 @@ public class LoopManiaWorldController {
             List<Enemy> defeatedEnemies = world.runBattles();
 
             if (world.isGameOver()) {
+                gameOverScreen.setVisible(true);
                 terminate();
                 // TODO - swap this for triggering the switch to the GameOverScreen
-                System.out.println("GAME OVER");
+                // System.out.println("GAME OVER");
             }
 
             if (world.isGameWon()) {
+                gameSuccessScreen.setVisible(true);
                 terminate();
                 // TODO - swap this for triggering the switch to the GameWonScreen
-                System.out.println("CONGRATULATIONS - GAME WON");
-
+                // System.out.println("CONGRATULATIONS - GAME WON");
             }
 
             for (Enemy e : defeatedEnemies) {
