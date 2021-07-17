@@ -458,16 +458,22 @@ public class LoopManiaWorldController {
     }
 
     private void loadCard() {
-        Card card = world.loadCard();
-        if (card != null) {
-            onLoadCard(card);
+        world.loadCard();
+        List<Card> cards = world.getCardEntities();
+        for (Card c: cards) {
+            if (c != null) {
+                onLoadCard(c);
+            }
         }
     }
 
     private void loadItem() {
-        Item item = world.addUnequippedItem();
-        if (item != null) {
-            onLoadItem(item);
+        world.addUnequippedItem();
+        List<Item> items = world.getUnequippedInventoryItems();
+        for (Item i: items) {
+            if (i != null) {
+                onLoadItem(i);
+            }
         }
     }
 

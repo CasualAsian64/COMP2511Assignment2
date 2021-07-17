@@ -24,6 +24,9 @@ public class LoopManiaWorld {
     private static final int SLUG = 0;
     private static final int ZOMBIE = 1;
     private static final int VAMPIRE = 2;
+
+    private static final int GOLDRANDOMISER = 50;
+    private static final int ITEMRANDOMISER = 20;
     /**
      * width of the world in GridPane cells
      */
@@ -109,6 +112,13 @@ public class LoopManiaWorld {
         this.loopsValue.set(getLoopsProperty()+1);
     }
 
+    public List<Item> getUnequippedInventoryItems() {
+        return unequippedInventoryItems;
+    }
+
+    public List<Card> getCardEntities() {
+        return cardEntities;
+    }
 
     //  * list of x,y coordinate pairs in the order by which moving entities traverse
     //  * them
@@ -382,20 +392,20 @@ public class LoopManiaWorld {
         setGameOver(true);
     }
 
-    public Card loadCard() {
+    public void loadCard() {
         if (cardEntities.size() >= getWidth()) {
             Card card = cardEntities.get(0);
             card.removeCardAward(character);
+            addUnequippedItem();
             removeCard(0);
         }
         Random randomCard = new Random();
-        int randCard = randomCard.nextInt(12);
+        int randCard = randomCard.nextInt(7);
         CardSelector cardSelector = new CardSelector();
         Card card = cardSelector.getCard(randCard, cardEntities.size());
         if(card != null) {
             cardEntities.add(card);
         }
-        return card;
     }
 
     public Card getCard(int cardNodeX, int cardNodeY) {
@@ -409,24 +419,21 @@ public class LoopManiaWorld {
         }
         return card;
     }
-
-    public Item addUnequippedItem() {
+    
+    public void addUnequippedItem() {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null) {
             //Give some reward for removing the card
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
-        //System.out.println("First available slot at: " + firstAvailableSlot.getValue0() + "," + firstAvailableSlot.getValue1());
         ItemSelector itemSelector = new ItemSelector();
         Random randomItem = new Random();
-        int randItem = randomItem.nextInt(12);
-        // Change true later
+        int randItem = randomItem.nextInt(ITEMRANDOMISER);
         Item item = itemSelector.getItem(randItem, allRareItems, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         if (item != null) {
             unequippedInventoryItems.add(item);
         }
-        return item;
     }
 
     /**
@@ -895,7 +902,7 @@ public class LoopManiaWorld {
 
     public Gold possiblySpawnGold() {
         Random randSpawn = new Random();
-        int goldSpawn = randSpawn.nextInt(30);
+        int goldSpawn = randSpawn.nextInt(GOLDRANDOMISER);
         if (goldPosition != null && goldSpawn == 0) {
             int indexInPath = orderedPath.indexOf(goldPosition);
             PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);
