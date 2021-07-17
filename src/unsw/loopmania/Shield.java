@@ -20,4 +20,10 @@ public class Shield extends Equipment {
         // TODO Auto-generated method stub
         return 0;
     }
+
+    @Override
+    public String getItemType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

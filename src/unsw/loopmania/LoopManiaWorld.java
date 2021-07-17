@@ -961,11 +961,7 @@ public class LoopManiaWorld {
 
     public Gold possiblySpawnGold() {
         Random randSpawn = new Random();
-<<<<<<< HEAD
-        int goldSpawn = randSpawn.nextInt(30);
-=======
         int goldSpawn = randSpawn.nextInt(GOLDRANDOMISER);
->>>>>>> main
         if (goldPosition != null && goldSpawn == 0) {
             int indexInPath = orderedPath.indexOf(goldPosition);
             PathPosition pathPosition = new PathPosition(indexInPath, orderedPath);
@@ -985,10 +981,6 @@ public class LoopManiaWorld {
         buildingEntities.add(building);
     }
 
-    <<<<<<<HEAD
-
-}=======
-
     public Item getItem(int x, int y) {
         Item item = null;
         for (Item i : unequippedInventoryItems) {
@@ -1000,4 +992,4 @@ public class LoopManiaWorld {
         return item;
     }
 
-}>>>>>>>main
+}

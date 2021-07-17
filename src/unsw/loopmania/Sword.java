@@ -16,4 +16,10 @@ public class Sword extends Weapon {
     public int getAttackIncrease(MovingEntity opponent) {
         return 10;
     }
+
+    @Override
+    public String getItemType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

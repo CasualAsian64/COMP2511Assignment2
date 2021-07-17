@@ -14,4 +14,10 @@ public class Staff extends Weapon {
     public int getAttackIncrease(MovingEntity opponent) {
         return 2;
     }
+
+    @Override
+    public String getItemType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -109,9 +109,6 @@
             </GridPane>
 
             <!-- clicking this button returns the human player to the main menu -->
-<<<<<<< HEAD
-            <Button onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="128.0" text="Exit to Main Menu" />
-=======
             <Button onAction="#switchToMainMenu" text="Exit to Main Menu" />
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="265.0">
                <children>
@@ -178,7 +175,6 @@
                   <Label layoutX="198.0" layoutY="106.0" text="Optional" />
                </children>
             </AnchorPane>
->>>>>>> main
          </children>
       </VBox>
    </HBox>

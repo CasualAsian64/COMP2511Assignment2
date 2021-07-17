@@ -29,6 +29,12 @@ public class Helmet extends Equipment {
         return 0;
     }
 
+    @Override
+    public String getItemType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
     // @Override
     // public int reduceAttack(int attack) {
     // return attack - 3;

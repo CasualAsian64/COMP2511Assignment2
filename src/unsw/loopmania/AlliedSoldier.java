@@ -1,7 +1,5 @@
 package unsw.loopmania;
 
-import javafx.beans.property.SimpleIntegerProperty;
-
 /**
  * Represents a vampire castle card in the backend game world
  */

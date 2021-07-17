@@ -19,4 +19,10 @@ public class Stake extends Weapon {
             return 5;
         }
     }
+
+    @Override
+    public String getItemType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -41,8 +41,4 @@ public class Zombie extends Enemy {
 
     }
 
-    @Override
-    public void reverseDirection() {       
-    }
-
 }

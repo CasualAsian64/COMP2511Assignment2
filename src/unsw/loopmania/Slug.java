@@ -24,10 +24,4 @@ public class Slug extends Enemy {
 
     }
 
-    @Override
-    public void reverseDirection() {
-        // TODO Auto-generated method stub
-        
-    }
-
 }
