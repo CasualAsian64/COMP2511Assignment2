@@ -14,5 +14,8 @@ public abstract class Equipment extends Item {
         super(x, y);
     }
 
+    public String getItemType() {
+        return "Equipment";
+    }
     //public abstract int reduceAttack(int attack);
 }

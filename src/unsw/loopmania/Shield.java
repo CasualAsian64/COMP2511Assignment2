@@ -12,9 +12,7 @@ public class Shield extends Equipment {
         this.type = "Shield";
     }
 
-    @Override
     public int reduceAttack(int attack) {
-        // TODO Auto-generated method stub
         return 0;
     }    
 }
