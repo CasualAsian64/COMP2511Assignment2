@@ -365,7 +365,7 @@ public class LoopManiaWorldController {
         expLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().expValueProperty()));
 
 
-        alliesLabel.textProperty().bind(alliesProperty.asString());
+        alliesLabel.textProperty().bind(Bindings.convert(world.getCharacter().alliesNumValueProperty()));
         // healthLabel.textProperty().bindBidirectional(healthProperty.asString());
         // healthLabel.textProperty().bindBidirectional(healthProperty, null);
 
