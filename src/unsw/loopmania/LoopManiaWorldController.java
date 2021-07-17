@@ -129,6 +129,22 @@ public class LoopManiaWorldController {
     private Label expLabel = new Label();
     @FXML
     private Label alliesLabel = new Label();
+    @FXML
+    private Label loopsLabel = new Label();
+
+    @FXML
+    private Label requiredGoldLabel = new Label();
+    @FXML
+    private Label requiredExpLabel = new Label();
+    @FXML
+    private Label requiredLoopsLabel = new Label();
+
+    @FXML
+    private Label optionalGoldLabel = new Label();
+    @FXML
+    private Label optionalExpLabel = new Label();
+    @FXML
+    private Label optionalLoopsLabel = new Label();
 
 
  
@@ -353,7 +369,16 @@ public class LoopManiaWorldController {
         goldLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().goldValueProperty()));
         expLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().expValueProperty()));
         alliesLabel.textProperty().bind(Bindings.convert(world.getCharacter().alliesNumValueProperty()));
+        loopsLabel.textProperty().bind(Bindings.convert(world.LoopsValueProperty()));
 
+        requiredGoldLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDGoldValueProperty()));
+        requiredExpLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDExpValueProperty()));
+        requiredLoopsLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDLoopsValueProperty()));
+
+
+        optionalGoldLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ORGoldValueProperty()));
+        optionalExpLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ORExpValueProperty()));
+        optionalLoopsLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ORLoopsValueProperty()));
 
     }
 

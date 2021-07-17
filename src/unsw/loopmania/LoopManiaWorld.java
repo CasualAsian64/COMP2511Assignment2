@@ -100,6 +100,23 @@ public class LoopManiaWorld {
         this.gameWon = gameWon;
     }
 
+
+    private SimpleIntegerProperty loopsValue = new SimpleIntegerProperty(this, "loopsValue");
+
+
+    public IntegerProperty LoopsValueProperty(){
+        return loopsValue;
+    }
+
+    public int getLoopsProperty(){
+        return loopsValue.get();
+    }
+
+    public void incrementLoopsProperty(){ 
+        this.loopsValue.set(getLoopsProperty()+1);
+    }
+
+
     //  * list of x,y coordinate pairs in the order by which moving entities traverse
     //  * them
     //  */
@@ -166,12 +183,19 @@ public class LoopManiaWorld {
         return character;
     }
 
+    
+
+    public Goals getWorldGoals() {
+        return worldGoals;
+    }
+
     public void setWorldGoals(Goals goal) {
         worldGoals = goal;
     }
 
     public void incrementLoops() {
         numLoops++;
+        incrementLoopsProperty();
     }
 
     public List<Building> getBuildingEntities() {
