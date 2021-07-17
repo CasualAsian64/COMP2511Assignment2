@@ -27,10 +27,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import java.util.EnumMap;
@@ -742,19 +740,26 @@ public class LoopManiaWorldController {
                 view.setVisible(false);
 
                 buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane);
-
+                Node node = event.getPickResult().getIntersectedNode();
+                Integer cIndex = GridPane.getColumnIndex(node);
+                Integer rIndex = GridPane.getRowIndex(node);
+                int x = cIndex == null ? 0 : cIndex;
+                int y = rIndex == null ? 0 : rIndex;
+                ImageSelector imageSelector = new ImageSelector();
+                Image image = null;
+                int nodeX = GridPane.getColumnIndex(currentlyDraggedImage);
+                int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType) {
                     case CARD:
-
-                        // maybe add more cases?
-                        // draggedEntity.setImage(vampireCastleCardImage);
-
-                        // TODO -revisit this idk what this does
-                        draggedEntity.setImage(villageCardImage);
+                        Card card = world.getCard(x, y);
+                        image = imageSelector.getImage(card, allBuildingCardImages);
+                        draggedEntity.setImage(image);
                         break;
                     case ITEM:
-                        draggedEntity.setImage(swordImage);
+                        Item item = world.getItem(nodeX, nodeY);
+                        image = imageSelector.getImage(item, allItemImages);
+                        draggedEntity.setImage(image);
                         break;
                     default:
                         break;
