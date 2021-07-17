@@ -950,4 +950,12 @@ public class LoopManiaWorld {
         return item;
     }
 
+    public void usePotion(Item item) {
+        unequippedInventoryItems.remove(item);
+        item.destroy();
+        Statistics stats = character.getStats();
+        int characterHealth = stats.getHealth();
+        stats.setHealth(characterHealth + 20);
+    }
+
 } 
