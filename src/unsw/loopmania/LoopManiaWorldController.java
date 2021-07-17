@@ -28,12 +28,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import java.util.EnumMap;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.binding.Bindings;
 
 
@@ -144,7 +142,7 @@ public class LoopManiaWorldController {
      */
     private DragIcon draggedEntity;
 
-    
+    private boolean isGameOver = false; 
     private boolean isPaused;
     private LoopManiaWorld world;
 
@@ -350,27 +348,11 @@ public class LoopManiaWorldController {
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
 
-        // // Bidirectionally bind the TextFields to the characters stats 
-        SimpleIntegerProperty healthProperty = new SimpleIntegerProperty(world.getCharacter().getStats().getHealth());
-        SimpleIntegerProperty goldProperty = new SimpleIntegerProperty(world.getCharacter().getStats().getGold());
-        SimpleIntegerProperty expProperty = new SimpleIntegerProperty(world.getCharacter().getStats().getExp());
-        SimpleIntegerProperty alliesProperty = new SimpleIntegerProperty((world.getCharacter().getAllies()).size());
-
-
+        // bind the labels to the characters stats 
         healthLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().HealthValueProperty()));
-
-
         goldLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().goldValueProperty()));
-
-
         expLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().expValueProperty()));
-
-
         alliesLabel.textProperty().bind(Bindings.convert(world.getCharacter().alliesNumValueProperty()));
-        // healthLabel.textProperty().bindBidirectional(healthProperty.asString());
-        // healthLabel.textProperty().bindBidirectional(healthProperty, null);
-
-        // textField.bindBirectional(world.character.health)
 
 
     }
@@ -387,6 +369,20 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             world.runTickMoves();
             List<Enemy> defeatedEnemies = world.runBattles();
+
+            if (world.isGameOver()) {
+                terminate();
+                // TODO - swap this for triggering the switch to the GameOverScreen
+                System.out.println("GAME OVER");
+            }
+
+            if (world.isGameWon()) {
+                terminate();
+                // TODO - swap this for triggering the switch to the GameWonScreen
+                System.out.println("CONGRATULATIONS - GAME WON");
+
+            }
+
             for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
             }

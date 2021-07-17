@@ -80,7 +80,26 @@ public class LoopManiaWorld {
     
     private List<String> allRareItems;
 
+    private boolean gameOver = false; 
   
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    private boolean gameWon = false; 
+
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
+    public void setGameWon(boolean gameWon) {
+        this.gameWon = gameWon;
+    }
+
     //  * list of x,y coordinate pairs in the order by which moving entities traverse
     //  * them
     //  */
@@ -344,7 +363,7 @@ public class LoopManiaWorld {
 
     private void triggerGameOver() {
         // signal to loop mania world controller to end the game
-
+        setGameOver(true);
     }
 
     public Card loadCard() {
@@ -432,7 +451,9 @@ public class LoopManiaWorld {
         detectEnemyInRadius();
         // Everytime the character moves, check if the character has acheieved the world
         // goals
-        worldGoals.checkGoalsMet(character.getStats(), numLoops);
+        if (worldGoals.checkGoalsMet(character.getStats(), numLoops)) {
+            setGameWon(true);
+        }
     }
 
     // loop through all buildings and gold entities and see if Character is onTile
