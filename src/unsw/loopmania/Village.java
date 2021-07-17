@@ -19,11 +19,6 @@ public class Village extends Building {
 
     public void healCharacter(Statistics stats) {
 
-        System.out.println("The character has visited the village");
-        System.out.println("");
-
-
-        System.out.println("The characters health before healing is " + stats.getHealth());
 
         // if heal amount is greater than 100, set health to 100 (max health)
         if (stats.getHealth() >= 90) {
@@ -35,9 +30,6 @@ public class Village extends Building {
             stats.setHealth(stats.getHealth() + 10);
         }    
 
-        System.out.println("The characters health after healing is " + stats.getHealth());
-
-        System.out.println("");
 
     }
 }
