@@ -28,8 +28,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.Label;
 import javafx.util.Duration;
 import java.util.EnumMap;
+
+import javafx.beans.binding.Bindings;
+
+
 
 import java.io.File;
 import java.io.IOException;
@@ -115,6 +120,34 @@ public class LoopManiaWorldController {
     @FXML
     private GridPane unequippedInventory;
 
+
+    @FXML
+    private Label healthLabel = new Label();
+    @FXML
+    private Label goldLabel = new Label();
+    @FXML
+    private Label expLabel = new Label();
+    @FXML
+    private Label alliesLabel = new Label();
+    @FXML
+    private Label loopsLabel = new Label();
+
+    @FXML
+    private Label requiredGoldLabel = new Label();
+    @FXML
+    private Label requiredExpLabel = new Label();
+    @FXML
+    private Label requiredLoopsLabel = new Label();
+
+    @FXML
+    private Label optionalGoldLabel = new Label();
+    @FXML
+    private Label optionalExpLabel = new Label();
+    @FXML
+    private Label optionalLoopsLabel = new Label();
+
+
+ 
     // all image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -125,6 +158,7 @@ public class LoopManiaWorldController {
      */
     private DragIcon draggedEntity;
 
+    private boolean isGameOver = false; 
     private boolean isPaused;
     private LoopManiaWorld world;
 
@@ -329,6 +363,23 @@ public class LoopManiaWorldController {
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
+
+        // bind the labels to the characters stats 
+        healthLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().HealthValueProperty()));
+        goldLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().goldValueProperty()));
+        expLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().expValueProperty()));
+        alliesLabel.textProperty().bind(Bindings.convert(world.getCharacter().alliesNumValueProperty()));
+        loopsLabel.textProperty().bind(Bindings.convert(world.LoopsValueProperty()));
+
+        requiredGoldLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDGoldValueProperty()));
+        requiredExpLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDExpValueProperty()));
+        requiredLoopsLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDLoopsValueProperty()));
+
+
+        optionalGoldLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ORGoldValueProperty()));
+        optionalExpLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ORExpValueProperty()));
+        optionalLoopsLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ORLoopsValueProperty()));
+
     }
 
     /**
@@ -343,6 +394,20 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             world.runTickMoves();
             List<Enemy> defeatedEnemies = world.runBattles();
+
+            if (world.isGameOver()) {
+                terminate();
+                // TODO - swap this for triggering the switch to the GameOverScreen
+                System.out.println("GAME OVER");
+            }
+
+            if (world.isGameWon()) {
+                terminate();
+                // TODO - swap this for triggering the switch to the GameWonScreen
+                System.out.println("CONGRATULATIONS - GAME WON");
+
+            }
+
             for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
             }

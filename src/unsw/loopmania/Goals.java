@@ -3,6 +3,9 @@ package unsw.loopmania;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * Statistics for each entity
  */
@@ -16,6 +19,14 @@ public class Goals {
     private JSONObject allGoals;
     private boolean ORGoalsActive;
 
+    private SimpleIntegerProperty ANDLoopsValue = new SimpleIntegerProperty(this, "ANDLoops");
+    private SimpleIntegerProperty ANDGoldValue = new SimpleIntegerProperty(this, "ANDGold");
+    private SimpleIntegerProperty ANDExpValue = new SimpleIntegerProperty(this, "ANDExp");
+
+    private SimpleIntegerProperty ORLoopsValue = new SimpleIntegerProperty(this, "ORLoops");
+    private SimpleIntegerProperty ORGoldValue = new SimpleIntegerProperty(this, "ORGold");
+    private SimpleIntegerProperty ORExpValue = new SimpleIntegerProperty(this, "ORExp");
+
     public Goals(JSONObject goal_condition){
         this.ANDLoops = 0;
         this.ANDGold = 0;
@@ -23,6 +34,9 @@ public class Goals {
         this.ORLoops = 0;
         this.ORGold = 0;
         this.ORExp = 0;
+        // this.ANDLoopsValue.set(0);
+        // this.ANDGoldValue.set(0);
+        // this.ANDExpValue.set(0);
         this.ORGoalsActive = false;
         allGoals = new JSONObject();
         int quantity = 0;
@@ -57,6 +71,15 @@ public class Goals {
         allGoals.put("ORLoops", ORLoops);
         allGoals.put("ORExp", ORExp);
         allGoals.put("ORGold", ORGold);
+
+        setANDLoopsValueProperty(this.ANDLoops);
+        setANDGoldValueProperty(this.ANDGold);
+        setANDExpValueProperty(this.ANDExp);
+
+        setORLoopsValueProperty(this.ORLoops);
+        setORGoldValueProperty(this.ORGold);
+        setORExpValueProperty(this.ORExp);
+
     }
 
     // Sets the goals for the character to achieve
@@ -64,12 +87,18 @@ public class Goals {
         switch(goal) {
             case "cycles":
                 this.ANDLoops = quantity;
+                // this.ANDLoopsValue.set(quantity);
+                // setANDLoopsValueProperty(quantity);
                 break;
             case "gold":
                 this.ANDGold = quantity;
+                // this.ANDGoldValue.set(quantity);
+                // setANDGoldValueProperty(quantity);
                 break;
             case "experience":
                 this.ANDExp = quantity;
+                // this.ANDExpValue.set(quantity);
+                // setANDExpValueProperty(quantity);
                 break;
             case "ORcycles":
                 this.ORLoops = quantity;
@@ -141,6 +170,50 @@ public class Goals {
         return allGoals;
     }
 
+    public IntegerProperty ANDLoopsValueProperty(){
+        return ANDLoopsValue;
+    }
+
+    public IntegerProperty ANDGoldValueProperty(){
+        return ANDGoldValue;
+    }
+    public IntegerProperty ANDExpValueProperty(){
+        return ANDExpValue;
+    }
+
+    public void setANDLoopsValueProperty(int loops){ 
+        this.ANDLoopsValueProperty().set(loops);
+    }
+    public void setANDGoldValueProperty(int gold){ 
+        this.ANDGoldValueProperty().set(gold);
+    }
+    public void setANDExpValueProperty(int exp){ 
+        this.ANDExpValueProperty().set(exp);
+    }
+
+
+
+    public IntegerProperty ORLoopsValueProperty(){
+        return ORLoopsValue;
+    }
+
+    public IntegerProperty ORGoldValueProperty(){
+        return ORGoldValue;
+    }
+    public IntegerProperty ORExpValueProperty(){
+        return ORExpValue;
+    }
+
+
+    public void setORLoopsValueProperty(int loops){ 
+        this.ORLoopsValueProperty().set(loops);
+    }
+    public void setORGoldValueProperty(int gold){ 
+        this.ORGoldValueProperty().set(gold);
+    }
+    public void setORExpValueProperty(int exp){ 
+        this.ORExpValueProperty().set(exp);
+    }
 }
 
 

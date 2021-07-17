@@ -2,6 +2,9 @@ package unsw.loopmania;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * represents the main character in the backend of the game world
  */
@@ -11,6 +14,7 @@ public class Character extends MovingEntity {
     private Equipment equipment;
     private ArrayList<Building> buildingBuffs;
     private ArrayList<AlliedSoldier> allies;
+    private IntegerProperty alliesNumValue = new SimpleIntegerProperty(this, "alliesNumValue");
 
     // TODO = potentially implement relationships between this class and other
     // classes
@@ -75,5 +79,18 @@ public class Character extends MovingEntity {
     public ArrayList<AlliedSoldier> getAllies() {
         return allies;
     }
+
+    public IntegerProperty alliesNumValueProperty() { 
+        return alliesNumValue;
+    }
+
+    public int getAlliesNumValueProperty(){
+        return alliesNumValue.get();
+    }
+
+    public void incrementAlliesNumValueProperty(){ 
+        this.alliesNumValue.set(getAlliesNumValueProperty()+1);
+    }
+    
 
 }
