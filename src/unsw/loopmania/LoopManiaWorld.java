@@ -313,12 +313,13 @@ public class LoopManiaWorld {
                         break;
                     }
                     e.attack(character, character.getStats());
-                    // if (character.getHealth() == 0) {
-                    // break;
-                    // // end the game
-                    // }
-                    System.out.println();
-                    System.out.println("Character's health is: " + character.getHealth());
+                    if (character.getHealth() == 0) {
+                        // TODO - trigger game over
+                        triggerGameOver();
+                        break;
+                        // end the game
+                    }
+
                 }
                 character.collectRewards(e);
                 defeatedEnemies.add(e);
@@ -339,6 +340,11 @@ public class LoopManiaWorld {
         }
 
         return defeatedEnemies;
+    }
+
+    private void triggerGameOver() {
+        // signal to loop mania world controller to end the game
+
     }
 
     public Card loadCard() {
@@ -438,8 +444,6 @@ public class LoopManiaWorld {
                 b.performActionOnCharacter(this.character);
 
                 if (b.getType().equals("HerosCastle")) {
-                    System.out.println();
-                    System.out.println("The character visited the Hero's Castle");
                     if (!zombieSpawned && numLoops != 0) {
                         zombieRespawnLoop += 1;
                     }
@@ -465,9 +469,7 @@ public class LoopManiaWorld {
         for (Gold g : goldEntities) {
             if (g.getX() == (character.getX()) && g.getY() == (character.getY())) {
                 Statistics stats = character.getStats();
-                System.out.println("Character's original gold: " + stats.getGold());
                 stats.setGold(stats.getGold() + g.getGold());
-                System.out.println("Character's new gold: " + stats.getGold());
                 destroyGold(g);
             }
         }

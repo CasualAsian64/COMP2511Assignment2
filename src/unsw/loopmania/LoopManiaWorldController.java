@@ -144,6 +144,7 @@ public class LoopManiaWorldController {
      */
     private DragIcon draggedEntity;
 
+    
     private boolean isPaused;
     private LoopManiaWorld world;
 
