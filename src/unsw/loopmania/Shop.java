@@ -21,8 +21,9 @@ public abstract class Shop {
     
 
 
-    public void addPotion(HealthPotion potion){
+    public void addPotion(){
         total = total + 10; 
+        HealthPotion potion = new HealthPotion();
         potions.add(potion);
     }
     public void subtractPotion(){
@@ -30,8 +31,9 @@ public abstract class Shop {
         potions.remove(0);
     }
     
-    public void addSword(Sword sword){
-        total = total + 50; 
+    public void addSword(){
+        total = total + 50;
+        Sword sword = new Swords(); 
         swords.add(sword);
     }
     public void subtractSword(){
@@ -39,8 +41,9 @@ public abstract class Shop {
         swords.remove(0);
     }
     
-    public void addStaff(Staff staff){
+    public void addStaff() {
         total = total + 80; 
+        Staff staff = new Staff();
         staffs.add(staff);
     }
     public void subtractStaff(){
@@ -48,8 +51,9 @@ public abstract class Shop {
         staffs.remove(0);
     }
 
-    public void addStake(Stake stake){
+    public void addStake(){
         total = total + 30; 
+        Stake stake = new Stake();
         stakes.add(stake);
     }
     public void subtractStake(){
@@ -57,8 +61,9 @@ public abstract class Shop {
         stakes.remove(0);
     }
 
-    public void addHelmet(Helmet helmet){
+    public void addHelmet(){
         total = total + 20; 
+        Helmet helmet = new Helmet();
         helmets.add(helmet);
     }
     public void subtractHelmet(){
@@ -66,8 +71,9 @@ public abstract class Shop {
         helmets.remove(0);
     }
     
-    public void addArmour(Armour armour){
+    public void addArmour(){
         total = total + 70; 
+        Armour armour = new Armour();
         armours.add(armour);
     }
     public void subtractArmour(){
@@ -75,8 +81,9 @@ public abstract class Shop {
         armours.remove(0);
     }
 
-    public void addShield(Shield shield){
+    public void addShield(){
         total = total + 40; 
+        Shield shield = new Shield; 
         shields.add(shield);
     }
     public void subtractShield(){
@@ -84,17 +91,21 @@ public abstract class Shop {
         shields.remove(0);
     }
 
+    public boolean sufficientFunds(){
 
-    public boolean finaliseTransaction(Statistics stats, List<Item> unequippedInventory) { 
-
-        // Compare total with Character's gold.
+         // Compare total with Character's gold
         if (total > stats.getGold()){
             // Not enough gold
-            System.out.println("Not enough gold!");
+            // System.out.println("Not enough gold!");
             return false; 
         }
 
+        return true;
+    }
 
+    public void finaliseTransaction(Statistics stats, List<Item> unequippedInventory) { 
+
+    
         // Add all the items to the unequipped inventory. 
         for (HealthPotion hp: potions) {
             unequippedInventory.add(hp);
@@ -126,11 +137,6 @@ public abstract class Shop {
 
         // Decrement the players gold. 
         stats.setGold(stats.getGold() - total); 
-        System.out.println("Purchase successful!");
-
-
-        return true; 
-
 
 
     }

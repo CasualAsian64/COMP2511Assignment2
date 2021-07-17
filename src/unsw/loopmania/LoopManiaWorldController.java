@@ -27,10 +27,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import java.util.EnumMap;
@@ -171,8 +169,6 @@ public class LoopManiaWorldController {
      * and we actually drag this node
      */
     private DragIcon draggedEntity;
-
-    private boolean isGameOver = false; 
     private boolean isPaused;
     private LoopManiaWorld world;
 
@@ -271,6 +267,8 @@ public class LoopManiaWorldController {
      * object handling switching to the main menu
      */
     private MenuSwitcher mainMenuSwitcher;
+
+    private MenuSwitcher shopSwitcher; 
 
     /**
      * @param world           world object loaded from file
@@ -413,6 +411,10 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             world.runTickMoves();
             List<Enemy> defeatedEnemies = world.runBattles();
+
+            if (world.isInShop()) {
+                switchToShop();
+            }
 
             if (world.isGameOver()) {
                 gameOverScreen.setVisible(true);
@@ -860,6 +862,10 @@ public class LoopManiaWorldController {
         this.mainMenuSwitcher = mainMenuSwitcher;
     }
 
+    public void setShopSwitcher(MenuSwitcher shopSwitcher) {
+        this.shopSwitcher = shopSwitcher;
+    }
+
     /**
      * this method is triggered when click button to go to main menu in FXML
      * 
@@ -870,6 +876,11 @@ public class LoopManiaWorldController {
         // TODO = possibly set other menu switchers
         pause();
         mainMenuSwitcher.switchMenu();
+    }
+
+    private void switchToShop() { 
+        pause();
+        shopSwitcher.switchMenu();
     }
 
     /**

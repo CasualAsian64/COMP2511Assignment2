@@ -13,13 +13,13 @@ import javafx.stage.Stage;
  */
 public class LoopManiaApplication extends Application {
     // TODO = possibly add other menus?
-    // hello
 
     /**
      * the controller for the game. Stored as a field so can terminate it when click
      * exit button
      */
     private LoopManiaWorldController mainController;
+    private ShopController shopController; 
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -46,6 +46,14 @@ public class LoopManiaApplication extends Application {
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
 
+
+        // load the shop
+        ShopController shopController = new ShopController();
+        FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("Shop.fxml"));
+        shopLoader.setController(shopController);
+        Parent shopRoot = shopLoader.load();
+
+
         // create new scene with the main menu (so we start with the main menu)
         Scene scene = new Scene(mainMenuRoot);
 
@@ -59,6 +67,16 @@ public class LoopManiaApplication extends Application {
             switchToRoot(scene, gameRoot, primaryStage);
             mainController.startTimer();
         });
+
+
+        mainController.setShopSwitcher(() -> {
+            switchToRoot(scene, shopRoot, primaryStage);
+        });
+        shopController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+            mainController.startTimer();
+        });
+
 
         // deploy the main onto the stage
         scene.getRoot().setStyle("-fx-font-family: 'serif'");

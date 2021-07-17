@@ -39,11 +39,7 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="24.0" prefHeight="114.0" prefWidth="233.0" text="Welcome to the Shop" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="24.0" prefHeight="114.0" prefWidth="233.0" text="Welcome to the Shop" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
       <HBox layoutX="84.0" layoutY="256.0">
          <children>
             <Button fx:id="minusConsumableButton" mnemonicParsing="false" onAction="#handleConsumableMinus" text="-" />
@@ -52,23 +48,17 @@
          </children>
       </HBox>
       <Button fx:id="leaveShopButton" layoutX="676.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleLeaveShop" prefHeight="50.0" prefWidth="94.0" text="Leave Shop" />
-      <Label layoutX="552.0" layoutY="2.0" text="Equipment" textFill="WHITE">
-         <font>
-            <Font size="27.0" />
-         </font></Label>
+      <Label layoutX="582.0" layoutY="15.0" text="Equipment" textFill="WHITE" />
       <Button fx:id="purchaseButton" layoutX="399.0" layoutY="509.0" mnemonicParsing="false" onAction="#handlePurchase" prefHeight="50.0" prefWidth="108.0" text="PURCHASE" />
       <ImageView fitHeight="39.0" fitWidth="73.0" layoutX="106.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/brilliant_blue_new.png" />
          </image>
       </ImageView>
-      <Label layoutX="265.0" layoutY="4.0" text="Weapons" textFill="WHITE">
+      <Label layoutX="295.0" layoutY="10.0" text="Weapons" textFill="WHITE" />
+      <Label layoutX="300.0" layoutY="459.0" prefHeight="36.0" prefWidth="76.0" text="Total" textFill="WHITE">
          <font>
-            <Font size="27.0" />
-         </font></Label>
-      <Label layoutX="300.0" layoutY="459.0" text="Total" textFill="WHITE">
-         <font>
-            <Font size="32.0" />
+            <Font size="26.0" />
          </font></Label>
       <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="305.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -114,18 +104,15 @@
             <Image url="@../../images/shield.png" />
          </image>
       </ImageView>
-      <Label layoutX="36.0" layoutY="181.0" text="Health Potion - 10 Gold" textFill="WHITE">
-         <font>
-            <Font size="19.0" />
-         </font></Label>
+      <Label layoutX="64.0" layoutY="176.0" text="Health Potion - 10 Gold" textFill="WHITE" />
       <Label layoutX="278.0" layoutY="41.0" text="Sword - 50 Gold" textFill="WHITE" />
       <Label layoutX="564.0" layoutY="41.0" text="Helmet - 20 Gold" textFill="WHITE" />
       <Label layoutX="563.0" layoutY="176.0" text="Armour - 70 Gold" textFill="WHITE" />
       <HBox layoutX="569.0" layoutY="257.0">
          <children>
-            <Button fx:id="minusArmourButton" mnemonicParsing="false" onAction="#handleEquipmentMinus" text="-" />
+            <Button fx:id="minusArmourButton" mnemonicParsing="false" onAction="#handleArmourMinus" text="-" />
             <TextField fx:id="armourNumberField" prefHeight="27.0" prefWidth="38.0" />
-            <Button fx:id="plusArmourButton" mnemonicParsing="false" onAction="#handleEquipmentPlus" text="+" />
+            <Button fx:id="plusArmourButton" mnemonicParsing="false" onAction="#handleArmourPlus" text="+" />
          </children>
       </HBox>
       <Label layoutX="564.0" layoutY="300.0" text="Shield - 40 Gold" textFill="WHITE" />
@@ -169,16 +156,8 @@
       </ImageView>
       <StackPane fx:id="screenBackground" layoutX="493.0" layoutY="506.0" prefHeight="50.0" prefWidth="200.0">
          <children>
-            <Label fx:id="notEnoughGold" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="Not enough Gold!" textFill="RED">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="purchaseSuccessful" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="Purchase Successful!" textAlignment="CENTER" textFill="#66f06f">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
+            <Label fx:id="notEnoughGold" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="Not enough Gold!" textFill="RED" visible="false" />
+            <Label fx:id="purchaseSuccessful" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="Purchase Successful!" textAlignment="CENTER" textFill="#66f06f" visible="false" />
          </children>
       </StackPane>
       <Label fx:id="totalNumberField" layoutX="292.0" layoutY="515.0" prefHeight="17.0" prefWidth="85.0" textFill="WHITE">
