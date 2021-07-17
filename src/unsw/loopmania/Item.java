@@ -7,7 +7,8 @@ import javafx.beans.property.SimpleIntegerProperty;
  */
 
 public abstract class Item extends StaticEntity {
-
+    private static final int EXPREWARD = 20;
+    private static final int GOLDREWARD = 100;
     protected String type;
     Statistics stats;
 
@@ -31,6 +32,12 @@ public abstract class Item extends StaticEntity {
     public int getDefense(){
         Statistics stats = this.getStats();
         return stats.getDefense();
+    }
+
+    public void removeCardAward(Character character) {
+        Statistics stats = character.getStats();
+        stats.setExp(stats.getExp() + EXPREWARD);
+        stats.setGold(stats.getGold() + GOLDREWARD);
     }
 
     public abstract String getItemType();

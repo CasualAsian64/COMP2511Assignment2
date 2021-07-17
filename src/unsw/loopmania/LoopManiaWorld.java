@@ -315,11 +315,6 @@ public class LoopManiaWorld {
             }
         }
         for (Enemy e : defeatedEnemies) {
-            // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from
-            // the enemies list
-            // if we killEnemy in prior loop, we get
-            // java.util.ConcurrentModificationException
-            // due to mutating list we're iterating over
             killEnemy(e);
         }
 
@@ -334,7 +329,7 @@ public class LoopManiaWorld {
     public Card loadCard() {
         if (cardEntities.size() >= getWidth()) {
             Card card = cardEntities.get(0);
-            //card.removeCardAward(character);
+            card.removeCardAward(character);
             removeCard(0);
         }
         Random randomCard = new Random();
@@ -553,7 +548,6 @@ public class LoopManiaWorld {
 
         ArrayList<Enemy> enemiesInRange = new ArrayList<Enemy>();
         ArrayList<Enemy> killedEnemies = new ArrayList<Enemy>();
-        ArrayList<Enemy> vampires = new ArrayList<Enemy>();
 
         ArrayList<Building> campfires = new ArrayList<Building>();
 
@@ -589,8 +583,6 @@ public class LoopManiaWorld {
         for (Enemy e : killedEnemies) {
             killEnemy(e);
         }
-
-
     }
 
 
