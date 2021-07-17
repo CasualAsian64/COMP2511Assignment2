@@ -22,8 +22,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.text.html.parser.Entity;
-
 public class Helper {
     private static final int MAP1 = 1;
     private static final int MAP2 = 2;
@@ -379,6 +377,4 @@ public class Helper {
         System.out.println(goalCondition.toString());
         return goalCondition;
     }
-
-
 }

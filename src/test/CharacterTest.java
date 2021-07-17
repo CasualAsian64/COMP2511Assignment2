@@ -1,6 +1,7 @@
 package test;
 
 import unsw.loopmania.Character;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Statistics;
 
 import org.junit.Test;
@@ -86,8 +87,28 @@ public class CharacterTest {
         assertEquals(characterStats.getGold(), 0);
         assertEquals(characterStats.getExp(), 0);
     }
+    
+    @Test
+    public void testCharacterOnTile() {
+        Helper helper = new Helper();
+        LoopManiaWorld world = helper.createWorld(1);
+        // Then create a character and place at a path index.
+        Character character = helper.createCharacterSetup(64, world);
+        helper.createGoalsSetup(1, world);
 
-    /**
-     * Integration test
-     */
+        helper.createBuildingSetup("BarracksCard", 1, world, 0);
+        helper.createBuildingSetup("ZombiePitCard", 30, world, 2);
+        helper.createBuildingSetup("VampireCastleCard", 30, world, 1);
+
+        // Move character such that it moves onto the hero's castle
+        world.runTickMoves();
+        world.runTickMoves();
+        assertEquals(0, character.getX());
+        assertEquals(0, character.getY());
+
+        // character should be ontop of Barracks
+        world.runTickMoves();
+
+        world.runTickMoves();
+    }
 }
