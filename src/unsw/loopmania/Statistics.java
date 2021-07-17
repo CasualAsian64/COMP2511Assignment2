@@ -15,6 +15,8 @@ public class Statistics {
     private SimpleIntegerProperty healthValue = new SimpleIntegerProperty(this, "healthValue");
     private SimpleIntegerProperty goldValue = new SimpleIntegerProperty(this, "goldValue");
     private SimpleIntegerProperty expValue = new SimpleIntegerProperty(this, "expValue");
+    private SimpleIntegerProperty attackValue = new SimpleIntegerProperty(this, "attackValue");
+    private SimpleIntegerProperty defenseValue = new SimpleIntegerProperty(this, "defenseValue");
 
 
     // Default constructor
@@ -33,7 +35,9 @@ public class Statistics {
         this.gold = gold;
         this.healthValue.set(health);
         this.goldValue.set(gold);
-        this.goldValue.set(exp);
+        this.expValue.set(exp);
+        this.attackValue.set(attack);
+        this.defenseValue.set(defense);
     }
 
     public int getHealth() {
@@ -60,7 +64,13 @@ public class Statistics {
     }
 
     public void setAttack(int attack) {
+        setAttackProperty(attack);
         this.attack = attack;
+    }
+
+    public void setDefense(int defense) {
+        setDefenseProperty(defense);
+        this.defense = defense;
     }
 
     public void setGold(int gold) {
@@ -125,6 +135,30 @@ public class Statistics {
 
     public void setExpProperty(int exp){ 
         this.expValue.set(exp);
+    }
+
+    public IntegerProperty attackValueProperty() { 
+        return attackValue;
+    }
+
+    public int getattackProperty(){
+        return attackValue.get();
+    }
+
+    public void setAttackProperty(int attack){ 
+        this.attackValue.set(exp);
+    }
+
+    public IntegerProperty defenseValueProperty() { 
+        return defenseValue;
+    }
+
+    public int getDefenseProperty(){
+        return defenseValue.get();
+    }
+
+    public void setDefenseProperty(int defense){ 
+        this.defenseValue.set(exp);
     }
 
 }
