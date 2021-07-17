@@ -29,4 +29,10 @@ public class Slug extends Enemy {
         return type;
     }
 
+    @Override
+    public void reverseDirection() {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

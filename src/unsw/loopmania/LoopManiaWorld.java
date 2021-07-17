@@ -404,29 +404,50 @@ public class LoopManiaWorld {
         removeUnequippedInventoryItem(item);
     }
 
-    public Item convertCardToItemByCoordinates(int x, int y) {
+    public boolean checkItemInEquippedInventory(String itemType) {
+        boolean state = false;
+        for (Item i : equippedInventoryItems) {
+            if (i != null && i.getType().equals(itemType)) {
+                return true;
+            }
+        }
+        return state;
+    }
+
+    public Item convertCardToItemByCoordinates(int nodeX, int nodeY, int x, int y) {
         Item item = null;
         for (Item i : unequippedInventoryItems) {
-            if ((i.getX() == x) && (i.getY() == y)) {
+            if ((i.getX() == nodeX) && (i.getY() == nodeY)) {
                 item = i;
                 break;
             }
         }
-        ItemSelector itemSelector = new ItemSelector();
-        Item itemCopy = itemSelector.getItem(item.getType(), allRareItems, new SimpleIntegerProperty(x),new SimpleIntegerProperty(y));
+        System.out.println(item.getItemType());
         if (item != null) {
             switch (x) {
                 case 0:
-                    equippedInventoryItems.set(x, itemCopy);
-                    System.out.println("Weapon: " + item.getType() + " has been added");
+                    if (item.getItemType().equals("Weapon") && !checkItemInEquippedInventory(item.getType())) {
+                        equippedInventoryItems.set(x, item);
+                        System.out.println("Weapon: " + item.getType() + " has been added");
+                    } else {
+                        item = null;
+                    }
                     break;
                 case 1:
-                    equippedInventoryItems.set(x, item);
-                    System.out.println("Equipment: " + item.getType() + " has been added");
+                    if (item.getItemType().equals("Equipment") && !checkItemInEquippedInventory(item.getType())) {
+                        equippedInventoryItems.set(x, item);
+                        System.out.println("Equipment: " + item.getType() + " has been added");
+                    } else {
+                        item = null;
+                    }
                     break;
                 case 2:
-                    equippedInventoryItems.set(x, item);
-                    System.out.println("Equipment: " + item.getType() + " has been added");
+                    if (item.getItemType().equals("Equipment") && !checkItemInEquippedInventory(item.getType())) {
+                        equippedInventoryItems.set(x, item);
+                        System.out.println("Equipment: " + item.getType() + " has been added");
+                    } else {
+                        item = null;
+                    }
                     break;
             }
             
@@ -843,4 +864,15 @@ public class LoopManiaWorld {
         buildingEntities.add(building);
     }
 
-}
+    public Item getItem(int x, int y) {
+        Item item = null;
+        for (Item i : unequippedInventoryItems) {
+            if ((i.getX() == x) && (i.getY() == y)) {
+                item = i;
+                break;
+            }
+        }
+        return item;
+    }
+
+} 
