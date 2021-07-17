@@ -13,7 +13,6 @@ import javafx.stage.Stage;
  */
 public class LoopManiaApplication extends Application {
     // TODO = possibly add other menus?
-    // hello
 
     /**
      * the controller for the game. Stored as a field so can terminate it when click

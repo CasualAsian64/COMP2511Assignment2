@@ -759,7 +759,12 @@ public class LoopManiaWorldController {
                     case ITEM:
                         Item item = world.getItem(nodeX, nodeY);
                         image = imageSelector.getImage(item, allItemImages);
-                        draggedEntity.setImage(image);
+                        
+                        if (item.getType().equals("HealthPotion")) {
+                            world.usePotion(item);
+                        } else {
+                            draggedEntity.setImage(image);
+                        }
                         break;
                     default:
                         break;

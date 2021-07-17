@@ -58,8 +58,11 @@ public class Statistics {
         return exp;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setHealth(int healthPoints) {
+        this.health = healthPoints;
+        if (this.health > 100) {
+            this.health = 100;
+        }
         setHealthProperty(health);
     }
 

@@ -26,7 +26,8 @@ public class LoopManiaWorld {
     private static final int VAMPIRE = 2;
 
     private static final int GOLDRANDOMISER = 50;
-    private static final int ITEMRANDOMISER = 20;
+    private static final int ITEMRANDOMISER = 30;
+    private static final int CARDRANDOMISER = 20;
     /**
      * width of the world in GridPane cells
      */
@@ -184,13 +185,9 @@ public class LoopManiaWorld {
         this.character = character;
     }
 
-  
-
     public Character getCharacter() {
         return character;
     }
-
-    
 
     public Goals getWorldGoals() {
         return worldGoals;
@@ -331,13 +328,6 @@ public class LoopManiaWorld {
      * @return list of enemies which have been killed
      */
     public List<Enemy> runBattles() {
-        // TODO = modify this - currently the character automatically wins all battles
-        // without any damage!
-
-        // Before simulating combat, detect if the character is in radius of any campfire
-        // for now, the radius of the campfire is 4
-
-        // 
         boolean buffed = false;
 
         for (Building b: buildingEntities) {
@@ -368,8 +358,19 @@ public class LoopManiaWorld {
                     }
                     e.attack(character, character.getStats());
                     if (character.getHealth() == 0) {
-                        // TODO - trigger game over
-                        triggerGameOver();
+                        if(checkTheOneRingInUnequippedItems()) {
+                            for (Item i : unequippedInventoryItems) {
+                                if (i.getType().equals("OneRing")) {
+                                    removeUnequippedInventoryItem(i);
+                                    System.out.println("The One Ring was destroyed!");
+                                    break;
+                                }
+                            }
+                            Statistics stats = character.getStats();
+                            stats.setHealth(100);
+                        } else {
+                            triggerGameOver();
+                        }
                         break;
                         // end the game
                     }
@@ -404,7 +405,7 @@ public class LoopManiaWorld {
             removeCard(0);
         }
         Random randomCard = new Random();
-        int randCard = randomCard.nextInt(7);
+        int randCard = randomCard.nextInt(CARDRANDOMISER);
         CardSelector cardSelector = new CardSelector();
         Card card = cardSelector.getCard(randCard, cardEntities.size());
         if(card != null) {
@@ -423,7 +424,15 @@ public class LoopManiaWorld {
         }
         return card;
     }
-    
+    public boolean checkTheOneRingInUnequippedItems() {
+        boolean state = false;
+        for (Item i : unequippedInventoryItems) {
+            if (i != null && i.getType().equals("OneRing")) {
+                return true;
+            }
+        }
+        return state;
+    }
     public void addUnequippedItem() {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null) {
@@ -434,7 +443,7 @@ public class LoopManiaWorld {
         ItemSelector itemSelector = new ItemSelector();
         Random randomItem = new Random();
         int randItem = randomItem.nextInt(ITEMRANDOMISER);
-        Item item = itemSelector.getItem(randItem, allRareItems, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        Item item = itemSelector.getItem(randItem, allRareItems, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), checkTheOneRingInUnequippedItems());
         if (item != null) {
             unequippedInventoryItems.add(item);
         }
@@ -943,6 +952,14 @@ public class LoopManiaWorld {
             }
         }
         return item;
+    }
+
+    public void usePotion(Item item) {
+        unequippedInventoryItems.remove(item);
+        item.destroy();
+        Statistics stats = character.getStats();
+        int characterHealth = stats.getHealth();
+        stats.setHealth(characterHealth + 20);
     }
 
 } 
