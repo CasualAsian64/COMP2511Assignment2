@@ -7,6 +7,7 @@ import java.util.Random;
 import org.javatuples.Pair;
 import org.json.JSONArray;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -72,10 +73,46 @@ public class LoopManiaWorld {
 
     private List<String> allRareItems;
 
-    /**
-     * list of x,y coordinate pairs in the order by which moving entities traverse
-     * them
-     */
+    private boolean gameOver = false; 
+  
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    private boolean gameWon = false; 
+
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
+    public void setGameWon(boolean gameWon) {
+        this.gameWon = gameWon;
+    }
+
+
+    private SimpleIntegerProperty loopsValue = new SimpleIntegerProperty(this, "loopsValue");
+
+
+    public IntegerProperty LoopsValueProperty(){
+        return loopsValue;
+    }
+
+    public int getLoopsProperty(){
+        return loopsValue.get();
+    }
+
+    public void incrementLoopsProperty(){ 
+        this.loopsValue.set(getLoopsProperty()+1);
+    }
+
+
+    //  * list of x,y coordinate pairs in the order by which moving entities traverse
+    //  * them
+    //  */
     private List<Pair<Integer, Integer>> orderedPath;
 
     private int shopCounter = 1;
@@ -137,12 +174,25 @@ public class LoopManiaWorld {
         this.character = character;
     }
 
+  
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    
+
+    public Goals getWorldGoals() {
+        return worldGoals;
+    }
+
     public void setWorldGoals(Goals goal) {
         worldGoals = goal;
     }
 
     public void incrementLoops() {
         numLoops++;
+        incrementLoopsProperty();
     }
 
     public List<Building> getBuildingEntities() {
@@ -303,12 +353,13 @@ public class LoopManiaWorld {
                         break;
                     }
                     e.attack(character, character.getStats());
-                    // if (character.getHealth() == 0) {
-                    // break;
-                    // // end the game
-                    // }
-                    System.out.println();
-                    System.out.println("Character's health is: " + character.getHealth());
+                    if (character.getHealth() == 0) {
+                        // TODO - trigger game over
+                        triggerGameOver();
+                        break;
+                        // end the game
+                    }
+
                 }
                 character.collectRewards(e);
                 defeatedEnemies.add(e);
@@ -329,6 +380,11 @@ public class LoopManiaWorld {
         }
 
         return defeatedEnemies;
+    }
+
+    private void triggerGameOver() {
+        // signal to loop mania world controller to end the game
+        setGameOver(true);
     }
 
     public Card loadCard() {
@@ -466,7 +522,9 @@ public class LoopManiaWorld {
         detectEnemyInRadius();
         // Everytime the character moves, check if the character has acheieved the world
         // goals
-        worldGoals.checkGoalsMet(character.getStats(), numLoops);
+        if (worldGoals.checkGoalsMet(character.getStats(), numLoops)) {
+            setGameWon(true);
+        }
     }
 
     // loop through all buildings and gold entities and see if Character is onTile
@@ -479,8 +537,6 @@ public class LoopManiaWorld {
                 b.performActionOnCharacter(this.character);
 
                 if (b.getType().equals("HerosCastle")) {
-                    System.out.println();
-                    System.out.println("The character visited the Hero's Castle");
                     if (!zombieSpawned && numLoops != 0) {
                         zombieRespawnLoop += 1;
                     }
@@ -506,7 +562,6 @@ public class LoopManiaWorld {
         for (Gold g : goldEntities) {
             if (g.getX() == (character.getX()) && g.getY() == (character.getY())) {
                 Statistics stats = character.getStats();
-                System.out.println("Character's original gold: " + stats.getGold());
                 stats.setGold(stats.getGold() + g.getGold());
                 System.out.println("Character's new gold: " + stats.getGold());
                 destroyedGoldEntities.add(g);
