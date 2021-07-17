@@ -7,57 +7,146 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="201.0" layoutY="22.0" text="Welcome to the Shop">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="506.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="736.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.009259259328246117" green="0.5211419463157654" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.26671427488327026" green="1.0" blue="0.12999999523162842" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Label alignment="CENTER" layoutX="16.0" layoutY="72.0" prefHeight="114.0" prefWidth="233.0" text="Welcome to the Shop" wrapText="true">
          <font>
-            <Font size="18.0" />
+            <Font size="29.0" />
          </font>
       </Label>
-      <HBox layoutX="68.0" layoutY="184.0">
+      <HBox layoutX="71.0" layoutY="387.0">
          <children>
             <Button fx:id="minusConsumableButton" mnemonicParsing="false" onAction="#handleConsumableMinus" text="-" />
             <TextField fx:id="consumableNumberField" prefHeight="27.0" prefWidth="38.0" />
             <Button fx:id="plusConsumableButton" mnemonicParsing="false" onAction="#handleConsumablePlus" text="+" />
          </children>
       </HBox>
-      <Button fx:id="leaveShopButton" layoutX="251.0" layoutY="315.0" mnemonicParsing="false" onAction="#handleLeaveShop" text="Leave Shop" />
-      <Label layoutX="69.0" layoutY="57.0" text="Consumables" />
-      <Label layoutX="433.0" layoutY="57.0" text="Equipment" />
-      <Button fx:id="purchaseButton" layoutX="345.0" layoutY="263.0" mnemonicParsing="false" onAction="#handlePurchase" text="PURCHASE" />
-      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="94.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="leaveShopButton" layoutX="634.0" layoutY="445.0" mnemonicParsing="false" onAction="#handleLeaveShop" text="Leave Shop" />
+      <Label layoutX="552.0" layoutY="2.0" text="Equipment">
+         <font>
+            <Font size="27.0" />
+         </font></Label>
+      <Button fx:id="purchaseButton" layoutX="389.0" layoutY="445.0" mnemonicParsing="false" onAction="#handlePurchase" text="PURCHASE" />
+      <ImageView fitHeight="39.0" fitWidth="73.0" layoutX="95.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/brilliant_blue_new.png" />
          </image>
       </ImageView>
-      <Label layoutX="270.0" layoutY="57.0" text="Weapons" />
-      <Label layoutX="225.0" layoutY="268.0" text="Total" />
-      <TextField fx:id="TotalNumberField" layoutX="279.0" layoutY="263.0" prefHeight="27.0" prefWidth="38.0" />
-      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="279.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
+      <Label layoutX="265.0" layoutY="4.0" text="Weapons">
+         <font>
+            <Font size="27.0" />
+         </font></Label>
+      <Label layoutX="233.0" layoutY="451.0" text="Total" />
+      <TextField fx:id="TotalNumberField" layoutX="272.0" layoutY="446.0" prefHeight="27.0" prefWidth="94.0" />
+      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="305.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/basic_sword.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="449.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="593.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/armour.png" />
          </image>
       </ImageView>
-      <HBox layoutX="255.0" layoutY="184.0">
+      <HBox layoutX="281.0" layoutY="131.0">
          <children>
-            <Button fx:id="minusWeaponButton" mnemonicParsing="false" onAction="#handleWeaponMinus" text="-" />
-            <TextField fx:id="weaponNumberField" prefHeight="27.0" prefWidth="38.0" />
-            <Button fx:id="WeaponPlus" mnemonicParsing="false" onAction="#handleWeaponPlus" text="+" />
+            <Button fx:id="minusSwordButton" mnemonicParsing="false" onAction="#handleSwordMinus" text="-" />
+            <TextField fx:id="swordNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Button fx:id="plusSwordButton" mnemonicParsing="false" onAction="#handleSwordPlus" text="+" />
          </children>
       </HBox>
-      <HBox layoutX="423.0" layoutY="184.0">
+      <HBox layoutX="568.0" layoutY="131.0">
          <children>
-            <Button fx:id="minusEquipmentButton" mnemonicParsing="false" onAction="#handleEquipmentMinus" text="-" />
-            <TextField fx:id="numberField21" prefHeight="27.0" prefWidth="38.0" />
-            <Button fx:id="plusEquipmentButton" mnemonicParsing="false" onAction="#handleEquipmentPlus" text="+" />
+            <Button fx:id="minusHelmetButton" mnemonicParsing="false" onAction="#handleHelmetMinus" text="-" />
+            <TextField fx:id="helmetNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Button fx:id="plusEquipmentButton" mnemonicParsing="false" onAction="#handleHelmetPlus" text="+" />
          </children>
       </HBox>
+      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="304.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/stake.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="304.0" layoutY="328.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/staff.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="593.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/helmet.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="592.0" layoutY="327.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/shield.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="51.0" layoutY="300.0" text="Health Potion - 10 Gold" />
+      <Label layoutX="278.0" layoutY="41.0" text="Sword - 50 Gold" />
+      <Label layoutX="564.0" layoutY="41.0" text="Helmet - 20 Gold" />
+      <Label layoutX="563.0" layoutY="176.0" text="Armour - 70 Gold" />
+      <HBox layoutX="569.0" layoutY="257.0">
+         <children>
+            <Button fx:id="minusArmourButton" mnemonicParsing="false" onAction="#handleEquipmentMinus" text="-" />
+            <TextField fx:id="armourNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Button fx:id="plusArmourButton" mnemonicParsing="false" onAction="#handleEquipmentPlus" text="+" />
+         </children>
+      </HBox>
+      <Label layoutX="564.0" layoutY="300.0" text="Shield - 40 Gold" />
+      <Label layoutX="282.0" layoutY="176.0" text="Stake - 30 Gold" />
+      <Label layoutX="283.0" layoutY="300.0" text="Staff - 80 Gold" />
+      <HBox layoutX="280.0" layoutY="257.0">
+         <children>
+            <Button fx:id="minsStakeButton" mnemonicParsing="false" onAction="#handleStakeMinus" text="-" />
+            <TextField fx:id="stakeNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Button fx:id="plusStakeButton" mnemonicParsing="false" onAction="#handleStakePlus" text="+" />
+         </children>
+      </HBox>
+      <HBox layoutX="569.0" layoutY="388.0">
+         <children>
+            <Button fx:id="minusShieldButton" mnemonicParsing="false" onAction="#handleShieldMinus" text="-" />
+            <TextField fx:id="shieldNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Button fx:id="plusShieldButton" mnemonicParsing="false" onAction="#handleShieldPlus" text="+" />
+         </children>
+      </HBox>
+      <HBox layoutX="283.0" layoutY="389.0">
+         <children>
+            <Button fx:id="minusStaffButton" mnemonicParsing="false" onAction="#handleStaffMinus" text="-" />
+            <TextField fx:id="staffNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Button fx:id="plusStaffButton" mnemonicParsing="false" onAction="#handleStaffPlus" text="+" />
+         </children>
+      </HBox>
+      <Label layoutX="12.0" layoutY="450.0" text="Gold available:" />
+      <ImageView fitHeight="39.0" fitWidth="73.0" layoutX="182.0" layoutY="439.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/gold_pile.png" />
+         </image>
+      </ImageView>
+      <Label id="goldAvailable" layoutX="103.0" layoutY="444.0" prefHeight="32.0" prefWidth="58.0" />
    </children>
 </Pane>
