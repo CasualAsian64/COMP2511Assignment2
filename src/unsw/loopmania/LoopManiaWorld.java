@@ -347,8 +347,7 @@ public class LoopManiaWorld {
         return card;
     }
 
-    public Card getCard(int cardNodeX, int cardNodeY, int buildingNodeX,
-    int buildingNodeY) {
+    public Card getCard(int cardNodeX, int cardNodeY) {
         // start by getting card
         Card card = null;
         for (Card c : cardEntities) {
@@ -472,6 +471,7 @@ public class LoopManiaWorld {
 
     // loop through all buildings and gold entities and see if Character is onTile
     public void detectCharacterisOnTile() {
+        List<Gold> destroyedGoldEntities = new ArrayList<>();
         for (Building b : buildingEntities) {
             // if building X coordinate == character X coordinate &&
             // building Y coordinate == character Y coordinate
@@ -509,8 +509,12 @@ public class LoopManiaWorld {
                 System.out.println("Character's original gold: " + stats.getGold());
                 stats.setGold(stats.getGold() + g.getGold());
                 System.out.println("Character's new gold: " + stats.getGold());
-                destroyGold(g);
+                destroyedGoldEntities.add(g);
             }
+        }
+        
+        for (Gold g : destroyedGoldEntities) {
+            destroyGold(g);
         }
     }
 

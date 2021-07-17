@@ -503,7 +503,7 @@ public class LoopManiaWorldController {
                                 } else {
                                     // Removes transparent image upon placing the building
                                     node.setOpacity(1);
-                                    Card card = world.getCard(nodeX, nodeY, x, y);
+                                    Card card = world.getCard(nodeX, nodeY);
                                     onLoadCard(card);
                                 }
                                 break;
@@ -517,7 +517,7 @@ public class LoopManiaWorldController {
                                     targetGridPane.add(image, x, y, 1, 1);
                                 } else {
                                     node.setOpacity(1);
-                                    item = world.getItem(x, y);
+                                    item = world.getItem(nodeX, nodeY);
                                     onLoadItem(item);
                                 }
                                 break;
