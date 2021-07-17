@@ -63,6 +63,7 @@
                   <ColumnConstraints />
                   <ColumnConstraints />
                   <ColumnConstraints />
+                  <ColumnConstraints prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints />
@@ -82,6 +83,11 @@
                   </ImageView>
                   <!-- shieldCell is the cell where a shield intended to be equipped will be dragged by the human player -->
                   <ImageView id="shieldCell" GridPane.columnIndex="2" GridPane.rowIndex="0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
+                     <image>
+                        <Image url="@../../images/shield_unequipped.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="shieldCell" GridPane.columnIndex="3">
                      <image>
                         <Image url="@../../images/shield_unequipped.png" />
                      </image>
