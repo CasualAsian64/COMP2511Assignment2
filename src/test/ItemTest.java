@@ -4,6 +4,7 @@ import unsw.loopmania.Shield;
 import unsw.loopmania.Armour;
 import unsw.loopmania.Character;
 import unsw.loopmania.Helmet;
+import unsw.loopmania.LoopManiaWorld;
 
 import org.junit.Test;
 
@@ -22,45 +23,17 @@ public class ItemTest {
     private static final int MAP1 = 1;
 
     @Test
-    public void equipmentDebuffTest() {
-        /**
-         * Check if helmet reduces player attack
-         * Check if armour and shield reduces player attack
-         */
-
-        SimpleIntegerProperty x = new SimpleIntegerProperty();
-        SimpleIntegerProperty y = new SimpleIntegerProperty();
-
+    public void testAddUnequipItem() {
         Helper helper = new Helper();
-        Character character = helper.testCharacterSetup(0, MAP1);
+        //  First create world based on map in helper
+        LoopManiaWorld world = helper.createWorld(1);
+        // Then create a character and place at a path index. For this e.g. I set it to be 0
+        helper.createCharacterSetup(0, world);
 
-        // assert armour does not reduce player attack
-        Armour armour = new Armour(x, y);
-        assertEquals(armour.reduceAttack(character.getAttack()), 0);
+        world.addUnequippedItem();
 
-        // assert shield does not reduce player attack
-        Shield shield = new Shield(x, y);
-        assertEquals(shield.reduceAttack(character.getAttack()), 0);
-
-        // assert helmet does reduce player attack
-        Helmet helmet = new Helmet(x, y);
-        assertEquals(helmet.reduceAttack(character.getAttack()), 2);
-    }
-
-
-    /**
-     * Other types of tests to potentially complete (might not contribute to coverage...)
-     */
-    @Test
-    public void swordAttackBuffTest() {
-        /**
-         * Check if sword buffs player attack
-         */
-    }
-    @Test
-    public void armourDefenseTest() {
-        /**
-         * Check if armour reduces enemy attack
-         */
+        for (int i = 0; i < 100; i++) {
+            world.addUnequippedItem();
+        }
     }
 }

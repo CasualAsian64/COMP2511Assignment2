@@ -213,6 +213,10 @@ public class LoopManiaWorld {
         return numLoops;
     }
 
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
     /**
      * add a generic entity (without it's own dedicated method for adding to the
      * world)

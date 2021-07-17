@@ -8,8 +8,6 @@ import unsw.loopmania.Statistics;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-
 public class GoalsTest {
     /**
     * Unit tests for goals
@@ -19,7 +17,7 @@ public class GoalsTest {
      * Checks if we read in MAP 1 goals accurately from a JSON object
      */
     @Test
-    public void test_MAP1_goals(){
+    public void testMAP1Goals(){
         Helper helper = new Helper();
         Goals world_goals = new Goals(helper.goalCondition1());
         world_goals.printAllGoals();
@@ -36,7 +34,7 @@ public class GoalsTest {
      * Checks if we read in MAP 2 goals accurately from a JSON object
      */
     @Test
-    public void test_MAP2_goals(){
+    public void testMAP2Goals(){
         Helper helper = new Helper();
         Goals world_goals = new Goals(helper.goalCondition2());
         world_goals.printAllGoals();
@@ -58,7 +56,7 @@ public class GoalsTest {
      * Check if the goals are met and return that the player has won
      */
     @Test
-    public void test_goals_met(){
+    public void testGoalsMet(){
         Helper helper = new Helper();
         Goals world_goals = new Goals(helper.goalCondition1());
         JSONObject world_goals_JSONobject = world_goals.getAllGoals();
@@ -84,6 +82,5 @@ public class GoalsTest {
         // Both conditions are met, and will return true
         statistic = new Statistics(100, 10, 0, 123456, 0);
         assertEquals(world_goals.checkGoalsMet(statistic, numLoops), true);
-
     }
 }
