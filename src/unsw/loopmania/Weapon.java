@@ -10,5 +10,9 @@ public abstract class Weapon extends Item {
         super(x, y);
     }
 
+    public String getItemType() {
+        return "Weapon";
+    }
+    
     abstract public int getAttackIncrease(Enemy enemy);
 }

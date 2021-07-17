@@ -1,5 +1,6 @@
 package unsw.loopmania;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +18,7 @@ public class ItemSelector {
 
     public Item getItem(int itemSelection, List<String> allRareItems, SimpleIntegerProperty x, SimpleIntegerProperty y) {
         Item item;
-        if (itemSelection == ONERING && !allRareItems.contains("TheOneRing")) {
+        if (itemSelection == ONERING && !allRareItems.contains("the_one_ring")) {
             Random randomItem = new Random();
             itemSelection = randomItem.nextInt(7);
         }

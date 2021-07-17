@@ -20,6 +20,7 @@ public class LoopManiaWorld {
 
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
+    public static final int equippedInventoryLength = 3;
     private static final int SLUG = 0;
     private static final int ZOMBIE = 1;
     private static final int VAMPIRE = 2;
@@ -59,25 +60,17 @@ public class LoopManiaWorld {
 
     private Character character;
 
-    // TODO = add more lists for other entities, for equipped inventory items,
-    // etc...
-
-    // TODO = expand the range of enemies
     private List<Enemy> enemies;
 
-    // TODO = expand the range of cards
     private List<Card> cardEntities;
 
-    // TODO = expand the range of items
-    private List<Entity> unequippedInventoryItems;
-    // private List<Item> unequippedInventoryItems;
+    private List<Item> unequippedInventoryItems;
+    private List<Item> equippedInventoryItems;
 
-    // TODO = expand the range of buildings
     private List<Building> buildingEntities;
 
     private List<Gold> goldEntities;
 
-    
     private List<String> allRareItems;
 
     private boolean gameOver = false; 
@@ -143,6 +136,10 @@ public class LoopManiaWorld {
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
+        equippedInventoryItems = new ArrayList<>();
+        for (int i = 0; i < equippedInventoryLength; i += 1) {
+            equippedInventoryItems.add(null);
+        }
         numLoops = 0;
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
@@ -406,8 +403,7 @@ public class LoopManiaWorld {
         return card;
     }
 
-    public Card getCard(int cardNodeX, int cardNodeY, int buildingNodeX,
-    int buildingNodeY) {
+    public Card getCard(int cardNodeX, int cardNodeY) {
         // start by getting card
         Card card = null;
         for (Card c : cardEntities) {
@@ -459,8 +455,59 @@ public class LoopManiaWorld {
      * @param y y coordinate from 0 to height-1
      */
     public void removeUnequippedInventoryItemByCoordinates(int x, int y) {
-        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         removeUnequippedInventoryItem(item);
+    }
+
+    public boolean checkItemInEquippedInventory(String itemType) {
+        boolean state = false;
+        for (Item i : equippedInventoryItems) {
+            if (i != null && i.getType().equals(itemType)) {
+                return true;
+            }
+        }
+        return state;
+    }
+
+    public Item convertCardToItemByCoordinates(int nodeX, int nodeY, int x, int y) {
+        Item item = null;
+        for (Item i : unequippedInventoryItems) {
+            if ((i.getX() == nodeX) && (i.getY() == nodeY)) {
+                item = i;
+                break;
+            }
+        }
+        System.out.println(item.getItemType());
+        if (item != null) {
+            switch (x) {
+                case 0:
+                    if (item.getItemType().equals("Weapon") && !checkItemInEquippedInventory(item.getType())) {
+                        equippedInventoryItems.set(x, item);
+                        System.out.println("Weapon: " + item.getType() + " has been added");
+                    } else {
+                        item = null;
+                    }
+                    break;
+                case 1:
+                    if (item.getItemType().equals("Equipment") && !checkItemInEquippedInventory(item.getType())) {
+                        equippedInventoryItems.set(x, item);
+                        System.out.println("Equipment: " + item.getType() + " has been added");
+                    } else {
+                        item = null;
+                    }
+                    break;
+                case 2:
+                    if (item.getItemType().equals("Equipment") && !checkItemInEquippedInventory(item.getType())) {
+                        equippedInventoryItems.set(x, item);
+                        System.out.println("Equipment: " + item.getType() + " has been added");
+                    } else {
+                        item = null;
+                    }
+                    break;
+            }
+            
+        }
+        return item;
     }
 
     /**
@@ -482,6 +529,7 @@ public class LoopManiaWorld {
 
     // loop through all buildings and gold entities and see if Character is onTile
     public void detectCharacterisOnTile() {
+        List<Gold> destroyedGoldEntities = new ArrayList<>();
         for (Building b : buildingEntities) {
             // if building X coordinate == character X coordinate &&
             // building Y coordinate == character Y coordinate
@@ -515,8 +563,13 @@ public class LoopManiaWorld {
             if (g.getX() == (character.getX()) && g.getY() == (character.getY())) {
                 Statistics stats = character.getStats();
                 stats.setGold(stats.getGold() + g.getGold());
-                destroyGold(g);
+                System.out.println("Character's new gold: " + stats.getGold());
+                destroyedGoldEntities.add(g);
             }
+        }
+        
+        for (Gold g : destroyedGoldEntities) {
+            destroyGold(g);
         }
     }
 
@@ -620,10 +673,10 @@ public class LoopManiaWorld {
      * @param y y index from 0 to height-1
      * @return unequipped inventory item at the input position
      */
-    private Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
-        for (Entity e : unequippedInventoryItems) {
-            if ((e.getX() == x) && (e.getY() == y)) {
-                return e;
+    private Item getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
+        for (Item i : unequippedInventoryItems) {
+            if ((i.getX() == x) && (i.getY() == y)) {
+                return i;
             }
         }
         return null;
@@ -870,4 +923,15 @@ public class LoopManiaWorld {
         buildingEntities.add(building);
     }
 
-}
+    public Item getItem(int x, int y) {
+        Item item = null;
+        for (Item i : unequippedInventoryItems) {
+            if ((i.getX() == x) && (i.getY() == y)) {
+                item = i;
+                break;
+            }
+        }
+        return item;
+    }
+
+} 

@@ -35,4 +35,8 @@ public class Zombie extends Enemy {
         return battleRadius;
     }
 
+    @Override
+    public void reverseDirection() {       
+    }
+
 }

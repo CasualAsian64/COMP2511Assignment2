@@ -32,4 +32,6 @@ public abstract class Item extends StaticEntity {
         Statistics stats = this.getStats();
         return stats.getDefense();
     }
+
+    public abstract String getItemType();
 }
