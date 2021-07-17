@@ -131,8 +131,7 @@ public class LoopManiaWorldController {
     private Label expLabel = new Label();
     @FXML
     private Label alliesLabel = new Label();
-    @FXML
-    private Label dummyLabel = new Label();
+
 
  
     // all image views including tiles, character, enemies, cards... even though
@@ -357,11 +356,10 @@ public class LoopManiaWorldController {
         SimpleIntegerProperty alliesProperty = new SimpleIntegerProperty((world.getCharacter().getAllies()).size());
 
 
-        // healthLabel.textProperty().bind(healthProperty.asString());
         healthLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().HealthValueProperty()));
 
 
-        goldLabel.textProperty().bind(goldProperty.asString());
+        goldLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().goldValueProperty()));
 
 
         expLabel.textProperty().bind(expProperty.asString());
@@ -373,7 +371,7 @@ public class LoopManiaWorldController {
 
         // textField.bindBirectional(world.character.health)
 
-        dummyLabel.textProperty().bind(Bindings.convert(world.dummyValueProperty()));
+
     }
 
     /**

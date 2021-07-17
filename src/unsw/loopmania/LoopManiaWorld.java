@@ -80,36 +80,10 @@ public class LoopManiaWorld {
     
     private List<String> allRareItems;
 
-    // public IntegerProperty healthBox(){ 
-    //     return character.getHealth();
-    // } 
-    // private IntegerProperty goldBox; 
-    // private IntegerProperty expBox; 
-    // private IntegerProperty alliesBox; 
-
-    private SimpleIntegerProperty dummy = new SimpleIntegerProperty(this, "dummy");
-
-
-    public int getDummy() {
-        return dummy.get();
-    }
-
-    public void setDummy(int dummy) {
-        this.dummy.set(dummy);
-    }
-
-    public IntegerProperty dummyValueProperty(){
-        return dummy; 
-    }
-
-    public void decrementDummy(){
-        setDummy(getDummy() - 1);
-    }
-
-    /**
-     * list of x,y coordinate pairs in the order by which moving entities traverse
-     * them
-     */
+  
+    //  * list of x,y coordinate pairs in the order by which moving entities traverse
+    //  * them
+    //  */
     private List<Pair<Integer, Integer>> orderedPath;
 
     private int shopCounter = 1;
@@ -138,7 +112,6 @@ public class LoopManiaWorld {
         buildingEntities = new ArrayList<>();
         goldEntities = new ArrayList<>();
         allRareItems = new ArrayList<>();
-        dummy.set(100);
     }
 
     public List<Pair<Integer, Integer>> getOrderedPath() {
@@ -451,8 +424,6 @@ public class LoopManiaWorld {
         detectCharacterisOnTile();
         detectEnemyisOnTile();
         detectEnemyInRadius();
-        decrementDummy();
-        System.out.println("Dummy has the value " + getDummy());
         // Everytime the character moves, check if the character has acheieved the world
         // goals
         worldGoals.checkGoalsMet(character.getStats(), numLoops);
