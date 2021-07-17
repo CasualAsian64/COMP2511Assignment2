@@ -14,5 +14,5 @@ public abstract class Equipment extends Item {
         super(x, y);
     }
 
-    public abstract int reduceAttack(int attack);
+    public abstract int increaseDefence(int increase);
 }

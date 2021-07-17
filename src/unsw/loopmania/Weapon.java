@@ -10,5 +10,5 @@ public abstract class Weapon extends Item {
         super(x, y);
     }
 
-    abstract public int getAttackIncrease(Enemy enemy);
+    abstract public int getAttackIncrease(MovingEntity opponent);
 }

@@ -12,8 +12,13 @@ public class Armour extends Equipment {
         this.type = "Armour";
     }
 
-    @Override
     public int reduceAttack(int attack) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int increaseDefence(int increase) {
         // TODO Auto-generated method stub
         return 0;
     }

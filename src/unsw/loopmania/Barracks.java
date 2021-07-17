@@ -1,6 +1,8 @@
 package unsw.loopmania;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -15,11 +17,13 @@ public class Barracks extends Building {
 
     @Override
     public void performActionOnCharacter(Character character) {
-        spawnAlliedSoldier(character.getAllies());
-    } 
+        spawnAlliedSoldier(character.getAllies(), character.getPathPosition());
+    }
 
-    public void spawnAlliedSoldier(ArrayList<AlliedSoldier> allies) {
-        AlliedSoldier newAlly = new AlliedSoldier();
+    public void spawnAlliedSoldier(ArrayList<AlliedSoldier> allies, PathPosition currentPosition) {
+        PathPosition pathPosition = new PathPosition(currentPosition.getCurrentPositionInPath(),
+                currentPosition.getOrderedPath());
+        AlliedSoldier newAlly = new AlliedSoldier(pathPosition);
 
         allies.add(newAlly);
         System.out.println("The character visited the Barracks");

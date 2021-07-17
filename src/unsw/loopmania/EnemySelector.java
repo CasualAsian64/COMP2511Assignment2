@@ -10,7 +10,7 @@ public class EnemySelector {
         switch (enemySelection) {
             case SLUG:
                 enemy = new Slug(position);
-               //System.out.println("Spawned a slug");
+                // System.out.println("Spawned a slug");
                 return enemy;
             case ZOMBIE:
                 enemy = new Zombie(position);

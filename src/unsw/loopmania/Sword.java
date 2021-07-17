@@ -13,8 +13,7 @@ public class Sword extends Weapon {
         this.type = "Sword";
     }
 
-    public int getAttackIncrease(Enemy enemy) {
+    public int getAttackIncrease(MovingEntity opponent) {
         return 10;
     }
 }
-

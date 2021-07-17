@@ -4,9 +4,7 @@ public class Slug extends Enemy {
     private final String type = "Slug";
 
     public Slug(PathPosition position) {
-        super(position, new Statistics(10, 3, 3, 20, 40));
-        battleRadius = 2;
-        supportRadius = 2;
+        super(position, new Statistics(10, 3, 3, 20, 40), 2, 2);
     }
 
     /**
@@ -16,17 +14,14 @@ public class Slug extends Enemy {
         moveUpPath();
     }
 
-    @Override
-    public Statistics getStats() {
-        return stats;
-    }
-
-    public int getBattleRadius() {
-        return battleRadius;
-    }
-
     public String getType() {
         return type;
+    }
+
+    @Override
+    public void reverseDirection() {
+        // TODO Auto-generated method stub
+
     }
 
 }

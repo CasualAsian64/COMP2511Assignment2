@@ -6,10 +6,6 @@ import java.util.ArrayList;
  * represents the main character in the backend of the game world
  */
 public class Character extends MovingEntity {
-    private ArrayList<Weapon> weapons;
-    private Weapon equippedWeapon;
-    private Equipment equipment;
-    private ArrayList<Building> buildingBuffs;
     private ArrayList<AlliedSoldier> allies;
 
     // TODO = potentially implement relationships between this class and other
@@ -17,30 +13,21 @@ public class Character extends MovingEntity {
 
     public Character(PathPosition position) {
         super(position, new Statistics(100, 5, 2, 0, 0));
-        weapons = new ArrayList<Weapon>();
-        equippedWeapon = null;
-        equipment = null;
         allies = new ArrayList<AlliedSoldier>();
 
     }
 
     public void move() {
-
     }
 
     public void collectRewards(Enemy e) {
         Statistics eStats = e.getStats();
         stats.setGold(eStats.getGold() + stats.getGold());
         stats.setExp(eStats.getExp() + stats.getExp());
-        // System.out.println("The characters gold: " + stats.getGold());
-        // System.out.println("The characters exp: " + stats.getExp());
     }
 
     public void attack(Statistics opponentStats) {
         int attack = stats.getAttack();
-        if (equipment != null) {
-            attack += equipment.getAttack();
-        }
         opponentStats.reduceHealth(attack);
     }
 
@@ -77,10 +64,12 @@ public class Character extends MovingEntity {
         return allies.get(0);
     }
 
-    public void removeSoldiers(ArrayList<AlliedSoldier> deadSoldiers) {
-        for (AlliedSoldier soldier : deadSoldiers) {
-            allies.remove(soldier);
-        }
+    public void removeSoldier(AlliedSoldier deadSoldier) {
+        allies.remove(deadSoldier);
+    }
+
+    public void setAttack(int newAttackValue) {
+        stats.setAttack(newAttackValue);
     }
 
 }

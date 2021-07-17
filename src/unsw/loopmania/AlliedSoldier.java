@@ -5,26 +5,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * Represents a vampire castle card in the backend game world
  */
-public class AlliedSoldier {
-    private int battleRadius;
-    private int supportRadius;
-    private Statistics stats;
+public class AlliedSoldier extends MovingEntity {
     private boolean isZombie;
 
-    public AlliedSoldier() {
-        this.stats = new Statistics(20, 2, 0, 0, 0);
-        this.battleRadius = 1;
-        this.supportRadius = 1;
+    public AlliedSoldier(PathPosition position) {
+        super(position, new Statistics(20, 2, 0, 0, 0));
         isZombie = false;
-    }
-
-    public void attack(Statistics enemyStats) {
-        int attack = stats.getAttack();
-        enemyStats.reduceHealth(attack);
-    }
-
-    public Statistics getStats() {
-        return stats;
     }
 
     public int getHealth() {
@@ -38,5 +24,11 @@ public class AlliedSoldier {
 
     public boolean getIsZombie() {
         return isZombie;
+    }
+
+    @Override
+    public void move() {
+        // TODO Auto-generated method stub
+
     }
 }

@@ -5,20 +5,24 @@ public abstract class Enemy extends MovingEntity {
     int supportRadius;
 
     // TODO = modify this, and add additional forms of enemy
-    public Enemy(PathPosition position, Statistics stats) {
+    public Enemy(PathPosition position, Statistics stats, int battleRadius, int supportRadius) {
         super(position, stats);
-    }
-
-    public void attack(Statistics opponentStats) {
-        int attack = stats.getAttack();
-        opponentStats.reduceHealth(attack);
+        this.battleRadius = battleRadius;
+        this.supportRadius = supportRadius;
     }
 
     public abstract void reverseDirection();
 
     public abstract void move();
 
-    public abstract int getBattleRadius();
+    public int getBattleRadius() {
+        return battleRadius;
+    }
+
+    public int getSupportRadius() {
+        return supportRadius;
+    }
 
     public abstract String getType();
+
 }

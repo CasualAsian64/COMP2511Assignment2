@@ -12,8 +12,8 @@ public class Stake extends Weapon {
         this.type = "Stake";
     }
 
-    public int getAttackIncrease(Enemy enemy) {
-        if (enemy instanceof Vampire) {
+    public int getAttackIncrease(MovingEntity opponent) {
+        if (opponent instanceof Vampire) {
             return 15;
         } else {
             return 5;
