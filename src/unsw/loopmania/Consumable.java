@@ -7,4 +7,8 @@ public class Consumable extends Item {
     public Consumable(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }
+
+    public String getItemType() {
+        return "Consumable";
+    }
 }

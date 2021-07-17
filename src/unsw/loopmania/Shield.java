@@ -13,7 +13,6 @@ public class Shield extends Equipment {
     }
 
     public int reduceAttack(int attack) {
-        // TODO Auto-generated method stub
         return 0;
     }
 

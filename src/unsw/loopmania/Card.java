@@ -22,7 +22,8 @@ public abstract class Card extends StaticEntity {
     public String getCardType() {
         return cardType;
     }
-    public void removeCardAward(Statistics stats) {
+    public void removeCardAward(Character character) {
+        Statistics stats = character.getStats();
         stats.setExp(stats.getExp() + EXPREWARD);
         stats.setGold(stats.getGold() + GOLDREWARD);
     }

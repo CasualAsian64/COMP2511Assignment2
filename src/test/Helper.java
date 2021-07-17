@@ -1,6 +1,10 @@
 package test;
 
+import unsw.loopmania.Building;
+import unsw.loopmania.BuildingSelector;
 import unsw.loopmania.Character;
+import unsw.loopmania.Enemy;
+import unsw.loopmania.EnemySelector;
 import unsw.loopmania.Goals;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
@@ -24,7 +28,17 @@ public class Helper {
     private static final int MAP1 = 1;
     private static final int MAP2 = 2;
 
-    public LoopManiaWorld createWorld(int currentPositionInPath, int mapNo) {
+    private static final int GOAL1 = 1;
+    private static final int GOAL2 = 2;
+
+    private static final int NORTH = 1;
+    private static final int SOUTH = 2;
+    private static final int EAST = 3;
+    private static final int WEST = 4;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public LoopManiaWorld createWorld(int mapNo) {
         int height = 0;
         int width = 0;
         switch(mapNo) {
@@ -71,6 +85,74 @@ public class Helper {
         Character c = new Character(pathPosition);
         return c;
     }
+
+    public Enemy createEnemySetup(int enemySelection, int currentPositionInPath, LoopManiaWorld world) {
+        List<Pair<Integer, Integer>> orderedPath = world.getOrderedPath();
+        PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
+        EnemySelector enemySelector = new EnemySelector();
+        Enemy enemy = enemySelector.getEnemy(enemySelection, pathPosition);
+        world.addEnemy(enemy);
+        return enemy;
+    }
+
+    public Character createCharacterSetup(int currentPositionInPath, LoopManiaWorld world) {
+        List<Pair<Integer, Integer>> orderedPath = world.getOrderedPath();
+        PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
+        Character character = new Character(pathPosition);
+        world.setCharacter(character);
+        return character;
+    }
+
+    public Building createBuildingSetup(String buildingSelection, int currentPositionInPath, LoopManiaWorld world, int direction) {
+        List<Pair<Integer, Integer>> orderedPath = world.getOrderedPath();
+        int x = orderedPath.get(currentPositionInPath).getValue0();
+        int y = orderedPath.get(currentPositionInPath).getValue1();
+        switch (direction) {
+            case NORTH:
+                y -= 1;
+                break;
+            case SOUTH:
+                y += 1;
+                break;
+            case WEST:
+                x -= 1;
+                break;
+            case EAST:
+                x += 1;
+        }
+        System.out.println(buildingSelection);
+        System.out.println(x);
+        System.out.println(y);
+        boolean buildingOnPath = world.checkBuildingOnPath(x, y);
+        boolean buildingNextToPath = world.checkBuildingNextToPath(x, y);
+        System.out.println("Building on path: " + buildingOnPath);
+        System.out.println("Building next to path: " + buildingNextToPath);
+        SimpleIntegerProperty xCoord = new SimpleIntegerProperty(x);
+        SimpleIntegerProperty yCoord = new SimpleIntegerProperty(y);
+        BuildingSelector buildingSelector = new BuildingSelector();
+        Building building = buildingSelector.getBuilding(buildingSelection, xCoord, yCoord, buildingOnPath, buildingNextToPath);
+        world.addBuilding(building);
+        return building;
+    }
+
+    public Goals createGoalsSetup(int goalSelection, LoopManiaWorld world) {
+        Goals goals = null;
+        switch (goalSelection) {
+            case GOAL1:
+                goals = new Goals(goalCondition1());
+                break;
+            case GOAL2:
+                goals = new Goals(goalCondition2());
+                break;
+        }
+        if (goals != null) {
+            world.setWorldGoals(goals);
+            return goals;
+        }
+        return null;
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Function to create Slug entity on the first tile path
@@ -162,6 +244,7 @@ public class Helper {
         return vampire;
     }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public JSONObject createJSONMap(int start_posX, int start_posY, int pathNo) {
         JSONObject world = new JSONObject();
         world.put("type", "path_tile");
