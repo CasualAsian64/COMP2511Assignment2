@@ -26,7 +26,8 @@ public class LoopManiaWorld {
     private static final int VAMPIRE = 2;
 
     private static final int GOLDRANDOMISER = 50;
-    private static final int ITEMRANDOMISER = 20;
+    private static final int ITEMRANDOMISER = 30;
+    private static final int CARDRANDOMISER = 20;
     /**
      * width of the world in GridPane cells
      */
@@ -184,13 +185,9 @@ public class LoopManiaWorld {
         this.character = character;
     }
 
-  
-
     public Character getCharacter() {
         return character;
     }
-
-    
 
     public Goals getWorldGoals() {
         return worldGoals;
@@ -404,7 +401,7 @@ public class LoopManiaWorld {
             removeCard(0);
         }
         Random randomCard = new Random();
-        int randCard = randomCard.nextInt(7);
+        int randCard = randomCard.nextInt(CARDRANDOMISER);
         CardSelector cardSelector = new CardSelector();
         Card card = cardSelector.getCard(randCard, cardEntities.size());
         if(card != null) {

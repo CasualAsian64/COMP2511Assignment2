@@ -17,7 +17,6 @@ public class ItemSelector {
 
     public Item getItem(int itemSelection, List<String> allRareItems, SimpleIntegerProperty x, SimpleIntegerProperty y, boolean oneRing) {
         Item item;
-        System.out.println(oneRing);
         if (itemSelection == ONERING && (!allRareItems.contains("the_one_ring") || oneRing)) {
             Random randomItem = new Random();
             itemSelection = randomItem.nextInt(7);
