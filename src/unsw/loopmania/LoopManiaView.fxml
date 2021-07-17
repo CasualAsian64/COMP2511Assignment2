@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -107,12 +106,12 @@
             <Button onAction="#switchToMainMenu" text="Exit to Main Menu" />
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="228.0" prefWidth="135.0">
                <children>
+                  <Label fx:id="healthLabel" layoutX="69.0" layoutY="35.0" prefHeight="17.0" prefWidth="42.0" textFill="#f53333" />
                   <ImageView id="healthCell" layoutX="15.0" layoutY="26.0">
                      <image>
                         <Image url="@../../images/heart.png" />
                      </image>
                   </ImageView>
-                  <TextField layoutX="59.0" layoutY="26.0" prefHeight="32.0" prefWidth="62.0" />
                   <ImageView id="goldCell" layoutX="15.0" layoutY="77.0">
                      <image>
                         <Image url="@../../images/gold_pile.png" />
@@ -123,14 +122,15 @@
                         <Font name="Arial Bold" size="19.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="59.0" layoutY="77.0" prefHeight="32.0" prefWidth="62.0" />
-                  <TextField layoutX="59.0" layoutY="125.0" prefHeight="32.0" prefWidth="62.0" />
                   <ImageView id="alliedSoldierCell" layoutX="15.0" layoutY="169.0">
                      <image>
                         <Image url="@../../images/deep_elf_master_archer.png" />
                      </image>
                   </ImageView>
-                  <TextField layoutX="59.0" layoutY="169.0" prefHeight="32.0" prefWidth="62.0" />
+                  <Label fx:id="expLabel" layoutX="67.0" layoutY="134.0" prefHeight="17.0" prefWidth="42.0" />
+                  <Label fx:id="alliesLabel" layoutX="68.0" layoutY="177.0" prefHeight="17.0" prefWidth="42.0" />
+                  <Label fx:id="goldLabel" layoutX="70.0" layoutY="85.0" prefHeight="17.0" prefWidth="42.0" />
+                  <Label fx:id="dummyLabel" layoutX="73.0" layoutY="5.0" />
                </children>
             </AnchorPane>
          </children>

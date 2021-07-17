@@ -28,8 +28,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.util.Duration;
 import java.util.EnumMap;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.binding.Bindings;
+
+
 
 import java.io.File;
 import java.io.IOException;
@@ -115,6 +122,19 @@ public class LoopManiaWorldController {
     @FXML
     private GridPane unequippedInventory;
 
+
+    @FXML
+    private Label healthLabel = new Label();
+    @FXML
+    private Label goldLabel = new Label();
+    @FXML
+    private Label expLabel = new Label();
+    @FXML
+    private Label alliesLabel = new Label();
+    @FXML
+    private Label dummyLabel = new Label();
+
+ 
     // all image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -329,6 +349,31 @@ public class LoopManiaWorldController {
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
+
+        // // Bidirectionally bind the TextFields to the characters stats 
+        SimpleIntegerProperty healthProperty = new SimpleIntegerProperty(world.getCharacter().getStats().getHealth());
+        SimpleIntegerProperty goldProperty = new SimpleIntegerProperty(world.getCharacter().getStats().getGold());
+        SimpleIntegerProperty expProperty = new SimpleIntegerProperty(world.getCharacter().getStats().getExp());
+        SimpleIntegerProperty alliesProperty = new SimpleIntegerProperty((world.getCharacter().getAllies()).size());
+
+
+        // healthLabel.textProperty().bind(healthProperty.asString());
+        healthLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().HealthValueProperty()));
+
+
+        goldLabel.textProperty().bind(goldProperty.asString());
+
+
+        expLabel.textProperty().bind(expProperty.asString());
+
+
+        alliesLabel.textProperty().bind(alliesProperty.asString());
+        // healthLabel.textProperty().bindBidirectional(healthProperty.asString());
+        // healthLabel.textProperty().bindBidirectional(healthProperty, null);
+
+        // textField.bindBirectional(world.character.health)
+
+        dummyLabel.textProperty().bind(Bindings.convert(world.dummyValueProperty()));
     }
 
     /**

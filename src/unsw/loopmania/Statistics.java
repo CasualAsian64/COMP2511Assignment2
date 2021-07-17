@@ -1,5 +1,8 @@
 package unsw.loopmania;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * Statistics for each entity
  */
@@ -9,6 +12,8 @@ public class Statistics {
     private int defense;
     private int exp;
     private int gold;
+    private SimpleIntegerProperty healthValue = new SimpleIntegerProperty(this, "healthValue");
+
 
     // Default constructor
     public Statistics() {
@@ -24,12 +29,15 @@ public class Statistics {
         this.defense = defense;
         this.exp = exp;
         this.gold = gold;
+        this.healthValue.set(health);
     }
 
     public int getHealth() {
+        getHealthProperty();
         return health;
     }
 
+    
     public int getAttack() {
         return attack;
     }
@@ -44,6 +52,7 @@ public class Statistics {
 
     public void setHealth(int health) {
         this.health = health;
+        setHealthProperty(health);
     }
 
     public void setAttack(int attack) {
@@ -67,6 +76,23 @@ public class Statistics {
         if (health < 0) {
             health = 0;
         }
+
+        // JAVAFX bindings
+        setHealthProperty(getHealthProperty() - value);
+        if (getHealthProperty() < 0){
+            setHealthProperty(0);
+        }
     }
 
+    public IntegerProperty HealthValueProperty(){
+        return healthValue;
+    }
+
+    public int getHealthProperty(){
+        return healthValue.get();
+    }
+
+    public void setHealthProperty(int health){ 
+        this.healthValue.set(health);
+    }
 }
