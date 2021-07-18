@@ -5,20 +5,27 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * Represents a Trap building in the backend game world
  */
-public class Trap extends Building {
+public class Trap extends Building implements EnemyTriggerBuilding {
     public Trap(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.type = "Trap";
     }    
 
-    @Override
+    /**
+    * Perform action on the enemy 
+    * Return true if enemy is killed, false if it still survives
+    */
+    // @Override
     public boolean performActionOnEnemy(Enemy e){
         // Deal damage to the enemy
         return inflictDamage(e, e.getStats());
 
     }
 
-    // Return true if the enemy is killed, false if it still survives
+    /**
+    * Inflict damage to the enemy that steps on the trap
+    * Return true if the enemy is killed, false if it still survives
+    */
     public boolean inflictDamage(Enemy enemy, Statistics enemyStats) {
 
         // Kill the enemy if it has less than 25 health 
