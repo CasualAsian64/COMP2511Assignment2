@@ -61,12 +61,11 @@ public class Statistics {
         return health;
     }
 
-    <<<<<<<HEAD=======/**
-                       * getter for Attack
-                       * 
-                       * @return int
-                       */
-    >>>>>>>main
+    /**
+     * getter for Attack
+     * 
+     * @return int
+     */
 
     public int getAttack() {
         return attack;
@@ -172,67 +171,6 @@ public class Statistics {
             setHealthProperty(0);
         }
     }
-
-    <<<<<<<HEAD
-
-    public IntegerProperty HealthValueProperty() {
-        return healthValue;
-    }
-
-    public int getHealthProperty() {
-        return healthValue.get();
-    }
-
-    public void setHealthProperty(int health) {
-        this.healthValue.set(health);
-    }
-
-    public IntegerProperty goldValueProperty() {
-        return goldValue;
-    }
-
-    public int getGoldProperty() {
-        return goldValue.get();
-    }
-
-    public void setGoldProperty(int gold) {
-        this.goldValue.set(gold);
-    }
-
-    public IntegerProperty expValueProperty() {
-        return expValue;
-    }
-
-    public int getExpProperty() {
-        return expValue.get();
-    }
-
-    public void setExpProperty(int exp) {
-        this.expValue.set(exp);
-    }
-
-    public IntegerProperty attackValueProperty() {
-        return attackValue;
-    }
-
-    public int getattackProperty() {
-        return attackValue.get();
-    }
-
-    public void setAttackProperty(int attack) {
-        this.attackValue.set(attack);
-    }
-
-    public IntegerProperty defenseValueProperty() {
-        return defenseValue;
-    }
-
-    public int getDefenseProperty() {
-        return defenseValue.get();
-    }
-
-    public void setDefenseProperty(int defense) {
-=======
 
     /**
      * method to get HealthValueProperty
@@ -362,10 +300,10 @@ public class Statistics {
 
     /**
      * setter for DefenseProperty
+     * 
      * @param defense
      */
-    public void setDefenseProperty(int defense){ 
->>>>>>> main
+    public void setDefenseProperty(int defense) {
         this.defenseValue.set(defense);
     }
 
