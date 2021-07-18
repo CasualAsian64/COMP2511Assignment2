@@ -6,14 +6,22 @@ import javafx.beans.property.SimpleIntegerProperty;
  * Represents an equipped or unequipped armour in the backend world
  */
 public class Armour extends Equipment {
-    // TODO = add more weapon/item types
+    /**
+     * constructor for Armour
+     * @param x
+     * @param y
+     */
     public Armour(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.type = "Armour";
     }
 
+    /**
+     * method to reduce attack
+     * @param attack
+     * @return int
+     */
     public int reduceAttack(int attack) {
-        // TODO Auto-generated method stub
         return 0;
     }
 }
