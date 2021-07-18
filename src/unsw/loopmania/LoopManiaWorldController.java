@@ -171,6 +171,9 @@ public class LoopManiaWorldController {
     private DragIcon draggedEntity;
     private boolean isPaused;
     private LoopManiaWorld world;
+    private Character character;
+    private Statistics statistics;
+    private Goals worldGoals;
 
     /**
      * runs the periodic game logic - second-by-second moving of character through
@@ -277,6 +280,9 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
+        this.character = world.getCharacter();
+        this.statistics = character.getStats();
+        this.worldGoals = world.getWorldGoals();
         entityImages = new ArrayList<>(initialEntities);
 
         vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
@@ -380,22 +386,22 @@ public class LoopManiaWorldController {
         gameSuccessScreen.setVisible(false);
 
         // bind the labels to the characters stats 
-        healthLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().HealthValueProperty()));
-        goldLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().goldValueProperty()));
-        expLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().expValueProperty()));
-        alliesLabel.textProperty().bind(Bindings.convert(world.getCharacter().alliesNumValueProperty()));
+        healthLabel.textProperty().bind(Bindings.convert(statistics.HealthValueProperty()));
+        goldLabel.textProperty().bind(Bindings.convert(statistics.goldValueProperty()));
+        expLabel.textProperty().bind(Bindings.convert(statistics.expValueProperty()));
+        alliesLabel.textProperty().bind(Bindings.convert(character.alliesNumValueProperty()));
         loopsLabel.textProperty().bind(Bindings.convert(world.LoopsValueProperty()));
-        attackLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().attackValueProperty()));
-        defenseLabel.textProperty().bind(Bindings.convert(world.getCharacter().getStats().defenseValueProperty()));
+        attackLabel.textProperty().bind(Bindings.convert(statistics.attackValueProperty()));
+        defenseLabel.textProperty().bind(Bindings.convert(statistics.defenseValueProperty()));
 
-        requiredGoldLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDGoldValueProperty()));
-        requiredExpLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDExpValueProperty()));
-        requiredLoopsLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ANDLoopsValueProperty()));
+        requiredGoldLabel.textProperty().bind(Bindings.convert(worldGoals.ANDGoldValueProperty()));
+        requiredExpLabel.textProperty().bind(Bindings.convert(worldGoals.ANDExpValueProperty()));
+        requiredLoopsLabel.textProperty().bind(Bindings.convert(worldGoals.ANDLoopsValueProperty()));
 
 
-        optionalGoldLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ORGoldValueProperty()));
-        optionalExpLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ORExpValueProperty()));
-        optionalLoopsLabel.textProperty().bind(Bindings.convert(world.getWorldGoals().ORLoopsValueProperty()));
+        optionalGoldLabel.textProperty().bind(Bindings.convert(worldGoals.ORGoldValueProperty()));
+        optionalExpLabel.textProperty().bind(Bindings.convert(worldGoals.ORExpValueProperty()));
+        optionalLoopsLabel.textProperty().bind(Bindings.convert(worldGoals.ORLoopsValueProperty()));
 
     }
 
@@ -768,7 +774,7 @@ public class LoopManiaWorldController {
                         Item item = world.getItem(nodeX, nodeY);
                         image = imageSelector.getImage(item, allItemImages);
                         
-                        if (item.getType().equals("HealthPotion") && !world.isGameOver()) {
+                        if (item instanceof HealthPotion && !world.isGameOver()) {
                             world.usePotion(item);
                         } else {
                             draggedEntity.setImage(image);

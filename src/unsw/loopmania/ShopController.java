@@ -17,10 +17,13 @@ public class ShopController {
 
     private MenuSwitcher gameSwitcher;
 
+    private Character character;
+
 
     public ShopController(LoopManiaWorld world) {
         this.world = world;
         this.shop = world.getShop();
+        this.character = world.getCharacter();
     }
     
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
@@ -125,7 +128,7 @@ public class ShopController {
 
     @FXML 
     public void handleConsumableMinus(ActionEvent event) { 
-        world.getShop().subtractPotion();
+        shop.subtractPotion();
     }
 
     @FXML 
@@ -138,73 +141,73 @@ public class ShopController {
     @FXML 
     public void handleSwordMinus(ActionEvent event) {
 
-        world.getShop().subtractSword();
+        shop.subtractSword();
     }
 
     @FXML 
     public void handleSwordPlus(ActionEvent event) {
 
-        world.getShop().addSword();
+        shop.addSword();
     }
 
     @FXML 
     public void handleStakeMinus(ActionEvent event) { 
 
-        world.getShop().subtractStake();
+        shop.subtractStake();
     }
 
     @FXML 
     public void handleStakePlus(ActionEvent event) { 
 
-        world.getShop().addStake();
+        shop.addStake();
     }
 
     @FXML 
     public void handleStaffMinus(ActionEvent event) { 
 
-        world.getShop().subtractStaff();
+        shop.subtractStaff();
     }
 
     @FXML 
     public void handleStaffPlus(ActionEvent event) { 
 
-        world.getShop().addStaff();
+        shop.addStaff();
     }
 
     @FXML 
     public void handleHelmetMinus(ActionEvent event) { 
 
-        world.getShop().subtractHelmet();
+        shop.subtractHelmet();
     }
 
     @FXML 
     public void handleHelmetPlus(ActionEvent event) { 
 
-        world.getShop().addHelmet();
+        shop.addHelmet();
     }
 
     @FXML 
     public void handleArmourMinus(ActionEvent event) { 
 
-        world.getShop().subtractArmour();
+        shop.subtractArmour();
     }
 
     @FXML 
     public void handleArmourPlus(ActionEvent event) { 
 
-        world.getShop().addArmour();
+        shop.addArmour();
     }
 
     @FXML 
     public void handleShieldMinus(ActionEvent event) { 
 
-        world.getShop().subtractShield();
+        shop.subtractShield();
     }
 
     @FXML 
     public void handleShieldPlus(ActionEvent event) { 
 
-        world.getShop().addShield();
+        shop.addShield();
     }
 
      /**
@@ -215,8 +218,8 @@ public class ShopController {
     @FXML
     public void handlePurchase(ActionEvent event) {
 
-        if (world.getShop().sufficientFunds(world)) {
-            world.getShop().finaliseTransaction(world.getCharacter().getStats(), world);
+        if (shop.sufficientFunds(character.getStats())) {
+            shop.finaliseTransaction(character.getStats(), world);
             notEnoughGold.setVisible(false);
             purchaseSuccessful.setVisible(true);
         }        
@@ -239,7 +242,7 @@ public class ShopController {
         notEnoughGold.setVisible(false);
         purchaseSuccessful.setVisible(false);
 
-        world.getShop().setShopping(false);
+        shop.setShopping(false);
     }
 
 
@@ -250,16 +253,16 @@ public class ShopController {
         availableGold.setText("0");
 
         
-        availableGold.textProperty().bind(Bindings.convert(world.getCharacter().getStats().goldValueProperty()));
-        totalNumberField.textProperty().bind(Bindings.convert(world.getShop().totalValue()));
+        availableGold.textProperty().bind(Bindings.convert(character.getStats().goldValueProperty()));
+        totalNumberField.textProperty().bind(Bindings.convert(shop.totalValue()));
 
-        consumableLabel.textProperty().bind(Bindings.convert(world.getShop().potionsValueProperty()));
-        swordLabel.textProperty().bind(Bindings.convert(world.getShop().swordsValueProperty()));
-        stakeLabel.textProperty().bind(Bindings.convert(world.getShop().stakesValueProperty()));
-        staffLabel.textProperty().bind(Bindings.convert(world.getShop().staffsValueProperty()));
-        helmetLabel.textProperty().bind(Bindings.convert(world.getShop().helmetsValueProperty()));
-        armourLabel.textProperty().bind(Bindings.convert(world.getShop().armoursValueProperty()));
-        shieldLabel.textProperty().bind(Bindings.convert(world.getShop().shieldsValueProperty()));
+        consumableLabel.textProperty().bind(Bindings.convert(shop.potionsValueProperty()));
+        swordLabel.textProperty().bind(Bindings.convert(shop.swordsValueProperty()));
+        stakeLabel.textProperty().bind(Bindings.convert(shop.stakesValueProperty()));
+        staffLabel.textProperty().bind(Bindings.convert(shop.staffsValueProperty()));
+        helmetLabel.textProperty().bind(Bindings.convert(shop.helmetsValueProperty()));
+        armourLabel.textProperty().bind(Bindings.convert(shop.armoursValueProperty()));
+        shieldLabel.textProperty().bind(Bindings.convert(shop.shieldsValueProperty()));
 
     }
 
