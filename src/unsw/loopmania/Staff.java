@@ -11,7 +11,7 @@ public class Staff extends Weapon {
         this.type = "Staff";
     }
 
-    public int getAttackIncrease(Enemy enemy) {
+    public int getIncrease() {
         return 2;
     }
 }

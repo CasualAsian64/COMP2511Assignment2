@@ -12,7 +12,7 @@ public class Shield extends Equipment {
         this.type = "Shield";
     }
 
-    public int reduceAttack(int attack) {
-        return 0;
-    }    
+    public int getIncrease() {
+        return 10;
+    }
 }

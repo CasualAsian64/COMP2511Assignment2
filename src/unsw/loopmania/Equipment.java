@@ -14,5 +14,6 @@ public abstract class Equipment extends Item {
     public String getItemType() {
         return "Equipment";
     }
-    //public abstract int reduceAttack(int attack);
+
+    abstract public int getIncrease();
 }

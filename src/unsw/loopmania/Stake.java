@@ -12,11 +12,7 @@ public class Stake extends Weapon {
         this.type = "Stake";
     }
 
-    public int getAttackIncrease(Enemy enemy) {
-        if (enemy instanceof Vampire) {
-            return 15;
-        } else {
-            return 5;
-        }
+    public int getIncrease() {
+        return 5;
     }
 }

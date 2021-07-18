@@ -13,6 +13,6 @@ public abstract class Weapon extends Item {
     public String getItemType() {
         return "Weapon";
     }
-    
-    abstract public int getAttackIncrease(Enemy enemy);
+
+    abstract public int getIncrease();
 }

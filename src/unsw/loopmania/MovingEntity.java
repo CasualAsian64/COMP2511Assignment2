@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import java.util.List;
+
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -77,4 +79,6 @@ public abstract class MovingEntity extends Entity {
         Statistics stats = this.getStats();
         return stats.getDefense();
     }
+
+    public abstract void attack(Statistics opponentStats, List<Item> equippedItems);
 }

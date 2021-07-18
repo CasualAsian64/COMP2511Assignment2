@@ -12,8 +12,7 @@ public class Armour extends Equipment {
         this.type = "Armour";
     }
 
-    public int reduceAttack(int attack) {
-        // TODO Auto-generated method stub
-        return 0;
+    public int getIncrease() {
+        return 5;
     }
 }
