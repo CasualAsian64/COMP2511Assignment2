@@ -10,17 +10,15 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
-
+/**
+ * tests for all enemy types (slugs, zombies, and vampires)
+ */  
 public class EnemyTest {
-    /**
-     * Tests for all enemy types (slugs, zombies, and vampires)
-     */  
- 
+
     private static final int MAP2 = 2;
 
     /**
-     * Test slug enemy type
+     * test slug movement through the world
      */
     @Test
     public void slugMovementTest() {
@@ -58,7 +56,7 @@ public class EnemyTest {
 
 
     /**
-     * Tests for zombie enemy type
+     * tests for zombie movement through the world
      */
     @Test
     public void zombieMovementTest() {
@@ -95,7 +93,7 @@ public class EnemyTest {
     }
 
     /**
-     * Tests for vampire enemy type
+     * Tests for vampire movement through the world
      */
     @Test
     public void vampireMovementTest() {
@@ -131,7 +129,9 @@ public class EnemyTest {
         assertEquals(vampire.getY(), 0);
     }   
 
-    
+    /**
+     * test if vampire entities move backwards when in the radius of the campfire
+     */
     @Test
     public void vampireBackwardsMovementTest() {
         Helper helper = new Helper();

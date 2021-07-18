@@ -8,16 +8,15 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * tests for basic character functionality
+ */
 public class CharacterTest {
     private static final int MAP1 = 1;
     private static final int MAP2 = 2;
 
-    /**
-     * Unit tests
-     */
-
      /**
-      * Have the character move around MAP 1 and assert that the character travels down the path correctly
+      * have the character move around MAP 1 and assert that the character travels down the path correctly
       */
     @Test
     public void test_character_movement_MAP1(){ 
@@ -39,7 +38,7 @@ public class CharacterTest {
     }
 
     /**
-      * Have the character move around MAP 2 and assert that the character travels down the path correctly
+      * have the character move around MAP 2 and assert that the character travels down the path correctly
       */
     @Test
     public void test_character_movement_MAP2(){
@@ -74,7 +73,7 @@ public class CharacterTest {
     }
 
     /**
-      * Assert that the character's stats when using the constructor are expected values
+      * assert that the character's stats when using the constructor are expected values
       */
     @Test
     public void test_character_stats(){
@@ -88,6 +87,9 @@ public class CharacterTest {
         assertEquals(characterStats.getExp(), 0);
     }
     
+    /**
+     * test if character is ontop of a particular tile
+     */
     @Test
     public void testCharacterOnTile() {
         Helper helper = new Helper();
@@ -110,5 +112,25 @@ public class CharacterTest {
         world.runTickMoves();
 
         world.runTickMoves();
+    }
+
+    /**
+     * test if character gains gold when spawned in the world
+     */
+    @Test
+    public void testGold() {
+        Helper helper = new Helper();
+        //  First create world based on map in helper
+        LoopManiaWorld world = helper.createWorld(1);
+        // Then create a character and place at a path index. For this e.g. I set it to be 0
+        Character character = helper.createCharacterSetup(0, world);
+        helper.createGoalsSetup(1, world);
+          
+        for (int i = 0; i < 66; i++) {
+          world.runTickMoves();
+          world.possiblySpawnGold();
+        }
+
+        assertEquals(character.getStats().getGold(), 0);
     }
 }
