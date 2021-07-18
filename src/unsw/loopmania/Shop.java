@@ -11,6 +11,11 @@ public class Shop {
     private int total = 0; 
     private IntegerProperty totalValue = new SimpleIntegerProperty(this,"totalValue"); 
 
+    private LoopManiaWorld world; 
+
+    public Shop(LoopManiaWorld world){
+        this.world = world;
+    }
 
     private ArrayList<HealthPotion> potions; 
     private ArrayList<Sword> swords; 
@@ -22,6 +27,30 @@ public class Shop {
     
    
     
+    
+   
+
+    public IntegerProperty totalValue() {
+        return totalValue;
+    }
+
+    public int getTotalValue(){
+        return totalValue.get();
+    }
+    public void setTotalValue(int totalValue) {
+        this.totalValue.set(totalValue);
+    }
+
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        setTotalValue(total);
+        this.total = total;
+    }
+
     public Shop() {
         this.total = 0; 
         this.shopping = false;
@@ -46,79 +75,100 @@ public class Shop {
     }
 
     public void addPotion(){
-        total = total + 10; 
-        HealthPotion potion = new HealthPotion();
-        potions.add(potion);
+        setTotal(getTotal() + 10);
+        // HealthPotion potion = new HealthPotion(0,0);
+        // potions.add(potion);
+
+        world.addUnequippedItem();
     }
     public void subtractPotion(){
-        total = total - 10; 
-        potions.remove(0);
+        // total = total - 10; 
+        setTotal(getTotal() - 10);
+        // potions.remove(0);
     }
     
     public void addSword(){
-        total = total + 50;
-        Sword sword = new Swords(); 
-        swords.add(sword);
+
+        setTotal(getTotal() + 50);
+        // Sword sword = new Sword(); 
+        // swords.add(sword);
     }
     public void subtractSword(){
-        total = total - 50; 
-        swords.remove(0);
+
+        setTotal(getTotal() - 50);
+
+        // swords.remove(0);
     }
     
     public void addStaff() {
-        total = total + 80; 
-        Staff staff = new Staff();
-        staffs.add(staff);
+
+        setTotal(getTotal() + 80);
+
+        // Staff staff = new Staff();
+        // staffs.add(staff);
     }
     public void subtractStaff(){
-        total = total - 90; 
-        staffs.remove(0);
+
+        setTotal(getTotal() - 80);
+
+        // staffs.remove(0);
     }
 
     public void addStake(){
-        total = total + 30; 
-        Stake stake = new Stake();
-        stakes.add(stake);
+
+        setTotal(getTotal() + 30);
+        // Stake stake = new Stake();
+        // stakes.add(stake);
     }
     public void subtractStake(){
-        total = total - 30; 
-        stakes.remove(0);
+        setTotal(getTotal() - 30);
+
+        // stakes.remove(0);
     }
 
     public void addHelmet(){
-        total = total + 20; 
-        Helmet helmet = new Helmet();
-        helmets.add(helmet);
+
+        setTotal(getTotal() + 20);
+
+        // Helmet helmet = new Helmet();
+        // helmets.add(helmet);
     }
     public void subtractHelmet(){
-        total = total - 20; 
-        helmets.remove(0);
+
+        setTotal(getTotal() - 20);
+
+        // helmets.remove(0);
     }
     
     public void addArmour(){
-        total = total + 70; 
-        Armour armour = new Armour();
-        armours.add(armour);
+
+        setTotal(getTotal() + 70);
+
+        // Armour armour = new Armour();
+        // armours.add(armour);
     }
     public void subtractArmour(){
-        total = total - 70; 
-        armours.remove(0);
+
+        setTotal(getTotal() - 70);
+
+        // armours.remove(0);
     }
 
     public void addShield(){
-        total = total + 40; 
-        Shield shield = new Shield; 
-        shields.add(shield);
+
+        setTotal(getTotal() + 40);
+
+
     }
     public void subtractShield(){
-        total = total - 40; 
-        shields.remove(0);
+        setTotal(getTotal() - 70);
+        // shields.remove(0);
     }
 
     public boolean sufficientFunds(){
 
          // Compare total with Character's gold
-        if (total > stats.getGold()){
+        if (total > world.getCharacter().getStats().getGold()){
             // Not enough gold
             // System.out.println("Not enough gold!");
             return false; 

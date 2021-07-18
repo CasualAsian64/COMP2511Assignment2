@@ -11,18 +11,29 @@ import javafx.beans.binding.Bindings;
 
 public class ShopController {
     
-    // TODO - need to feed this 
     private LoopManiaWorld world;
+
+    private Shop shop;
 
     private MenuSwitcher gameSwitcher;
 
 
-    // public ShopController(Shop world.getShop(), LoopManiaWorld world) {
+    public ShopController(LoopManiaWorld world) {
+        this.world = world;
+        this.shop = world.getShop();
+    }
+
+    // public void setLoopManiaWorld(LoopManiaWorld world) {
     //     this.world = world;
-    //     this.shop = shop; 
+    // }
+    
+
+    // public LoopManiaWorld getWorld() {
+    //     return world;
     // }
 
 
+    
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
         this.gameSwitcher = gameSwitcher;
     }
@@ -114,7 +125,8 @@ public class ShopController {
     public void handleConsumablePlus(ActionEvent event) { 
         int value = Integer.parseInt(consumableNumberField.getText());
         consumableNumberField.setText(Integer.toString(value + 1));
-        world.getShop().addPotion();
+        // world.getShop().addPotion();
+        shop.addPotion();
     }
 
 
@@ -197,7 +209,8 @@ public class ShopController {
 
     @FXML 
     public void handleShieldPlus(ActionEvent event) { 
-        int value = Integer.parseInt(shieldNumberField.getText());berField.setText(Integer.toString(value + 1));
+        int value = Integer.parseInt(shieldNumberField.getText());
+        shieldNumberField.setText(Integer.toString(value + 1));
         world.getShop().addShield();
     }
 
@@ -212,7 +225,9 @@ public class ShopController {
 
         else {
             // TODO - trigger the not enough gold
-            System.out.println("not enough gold!");
+            // System.out.println("not enough gold!");
+
+            notEnoughGold.setVisible(true);
         }
 
     }
@@ -239,10 +254,10 @@ public class ShopController {
         totalNumberField.setText("0");
         availableGold.setText("0");
 
-
+        
         // TODO - bindings not working for labels
-        // availableGold.textProperty().bind(Bindings.convert(world.getCharacter().getStats().goldValueProperty()));
-
+        availableGold.textProperty().bind(Bindings.convert(world.getCharacter().getStats().goldValueProperty()));
+        totalNumberField.textProperty().bind(Bindings.convert(world.getShop().totalValue()));
     }
 
 
