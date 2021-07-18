@@ -11,28 +11,23 @@ import unsw.loopmania.Trap;
 import unsw.loopmania.Vampire;
 
 import org.junit.Test;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.conversions.Conversion;
-
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.util.Pair;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
-
+/**
+ * tests for all building types (barracks, campfire, heroscastle, tower, trap, vampirecastle, village, zombiepit)
+ */  
 public class BuildingTest {
     private static final int CURRENT = 0;
     private static final int NORTH = 1;
     private static final int SOUTH = 2;
     private static final int EAST = 3;
     private static final int WEST = 4;
-
-    /**
-     * Tests for all building types (barracks, campfire, heroscastle, tower, trap, vampirecastle, village, zombiepit)
-     */  
- 
     private static final int MAP1 = 1;
 
+    /**
+     * test the creation and placement of buildings onto the world
+     */
     @Test
     public void testHelperBuilding() {
         Helper helper = new Helper();
@@ -78,7 +73,7 @@ public class BuildingTest {
     }
 
     /**
-     * Test if barracks spawn allies
+     * test if barracks spawn allies
      */
     @Test
     public void barracksSpawnAllyTest() {
@@ -104,6 +99,9 @@ public class BuildingTest {
         assertEquals(character.getAllies().size(), 2);
     }
 
+    /**
+     * test if zombiePit and vampireCastle spawn the correct enemy
+     */
     @Test
     public void testSpawningEnemies() {
         Helper helper = new Helper();
@@ -116,6 +114,7 @@ public class BuildingTest {
 
         world.possiblySpawnGold();
 
+        // spawn enemies
         world.possiblySpawnEnemies();
 
         // assert, no zombies or vampires should exist
@@ -145,7 +144,7 @@ public class BuildingTest {
     }
 
     /**
-     * Test if hero'sCastle detects if player is ontop of it
+     * test if hero'sCastle detects if player is ontop of it
      */
     @Test
     public void herosCastleShopTest() {
@@ -167,7 +166,7 @@ public class BuildingTest {
     }
 
     /**
-     * Test if trap inflicts damage on enemy
+     * test if trap inflicts damage on enemy
      */
     @Test
     public void trapDamageTest() {
@@ -190,6 +189,9 @@ public class BuildingTest {
         assertEquals(vampire.getHealth(), 25);
     }
 
+    /**
+     * test to dectect if enemy is ontop and is killed by a trap
+     */
     @Test
     public void detectIfEnemyIsOnTrap() {
         Helper helper = new Helper();
@@ -211,11 +213,15 @@ public class BuildingTest {
         world.runTickMoves();
         world.runTickMoves();
 
+        // as enemy is killed by trap, getEnemies.size() should be 0
         assertEquals(world.getEnemies().size(), 0);
     }
 
+    /**
+     * test the tower will kill enemy entites within its radius
+     */
     @Test
-    public void towerRangeTest() {
+    public void towerKillTest() {
         Helper helper = new Helper();
         //  First create world based on map in helper
         LoopManiaWorld world = helper.createWorld(1);
@@ -240,7 +246,9 @@ public class BuildingTest {
         assertEquals(world.getEnemies().size(), 0);
     }
 
-
+    /**
+     * test to check if tower will damage enemies within its radius
+     */
     @Test
     public void towerAttackTest() {
         Helper helper = new Helper();
@@ -268,6 +276,9 @@ public class BuildingTest {
         assertEquals(world.getEnemies().size(), 4);
     }
 
+    /**
+     * test to check if vampire is affected by the campfire when in its radius
+     */
     @Test
     public void vampireInCampfireRadius() {
         Helper helper = new Helper();
@@ -299,24 +310,9 @@ public class BuildingTest {
         assertEquals(enemy.getY(), 0);
     }
 
-    @Test
-    public void checkBuildingNextToPathTest() {
-        Helper helper = new Helper();
-        //  First create world based on map in helper
-        LoopManiaWorld world = helper.createWorld(1);
-        // Then create a character and place at a path index. For this e.g. I set it to be 0
-        helper.createCharacterSetup(1, world);
-        // Create a enemy and place at a path index. For this e.g. I set it to be 1 and 0 is the enemy selector which selects slug
-        helper.createGoalsSetup(1, world);
-
-        Building building = helper.createBuildingSetup("TowerCard", 5, world, NORTH);
-
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!! CASE WHERE CHECKBUILDINGNEXTTOPATH RETURNS FALSE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        assertEquals(world.checkBuildingNextToPath(building.getX(), building.getY()), true);
-
-        world.runTickMoves();
-    }
-
+    /**
+     * test if the player is able to interact with the hero's castle
+     */
     @Test
     public void herosCastleTest() {
         Helper helper = new Helper();
@@ -340,6 +336,9 @@ public class BuildingTest {
         world.runTickMoves();
     }
 
+    /**
+     * test if the zombiePits spawn enemies given the player walks over the hero's castle
+     */
     @Test
     public void herosCastleRespawnZombieLoopTest() {
         Helper helper = new Helper();
@@ -355,6 +354,7 @@ public class BuildingTest {
         HerosCastle building = new HerosCastle(xCoord, yCoord);
         world.addBuilding(building);
 
+        // increment world loops to 1 and move player to hero's castle
         world.incrementLoops();
         world.runTickMoves();
         world.runTickMoves();
@@ -364,12 +364,17 @@ public class BuildingTest {
         helper.createBuildingSetup("ZombiePitCard", 30, world, 2);
         world.possiblySpawnEnemies();
 
+        // player is ontop of castle
         assertEquals(character.getX(), 0);
         assertEquals(character.getY(), 0);
 
+        // zombie should have spawned as conditions have been met
         assertEquals(world.checkZombieSpawned(), true);
     }
     
+    /**
+     * test if the vampireRespawnLoop increments after a vampire is spawned 
+     */
     @Test
     public void herosCastleRespawnVampireLoopTest() {
         Helper helper = new Helper();
@@ -390,33 +395,39 @@ public class BuildingTest {
         //world.possiblySpawnEnemies();
         assertEquals(world.checkVampireSpawned(), false);
 
+        // increment world loops
         for (int i = 0; i < 4; i++) {
             world.incrementLoops();
         }
         assertEquals(world.getNumLoops(), 4);
 
+        // move player character ontop of hero's castle
         world.runTickMoves();
-
         assertEquals(character.getX(), 0);
         assertEquals(character.getY(), 0);
 
         assertEquals(world.getNumLoops(), 5);
 
-        //world.possiblySpawnEnemies();
         assertEquals(world.checkVampireSpawned(), false);
         
+        // move player through world
         for (int i = 0; i < 66; i++) {
             world.runTickMoves();
         }
 
+        // spawn any possible vampires
         world.possiblySpawnEnemies();
 
+        // assert the lops have incremented
         assertEquals(world.getNumLoops(), 6);
 
         assertEquals(character.getX(), 0);
         assertEquals(character.getY(), 0);
     }
 
+    /**
+     * test if vampireEnemy is spawned from vampireCastle
+     */
     @Test
     public void testEnemySpawnPositions() {
         Helper helper = new Helper();
@@ -432,26 +443,27 @@ public class BuildingTest {
         HerosCastle building = new HerosCastle(xCoord, yCoord);
         world.addBuilding(building);
 
+        // spawn vampire building
         assertEquals(world.checkVampireBuilding(), false);
         helper.createBuildingSetup("VampireCastleCard", 30, world, 1);
         world.possiblySpawnEnemies();
         assertEquals(world.checkVampireSpawned(), false);
 
+        // iterate through world to get to loop 5
         for (int i = 0; i < 4; i++) {
             world.incrementLoops();
         }
         assertEquals(world.getNumLoops(), 4);
-
         world.runTickMoves();
-
         assertEquals(character.getX(), 0);
         assertEquals(character.getY(), 0);
-
         assertEquals(world.getNumLoops(), 5);
 
+        // spawn vampire entity
         world.possiblySpawnEnemies();
         assertEquals(world.checkVampireSpawned(), true);
         
+        // iterate through world until character is at hero's castle again
         for (int i = 0; i < 66; i++) {
             world.runTickMoves();
         }
@@ -462,18 +474,5 @@ public class BuildingTest {
 
         assertEquals(character.getX(), 0);
         assertEquals(character.getY(), 0);
-    }
-
-    @Test
-    public void testCardToBuildingByCoordintes() {
-        Helper helper = new Helper();
-        //  First create world based on map in helper
-        LoopManiaWorld world = helper.createWorld(1);
-        // Then create a character and place at a path index. For this e.g. I set it to be 0
-        helper.createCharacterSetup(1, world);
-        // Create a enemy and place at a path index. For this e.g. I set it to be 1 and 0 is the enemy selector which selects slug
-        helper.createGoalsSetup(1, world);
-
-        world.convertCardToBuildingByCoordinates(0, 0, 0, 0);
     }
 }
