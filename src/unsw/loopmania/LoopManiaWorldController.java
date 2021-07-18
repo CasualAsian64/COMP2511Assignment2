@@ -486,7 +486,7 @@ public class LoopManiaWorldController {
     }
 
     private void loadItem() {
-        world.addUnequippedItem();
+        world.addUnequippedItem(-1);
         List<Item> items = world.getUnequippedInventoryItems();
         for (Item i: items) {
             if (i != null) {
