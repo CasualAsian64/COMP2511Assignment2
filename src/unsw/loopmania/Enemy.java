@@ -3,24 +3,17 @@ package unsw.loopmania;
 import java.util.List;
 
 public abstract class Enemy extends MovingEntity {
-    int battleRadius;
-    int supportRadius;
-
     // TODO = modify this, and add additional forms of enemy
     public Enemy(PathPosition position, Statistics stats) {
         super(position, stats);
     }
 
-    public void attack(Character character, Statistics charStats) {
-        int attack = stats.getAttack();
-        charStats.reduceHealth(attack);
-    }
-
     public void attack(Statistics opponentStats, List<Item> equippedItems) {
         int attack = super.getAttack();
-        attack -= opponentStats.getDefense();
         attack = updateAttack(attack, equippedItems.get(2));
         attack = updateAttack(attack, equippedItems.get(3));
+        attack -= opponentStats.getDefense();
+        System.out.println("attack of enemy: " + attack);
         opponentStats.reduceHealth(attack);
     }
 
@@ -36,6 +29,8 @@ public abstract class Enemy extends MovingEntity {
     public abstract void move();
 
     public abstract int getBattleRadius();
+
+    public abstract int getSupportRadius();
 
     public abstract String getType();
 }

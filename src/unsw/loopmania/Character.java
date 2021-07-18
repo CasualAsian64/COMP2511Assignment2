@@ -43,10 +43,12 @@ public class Character extends MovingEntity {
     }
 
     public void attack(Statistics opponentStats, List<Item> equippedItems) {
+        updateStatistics(equippedItems);
         int attack = stats.getAttack();
         if (this.isBuffed) {
             attack = attack * 2;
         }
+        attack -= opponentStats.getDefense();
         opponentStats.reduceHealth(attack);
     }
 
@@ -61,24 +63,34 @@ public class Character extends MovingEntity {
             } else if (equippedItem != null && equippedItem instanceof Equipment) {
                 defense += equippedItem.getIncrease();
                 if (equippedItem instanceof Helmet) {
-                    // to fix this
-                    attack -= 5;
+                    Helmet helmet = (Helmet) equippedItem;
+                    attack -= helmet.decreaseAttack();
                 }
             }
         }
+        System.out.println("Character's attack: " + attack);
+        System.out.println("Character's defense: " + defense);
         stats.setAttack(attack);
         stats.setDefense(defense);
     }
 
-    public int increaseAttack(int attack, Item equippedItem) {
-        if (equippedItem != null) {
-            attack += equippedItem.getIncrease();
-        }
-        return attack;
-    }
-
     public ArrayList<AlliedSoldier> getAllies() {
         return allies;
+    }
+
+    public boolean alliedSoldierExists() {
+        if (allies.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public AlliedSoldier getAnAlliedSoldier() {
+        return allies.get(0);
+    }
+
+    public void removeSoldier(AlliedSoldier deadSoldier) {
+        allies.remove(deadSoldier);
     }
 
     public IntegerProperty alliesNumValueProperty() {

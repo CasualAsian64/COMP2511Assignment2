@@ -29,8 +29,7 @@ public class AlliedSoldier extends MovingEntity {
 
     }
 
-    @Override
     public void attack(Statistics opponentStats, List<Item> equippedItems) {
-        opponentStats.reduceHealth(stats.getAttack());
+        opponentStats.reduceHealth(super.getAttack() - opponentStats.getDefense());
     }
 }

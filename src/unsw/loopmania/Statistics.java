@@ -18,7 +18,6 @@ public class Statistics {
     private SimpleIntegerProperty attackValue = new SimpleIntegerProperty(this, "attackValue");
     private SimpleIntegerProperty defenseValue = new SimpleIntegerProperty(this, "defenseValue");
 
-
     // Default constructor
     public Statistics() {
         this.health = 0;
@@ -45,7 +44,6 @@ public class Statistics {
         return health;
     }
 
-    
     public int getAttack() {
         return attack;
     }
@@ -91,6 +89,9 @@ public class Statistics {
     }
 
     public void reduceHealth(int value) {
+        if (value < 0) {
+            value = 0;
+        }
         health = health - value;
         if (health < 0) {
             health = 0;
@@ -98,69 +99,68 @@ public class Statistics {
 
         // JAVAFX bindings
         setHealthProperty(getHealthProperty() - value);
-        if (getHealthProperty() < 0){
+        if (getHealthProperty() < 0) {
             setHealthProperty(0);
         }
     }
 
-    public IntegerProperty HealthValueProperty(){
+    public IntegerProperty HealthValueProperty() {
         return healthValue;
     }
 
-    public int getHealthProperty(){
+    public int getHealthProperty() {
         return healthValue.get();
     }
 
-    public void setHealthProperty(int health){ 
+    public void setHealthProperty(int health) {
         this.healthValue.set(health);
     }
 
-
-    public IntegerProperty goldValueProperty() { 
+    public IntegerProperty goldValueProperty() {
         return goldValue;
     }
 
-    public int getGoldProperty(){
+    public int getGoldProperty() {
         return goldValue.get();
     }
 
-    public void setGoldProperty(int gold){ 
+    public void setGoldProperty(int gold) {
         this.goldValue.set(gold);
     }
 
-    public IntegerProperty expValueProperty() { 
+    public IntegerProperty expValueProperty() {
         return expValue;
     }
 
-    public int getExpProperty(){
+    public int getExpProperty() {
         return expValue.get();
     }
 
-    public void setExpProperty(int exp){ 
+    public void setExpProperty(int exp) {
         this.expValue.set(exp);
     }
 
-    public IntegerProperty attackValueProperty() { 
+    public IntegerProperty attackValueProperty() {
         return attackValue;
     }
 
-    public int getattackProperty(){
+    public int getattackProperty() {
         return attackValue.get();
     }
 
-    public void setAttackProperty(int attack){ 
+    public void setAttackProperty(int attack) {
         this.attackValue.set(attack);
     }
 
-    public IntegerProperty defenseValueProperty() { 
+    public IntegerProperty defenseValueProperty() {
         return defenseValue;
     }
 
-    public int getDefenseProperty(){
+    public int getDefenseProperty() {
         return defenseValue.get();
     }
 
-    public void setDefenseProperty(int defense){ 
+    public void setDefenseProperty(int defense) {
         this.defenseValue.set(defense);
     }
 

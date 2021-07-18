@@ -2,6 +2,8 @@ package unsw.loopmania;
 
 public class Slug extends Enemy {
     private final String type = "Slug";
+    int battleRadius;
+    int supportRadius;
 
     public Slug(PathPosition position) {
         super(position, new Statistics(10, 3, 3, 20, 40));
@@ -21,10 +23,6 @@ public class Slug extends Enemy {
         return stats;
     }
 
-    public int getBattleRadius() {
-        return battleRadius;
-    }
-
     public String getType() {
         return type;
     }
@@ -32,7 +30,15 @@ public class Slug extends Enemy {
     @Override
     public void reverseDirection() {
         // TODO Auto-generated method stub
-        
+
+    }
+
+    public int getSupportRadius() {
+        return supportRadius;
+    }
+
+    public int getBattleRadius() {
+        return battleRadius;
     }
 
 }

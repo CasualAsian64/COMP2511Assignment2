@@ -340,9 +340,14 @@ public class LoopManiaWorld {
     public void soldierEnemyBattle(AlliedSoldier soldier, Enemy enemy) {
         // need to have alliedSoldier
         while (soldier.getHealth() > 0) {
+            System.out.println("Soldier and enemy battle");
             soldier.attack(enemy.getStats(), equippedInventoryItems);
             if (enemy.getHealth() == 0) {
                 break;
+            }
+            if (enemy instanceof Zombie) {
+                Zombie zombie = (Zombie) enemy;
+                zombie.possiblyTurnSoldier(soldier);
             }
             enemy.attack(soldier.getStats(), equippedInventoryItems);
         }
@@ -350,7 +355,9 @@ public class LoopManiaWorld {
 
     public void characterEnemyBattle(MovingEntity enemy) {
         while (character.getHealth() > 0) {
+            System.out.println("Character and enemy battle");
             character.attack(enemy.getStats(), equippedInventoryItems);
+            System.out.println("Enemy's health: " + enemy.getHealth());
             if (enemy.getHealth() == 0) {
                 break;
             }
@@ -370,8 +377,39 @@ public class LoopManiaWorld {
             // TODO = you should implement different RHS on this inequality, based on
             // influence radii and battle radii
 
-            if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < e
-                    .getBattleRadius()) {
+            if (e.getHealth() > 0 && Math.pow((character.getX() - e.getX()), 2)
+                    + Math.pow((character.getY() - e.getY()), 2) < e.getBattleRadius()) {
+
+                if (character.alliedSoldierExists()) {
+                    AlliedSoldier soldier = character.getAnAlliedSoldier();
+                    // allied soldier and enemy battle
+                    soldierEnemyBattle(soldier, e);
+
+                    if (soldier.getIsZombie()) {
+                        // allied soldier - turned zombie - battles the character
+                        System.out.println("Allied zombie fight: Zombie's health is: " + soldier.getHealth());
+                        characterEnemyBattle(soldier);
+                    }
+
+                    // soldier has died, it can no longer fight for the character
+                    if (soldier.getHealth() == 0) {
+                        character.removeSoldier(soldier);
+                    }
+                }
+                // enemy and character battle
+                characterEnemyBattle(e);
+
+                // character fights all the supporting enemies
+                for (Enemy enemy : enemies) {
+                    // the supporting enemy is alive and is in range
+                    if (enemy.getHealth() > 0 && (Math.pow((character.getX() - enemy.getX()), 2)
+                            + Math.pow((character.getY() - enemy.getY()), 2) < enemy.getSupportRadius())) {
+                        characterEnemyBattle(enemy);
+                        if (enemy.getHealth() == 0) {
+                            defeatedEnemies.add(enemy);
+                        }
+                    }
+                }
 
                 if (character.getHealth() == 0) {
                     if (checkTheOneRingInUnequippedItems()) {
@@ -385,9 +423,9 @@ public class LoopManiaWorld {
                     } else {
                         triggerGameOver();
                     }
-                    character.collectRewards(e);
-                    defeatedEnemies.add(e);
                 }
+                character.collectRewards(e);
+                defeatedEnemies.add(e);
 
             }
 

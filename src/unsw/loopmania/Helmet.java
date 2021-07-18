@@ -16,4 +16,8 @@ public class Helmet extends Equipment {
         return 2;
     }
 
+    public int decreaseAttack() {
+        return 2;
+    }
+
 }
