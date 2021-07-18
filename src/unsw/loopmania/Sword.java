@@ -7,12 +7,19 @@ import javafx.beans.property.SimpleIntegerProperty;
  */
 
 public class Sword extends Weapon {
-    // TODO = add more weapon/item types
+    /**
+     * constructor for Staff
+     * @param x
+     * @param y
+     */
     public Sword(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.type = "Sword";
     }
 
+    /**
+     * getter for AttackIncrease
+     */
     public int getAttackIncrease(Enemy enemy) {
         return 10;
     }
