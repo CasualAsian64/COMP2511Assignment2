@@ -1,24 +1,36 @@
 package unsw.loopmania;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import java.util.List;
 
 /**
  * Represents a vampire castle card in the backend game world
  */
-public class AlliedSoldier {
-    private int battleRadius;
-    private int supportRadius;
+public class AlliedSoldier extends MovingEntity {
     private Statistics stats;
     private boolean isZombie;
 
-    public AlliedSoldier() {
-        this.stats = new Statistics(20, 2, 0, 0, 0);
-        this.battleRadius = 1;
-        this.supportRadius = 1;
+    public AlliedSoldier(PathPosition position) {
+        super(position, new Statistics(20, 2, 0, 0, 0));
         isZombie = false;
     }
 
-    public Statistics getStats() {
-        return stats;
+    public void setIsZombie() {
+        isZombie = true;
+        stats.setAttack(5);
+    }
+
+    public boolean getIsZombie() {
+        return isZombie;
+    }
+
+    @Override
+    public void move() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void attack(Statistics opponentStats, List<Item> equippedItems) {
+        opponentStats.reduceHealth(stats.getAttack());
     }
 }

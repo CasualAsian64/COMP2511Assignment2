@@ -81,4 +81,8 @@ public abstract class MovingEntity extends Entity {
     }
 
     public abstract void attack(Statistics opponentStats, List<Item> equippedItems);
+
+    public PathPosition getPathPosition() {
+        return position;
+    }
 }

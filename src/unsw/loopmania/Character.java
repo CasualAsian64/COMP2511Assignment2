@@ -42,9 +42,12 @@ public class Character extends MovingEntity {
         this.isBuffed = isBuffed;
     }
 
-    public void attack(Statistics enemyStats, List<Item> equippedItems) {
+    public void attack(Statistics opponentStats, List<Item> equippedItems) {
         int attack = stats.getAttack();
-        enemyStats.reduceHealth(attack);
+        if (this.isBuffed) {
+            attack = attack * 2;
+        }
+        opponentStats.reduceHealth(attack);
     }
 
     public void updateStatistics(List<Item> equippedItems) {
@@ -57,6 +60,10 @@ public class Character extends MovingEntity {
                 attack += equippedItem.getIncrease();
             } else if (equippedItem != null && equippedItem instanceof Equipment) {
                 defense += equippedItem.getIncrease();
+                if (equippedItem instanceof Helmet) {
+                    // to fix this
+                    attack -= 5;
+                }
             }
         }
         stats.setAttack(attack);
@@ -84,6 +91,10 @@ public class Character extends MovingEntity {
 
     public void incrementAlliesNumValueProperty() {
         this.alliesNumValue.set(getAlliesNumValueProperty() + 1);
+    }
+
+    public void setHealth(int value) {
+        stats.setHealth(value);
     }
 
 }

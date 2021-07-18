@@ -337,6 +337,27 @@ public class LoopManiaWorld {
         enemies.remove(enemy);
     }
 
+    public void soldierEnemyBattle(AlliedSoldier soldier, Enemy enemy) {
+        // need to have alliedSoldier
+        while (soldier.getHealth() > 0) {
+            soldier.attack(enemy.getStats(), equippedInventoryItems);
+            if (enemy.getHealth() == 0) {
+                break;
+            }
+            enemy.attack(soldier.getStats(), equippedInventoryItems);
+        }
+    }
+
+    public void characterEnemyBattle(MovingEntity enemy) {
+        while (character.getHealth() > 0) {
+            character.attack(enemy.getStats(), equippedInventoryItems);
+            if (enemy.getHealth() == 0) {
+                break;
+            }
+            enemy.attack(character.getStats(), equippedInventoryItems);
+        }
+    }
+
     /**
      * run the expected battles in the world, based on current world state
      * 
@@ -351,36 +372,25 @@ public class LoopManiaWorld {
 
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < e
                     .getBattleRadius()) {
-                // fight...
-                // if enemy instanceof zombie && allied exists: attack allied
-                while (true) {
-                    character.attack(e, e.getStats());
-                    if (e.getHealth() == 0) {
-                        break;
-                    }
-                    e.attack(character, character.getStats());
-                    if (character.getHealth() == 0) {
-                        if (checkTheOneRingInUnequippedItems()) {
-                            for (Item i : unequippedInventoryItems) {
-                                if (i.getType().equals("OneRing")) {
-                                    removeUnequippedInventoryItem(i);
-                                    System.out.println("The One Ring was destroyed!");
-                                    break;
-                                }
-                            }
-                            Statistics stats = character.getStats();
-                            stats.setHealth(100);
-                        } else {
-                            triggerGameOver();
-                        }
-                        break;
-                        // end the game
-                    }
 
+                if (character.getHealth() == 0) {
+                    if (checkTheOneRingInUnequippedItems()) {
+                        for (Item i : unequippedInventoryItems) {
+                            if (i.getType().equals("OneRing")) {
+                                removeUnequippedInventoryItem(i);
+                                break;
+                            }
+                        }
+                        character.setHealth(100);
+                    } else {
+                        triggerGameOver();
+                    }
+                    character.collectRewards(e);
+                    defeatedEnemies.add(e);
                 }
-                character.collectRewards(e);
-                defeatedEnemies.add(e);
+
             }
+
         }
         for (Enemy e : defeatedEnemies) {
             killEnemy(e);

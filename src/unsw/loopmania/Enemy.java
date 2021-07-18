@@ -17,7 +17,18 @@ public abstract class Enemy extends MovingEntity {
     }
 
     public void attack(Statistics opponentStats, List<Item> equippedItems) {
+        int attack = super.getAttack();
+        attack -= opponentStats.getDefense();
+        attack = updateAttack(attack, equippedItems.get(2));
+        attack = updateAttack(attack, equippedItems.get(3));
+        opponentStats.reduceHealth(attack);
+    }
 
+    public int updateAttack(int attack, Item equipment) {
+        if (equipment != null && equipment instanceof Armour) {
+            attack = attack / 2;
+        }
+        return attack;
     }
 
     public abstract void reverseDirection();
