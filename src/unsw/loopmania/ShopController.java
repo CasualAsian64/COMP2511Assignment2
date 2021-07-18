@@ -207,6 +207,11 @@ public class ShopController {
         world.getShop().addShield();
     }
 
+     /**
+    * Display whether the purchase is successful or if there is not enough gold 
+    * to complete the transaction after pressing the purchase button. 
+    * @param event
+    */
     @FXML
     public void handlePurchase(ActionEvent event) {
 
