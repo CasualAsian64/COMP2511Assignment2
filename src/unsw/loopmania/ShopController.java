@@ -217,15 +217,14 @@ public class ShopController {
     @FXML
     public void handlePurchase(ActionEvent event) {
 
-        if (world.getShop().sufficientFunds()) {
-            // world.getShop().finaliseTransaction(world.getCharacter().getStats(), world.getUnequippedInventoryItems());
-            // TODO - trigger the purchase successful pop up
+        if (world.getShop().sufficientFunds(world)) {
+            world.getShop().finaliseTransaction(world.getCharacter().getStats(), world);
             purchaseSuccessful.setVisible(true);
         }        
 
         else {
 
-
+            purchaseSuccessful.setVisible(false);
             notEnoughGold.setVisible(true);
         }
 

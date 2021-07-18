@@ -17,18 +17,14 @@ public class Shop {
         this.world = world;
     }
 
-    private ArrayList<HealthPotion> potions; 
-    private ArrayList<Sword> swords; 
-    private ArrayList<Stake> stakes; 
-    private ArrayList<Staff> staffs; 
-    private ArrayList<Helmet> helmets; 
-    private ArrayList<Armour> armours; 
-    private ArrayList<Shield> shields; 
-    
-   
-    
-    
-   
+    private int potions; 
+    private int swords; 
+    private int stakes; 
+    private int staffs; 
+    private int helmets; 
+    private int armours; 
+    private int shields; 
+       
 
     public IntegerProperty totalValue() {
         return totalValue;
@@ -54,13 +50,13 @@ public class Shop {
     public Shop() {
         this.total = 0; 
         this.shopping = false;
-        this.potions = new ArrayList<HealthPotion>(); 
-        this.swords = new ArrayList<Sword>(); 
-        this.stakes = new ArrayList<Stake>(); 
-        this.staffs = new ArrayList<Staff>(); 
-        this.helmets = new ArrayList<Helmet>(); 
-        this.armours = new ArrayList<Armour>(); 
-        this.shields = new ArrayList<Shield>(); 
+        this.potions = 0;
+        this.swords = 0;
+        this.stakes = 0;
+        this.staffs = 0;
+        this.helmets = 0;
+        this.armours = 0;
+        this.shields = 0;
     }
 
     private boolean shopping; 
@@ -74,144 +70,231 @@ public class Shop {
         this.shopping = shopping;
     }
 
+
+    
+
+    // public void setTotalValue(IntegerProperty totalValue) {
+    //     this.totalValue = totalValue;
+    // }
+
+    // public LoopManiaWorld getWorld() {
+    //     return world;
+    // }
+
+    // public void setWorld(LoopManiaWorld world) {
+    //     this.world = world;
+    // }
+
+    public int getPotions() {
+        return potions;
+    }
+
+    public void setPotions(int potions) {
+        this.potions = potions;
+    }
+
+    public int getSwords() {
+        return swords;
+    }
+
+    public void setSwords(int swords) {
+        this.swords = swords;
+    }
+
+    public int getStakes() {
+        return stakes;
+    }
+
+    public void setStakes(int stakes) {
+        this.stakes = stakes;
+    }
+
+    public int getStaffs() {
+        return staffs;
+    }
+
+    public void setStaffs(int staffs) {
+        this.staffs = staffs;
+    }
+
+    public int getHelmets() {
+        return helmets;
+    }
+
+    public void setHelmets(int helmets) {
+        this.helmets = helmets;
+    }
+
+    public int getArmours() {
+        return armours;
+    }
+
+    public void setArmours(int armours) {
+        this.armours = armours;
+    }
+
+    public int getShields() {
+        return shields;
+    }
+
+    public void setShields(int shields) {
+        this.shields = shields;
+    }
+
     public void addPotion(){
         setTotal(getTotal() + 10);
-        // HealthPotion potion = new HealthPotion(0,0);
-        // potions.add(potion);
+        setPotions(getPotions() + 1);
 
-        world.addUnequippedItem();
     }
     public void subtractPotion(){
-        // total = total - 10; 
-        setTotal(getTotal() - 10);
-        // potions.remove(0);
+        if (getPotions() > 0) {
+            setTotal(getTotal() - 10);
+            setPotions(getPotions()-1);
+        }
     }
     
     public void addSword(){
+        setTotal(getTotal() + 50); 
+        setSwords(getSwords()+1);
 
-        setTotal(getTotal() + 50);
-        // Sword sword = new Sword(); 
-        // swords.add(sword);
     }
     public void subtractSword(){
 
-        setTotal(getTotal() - 50);
-
-        // swords.remove(0);
+        if (getSwords() > 0) {
+            setTotal(getTotal() - 50);
+            setSwords(getSwords()-1);
+        }
     }
     
     public void addStaff() {
 
         setTotal(getTotal() + 80);
-
-        // Staff staff = new Staff();
-        // staffs.add(staff);
+        setStaffs(getStaffs()+1);
     }
     public void subtractStaff(){
-
-        setTotal(getTotal() - 80);
-
-        // staffs.remove(0);
+        
+        if (getStaffs() > 0) {
+            setTotal(getTotal() - 80);
+            setStaffs(getStaffs()-1);
+        }
     }
 
     public void addStake(){
 
         setTotal(getTotal() + 30);
-        // Stake stake = new Stake();
-        // stakes.add(stake);
+        setStakes(getStakes()+1);
     }
     public void subtractStake(){
-        setTotal(getTotal() - 30);
+        
+        if (getStakes() > 0) {
+            setTotal(getTotal() - 30);
+            setStakes(getStakes()-1);
 
-        // stakes.remove(0);
+        }
     }
 
     public void addHelmet(){
 
         setTotal(getTotal() + 20);
+        setHelmets(getHelmets()+1);
 
-        // Helmet helmet = new Helmet();
-        // helmets.add(helmet);
     }
     public void subtractHelmet(){
-
-        setTotal(getTotal() - 20);
-
-        // helmets.remove(0);
+        
+        if (getHelmets() > 0) {
+            setTotal(getTotal() - 20);
+            setHelmets(getHelmets()-1);
+        }
     }
     
     public void addArmour(){
 
         setTotal(getTotal() + 70);
 
-        // Armour armour = new Armour();
-        // armours.add(armour);
+        setArmours(getArmours()+1);
     }
     public void subtractArmour(){
 
-        setTotal(getTotal() - 70);
+        if (getArmours() > 0) {
 
-        // armours.remove(0);
+            setTotal(getTotal() - 70);
+            setArmours(getArmours()-1);
+
+        }
     }
 
     public void addShield(){
 
         setTotal(getTotal() + 40);
-
+        setShields(getShields()+1);
 
     }
     public void subtractShield(){
-        setTotal(getTotal() - 70);
-        // shields.remove(0);
+
+        if (getShields()> 0) {
+            setTotal(getTotal() - 70);
+            setShields(getShields()-1);
+        }
+       
     }
 
-    public boolean sufficientFunds(){
+    public boolean sufficientFunds(LoopManiaWorld world) {
 
          // Compare total with Character's gold
-        if (total > world.getCharacter().getStats().getGold()){
-            // Not enough gold
-            // System.out.println("Not enough gold!");
+        if (getTotal() > world.getCharacter().getStats().getGold()){
             return false; 
         }
 
         return true;
     }
 
-    public void finaliseTransaction(Statistics stats, List<Item> unequippedInventory) { 
+    public void finaliseTransaction(Statistics stats, LoopManiaWorld world) { 
 
     
-        // Add all the items to the unequipped inventory. 
-        for (HealthPotion hp: potions) {
-            unequippedInventory.add(hp);
+        // TODO Add all the purchased to the unequipped inventory. 
+        
+        while (getSwords() > 0) {
+            world.addUnequippedItem(0);
+            setSwords(getSwords()-1);
+        }
+        
+        while (getStakes() > 0) {
+            world.addUnequippedItem(1);
+            setStakes(getStakes()-1);
         }
 
-        for (Sword sword: swords) {
-            unequippedInventory.add(sword);
+
+        while (getArmours() > 0) {
+            world.addUnequippedItem(2);
+            setArmours(getArmours()-1);
         }
 
-        for (Stake stake: stakes) {
-            unequippedInventory.add(stake);
+        while (getHelmets() > 0) {
+            world.addUnequippedItem(3);
+            setHelmets(getHelmets()-1);
         }
 
-        for (Staff staff: staffs) {
-            unequippedInventory.add(staff);
+        while (getShields() > 0) {
+            world.addUnequippedItem(4);
+            setShields(getShields()-1);
+        }
+        
+        while (getPotions() > 0) {
+            world.addUnequippedItem(5);
+            setPotions(getPotions()-1);
         }
 
-        for (Helmet helmet: helmets) {
-            unequippedInventory.add(helmet);
+        while (getStaffs() > 0) {
+            world.addUnequippedItem(6);
+            setStaffs(getStaffs()-1);
         }
 
-        for (Armour armour: armours) { 
-            unequippedInventory.add(armour);
-        }
-
-        for (Shield shield: shields) { 
-            unequippedInventory.add(shield);
-        }
 
         // Decrement the players gold. 
-        stats.setGold(stats.getGold() - total); 
+        stats.setGold(stats.getGold() - getTotal()); 
 
+        // Set total back to zero after each transaction
+        setTotal(0);
 
     }
 

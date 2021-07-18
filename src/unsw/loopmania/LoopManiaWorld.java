@@ -98,7 +98,7 @@ public class LoopManiaWorld {
         this.gameWon = gameWon;
     }
 
-    private Shop shop = new Shop(this); 
+    private Shop shop = new Shop(); 
 
 
     public Shop getShop() {
