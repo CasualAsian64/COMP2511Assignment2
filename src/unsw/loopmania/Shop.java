@@ -1,7 +1,5 @@
 package unsw.loopmania;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -9,16 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Shop {
 
     private int total = 0; 
-    private IntegerProperty totalValue = new SimpleIntegerProperty(this,"totalValue"); 
-    private IntegerProperty potionsValue = new SimpleIntegerProperty(this,"potionsValue"); 
-    private IntegerProperty swordsValue = new SimpleIntegerProperty(this,"swordsValue"); 
-    private IntegerProperty stakesValue = new SimpleIntegerProperty(this,"stakesValue"); 
-    private IntegerProperty staffsValue = new SimpleIntegerProperty(this,"staffsValue"); 
-    private IntegerProperty helmetsValue = new SimpleIntegerProperty(this,"helmetsValue"); 
-    private IntegerProperty armoursValue = new SimpleIntegerProperty(this,"armoursValue"); 
-    private IntegerProperty shieldsValue = new SimpleIntegerProperty(this,"shieldsValue"); 
-
-
+    
     private LoopManiaWorld world; 
 
     public Shop(LoopManiaWorld world){
@@ -32,6 +21,15 @@ public class Shop {
     private int helmets; 
     private int armours; 
     private int shields; 
+
+    private IntegerProperty totalValue = new SimpleIntegerProperty(this,"totalValue"); 
+    private IntegerProperty potionsValue = new SimpleIntegerProperty(this,"potionsValue"); 
+    private IntegerProperty swordsValue = new SimpleIntegerProperty(this,"swordsValue"); 
+    private IntegerProperty stakesValue = new SimpleIntegerProperty(this,"stakesValue"); 
+    private IntegerProperty staffsValue = new SimpleIntegerProperty(this,"staffsValue"); 
+    private IntegerProperty helmetsValue = new SimpleIntegerProperty(this,"helmetsValue"); 
+    private IntegerProperty armoursValue = new SimpleIntegerProperty(this,"armoursValue"); 
+    private IntegerProperty shieldsValue = new SimpleIntegerProperty(this,"shieldsValue"); 
        
 
     public IntegerProperty totalValue() {
@@ -45,6 +43,9 @@ public class Shop {
         this.totalValue.set(totalValue);
     }
 
+
+
+
     public IntegerProperty potionsValueProperty() {
         return potionsValue;
     }
@@ -55,6 +56,9 @@ public class Shop {
     public void setPotionsValue(int potionsValue) {
         this.potionsValue.set(potionsValue);
     }
+
+
+
 
     public IntegerProperty swordsValueProperty() {
         return swordsValue;
@@ -67,6 +71,9 @@ public class Shop {
         this.swordsValue.set(swordsValue);
     }
 
+
+
+
     public IntegerProperty stakesValueProperty() {
         return stakesValue;
     }
@@ -77,6 +84,10 @@ public class Shop {
     public void setStakesValue(int stakesValue) {
         this.stakesValue.set(stakesValue);
     }
+
+
+
+
 
     public IntegerProperty staffsValueProperty() {
         return staffsValue;
@@ -90,6 +101,9 @@ public class Shop {
     }
 
 
+
+
+
     public IntegerProperty helmetsValueProperty() {
         return helmetsValue;
     }
@@ -101,6 +115,10 @@ public class Shop {
         this.helmetsValue.set(helmetsValue);
     }
 
+
+
+
+
     public IntegerProperty armoursValueProperty() {
         return armoursValue;
     }
@@ -111,6 +129,8 @@ public class Shop {
     public void setArmoursValue(int armoursValue) {
         this.armoursValue.set(armoursValue);
     }
+
+
 
 
     public IntegerProperty shieldsValueProperty() {
@@ -125,6 +145,8 @@ public class Shop {
     }
 
 
+
+    
     public int getTotal() {
         return total;
     }
@@ -148,7 +170,7 @@ public class Shop {
 
     private boolean shopping; 
 
-    
+
 
     public boolean isShopping() {
         return shopping;
@@ -160,17 +182,15 @@ public class Shop {
 
     
 
-    // public void setTotalValue(IntegerProperty totalValue) {
-    //     this.totalValue = totalValue;
-    // }
+    public LoopManiaWorld getWorld() {
+        return world;
+    }
 
-    // public LoopManiaWorld getWorld() {
-    //     return world;
-    // }
+    public void setWorld(LoopManiaWorld world) {
+        this.world = world;
+    }
 
-    // public void setWorld(LoopManiaWorld world) {
-    //     this.world = world;
-    // }
+
 
     public int getPotions() {
         return potions;
@@ -332,9 +352,14 @@ public class Shop {
        
     }
 
+    /**
+     * Determines whether there are sufficient funds to purchase the items requested
+     * Return true if there are enough funds, else false.
+     * @param world
+     */
     public boolean sufficientFunds(LoopManiaWorld world) {
 
-         // Compare total with Character's gold
+         // Total of requested items exceeds characters' gold
         if (getTotal() > world.getCharacter().getStats().getGold()){
             return false; 
         }
@@ -342,10 +367,17 @@ public class Shop {
         return true;
     }
 
+    /**
+     * Handles the finalising of the shop transaction.  
+     * Decrements each of the requested items from the shop and 
+     * adds to the character's inventory. 
+     * Decreases the character's gold.
+     * 
+     * @param stats
+     * @param world
+     */
     public void finaliseTransaction(Statistics stats, LoopManiaWorld world) { 
 
-    
-        // TODO Add all the purchased to the unequipped inventory. 
         
         while (getSwords() > 0) {
             world.addUnequippedItem(0);
@@ -356,7 +388,6 @@ public class Shop {
             world.addUnequippedItem(1);
             setStakes(getStakes()-1);
         }
-
 
         while (getArmours() > 0) {
             world.addUnequippedItem(2);
@@ -391,7 +422,4 @@ public class Shop {
         setTotal(0);
 
     }
-
-
-
 }
