@@ -1,7 +1,5 @@
 package unsw.loopmania;
 
-import java.util.List;
-
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
