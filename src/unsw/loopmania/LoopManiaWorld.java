@@ -365,6 +365,56 @@ public class LoopManiaWorld {
         }
     }
 
+    public void fightSupportingEnemies(List<Enemy> defeatedEnemies) {
+        for (Enemy enemy : enemies) {
+            // 1. Check the supporting enemy is alive and is in range
+            // Note: The supporting enemy will never be the current enemy as either they
+            // would have died (or the character has died - game ended).
+            // Therefore, the if condition will fail.
+            // 2. Check the character is within the supporting enemy's supprorting radius
+            if (enemy.getHealth() > 0 && this.isInSupportRange(enemy)) {
+                characterEnemyBattle(enemy);
+                this.checkCharacterHealth();
+                // enemy has died, destroy the enemy and collect the rewards
+                if (enemy.getHealth() == 0) {
+                    character.collectRewards(enemy);
+                    defeatedEnemies.add(enemy);
+                }
+            }
+        }
+    }
+
+    public void soldierPossiblyAttacksEnemy(Enemy enemy) {
+        // allied soldier exists - fights the enemy first
+        if (character.alliedSoldierExists()) {
+            AlliedSoldier soldier = character.getAnAlliedSoldier();
+            // allied soldier and enemy battle
+            soldierEnemyBattle(soldier, enemy);
+
+            if (soldier.getIsZombie()) {
+                // allied soldier - turned zombie - battles the character
+                System.out.println("Allied zombie fight: Zombie's health is: " + soldier.getHealth());
+                characterEnemyBattle(soldier);
+                this.checkCharacterHealth();
+            }
+
+            // soldier has died, it can no longer fight for the character
+            if (soldier.getHealth() == 0) {
+                character.removeSoldier(soldier);
+            }
+        }
+    }
+
+    public boolean isInBattleRange(Enemy enemy) {
+        return Math.pow((character.getX() - enemy.getX()), 2) + Math.pow((character.getY() - enemy.getY()), 2) < enemy
+                .getBattleRadius();
+    }
+
+    public boolean isInSupportRange(Enemy enemy) {
+        return Math.pow((character.getX() - enemy.getX()), 2) + Math.pow((character.getY() - enemy.getY()), 2) < enemy
+                .getSupportRadius();
+    }
+
     /**
      * run the expected battles in the world, based on current world state
      * 
@@ -373,67 +423,45 @@ public class LoopManiaWorld {
     public List<Enemy> runBattles() {
         List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
         for (Enemy e : enemies) {
-            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-            // TODO = you should implement different RHS on this inequality, based on
-            // influence radii and battle radii
-
-            if (e.getHealth() > 0 && Math.pow((character.getX() - e.getX()), 2)
-                    + Math.pow((character.getY() - e.getY()), 2) < e.getBattleRadius()) {
-
-                if (character.alliedSoldierExists()) {
-                    AlliedSoldier soldier = character.getAnAlliedSoldier();
-                    // allied soldier and enemy battle
-                    soldierEnemyBattle(soldier, e);
-
-                    if (soldier.getIsZombie()) {
-                        // allied soldier - turned zombie - battles the character
-                        System.out.println("Allied zombie fight: Zombie's health is: " + soldier.getHealth());
-                        characterEnemyBattle(soldier);
-                    }
-
-                    // soldier has died, it can no longer fight for the character
-                    if (soldier.getHealth() == 0) {
-                        character.removeSoldier(soldier);
-                    }
-                }
+            // 1. check enemy's health as they may have died from supporting a previous
+            // enemy
+            // 2. check the character is in the enemy's battle radius
+            if (e.getHealth() > 0 && this.isInBattleRange(e)) {
+                // if an allied soldier exists, it fights the enemy first
+                this.soldierPossiblyAttacksEnemy(e);
                 // enemy and character battle
                 characterEnemyBattle(e);
-
-                // character fights all the supporting enemies
-                for (Enemy enemy : enemies) {
-                    // the supporting enemy is alive and is in range
-                    if (enemy.getHealth() > 0 && (Math.pow((character.getX() - enemy.getX()), 2)
-                            + Math.pow((character.getY() - enemy.getY()), 2) < enemy.getSupportRadius())) {
-                        characterEnemyBattle(enemy);
-                        if (enemy.getHealth() == 0) {
-                            defeatedEnemies.add(enemy);
-                        }
-                    }
-                }
-
-                if (character.getHealth() == 0) {
-                    if (checkTheOneRingInUnequippedItems()) {
-                        for (Item i : unequippedInventoryItems) {
-                            if (i.getType().equals("OneRing")) {
-                                removeUnequippedInventoryItem(i);
-                                break;
-                            }
-                        }
-                        character.setHealth(100);
-                    } else {
-                        triggerGameOver();
-                    }
-                }
+                this.checkCharacterHealth();
                 character.collectRewards(e);
+                // by this point, either the enemy died or the game ended (the character died)
                 defeatedEnemies.add(e);
 
+                // character fights all the supporting enemies
+                this.fightSupportingEnemies(defeatedEnemies);
             }
-
         }
+
         for (Enemy e : defeatedEnemies) {
             killEnemy(e);
         }
         return defeatedEnemies;
+
+    }
+
+    public void checkCharacterHealth() {
+        if (character.getHealth() == 0) {
+            if (checkTheOneRingInUnequippedItems()) {
+                for (Item i : unequippedInventoryItems) {
+                    if (i.getType().equals("OneRing")) {
+                        removeUnequippedInventoryItem(i);
+                        break;
+                    }
+                }
+                character.setHealth(100);
+            } else {
+                triggerGameOver();
+            }
+        }
     }
 
     private void triggerGameOver() {

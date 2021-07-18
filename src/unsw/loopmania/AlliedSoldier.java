@@ -6,7 +6,6 @@ import java.util.List;
  * Represents a vampire castle card in the backend game world
  */
 public class AlliedSoldier extends MovingEntity {
-    private Statistics stats;
     private boolean isZombie;
 
     public AlliedSoldier(PathPosition position) {
@@ -16,7 +15,6 @@ public class AlliedSoldier extends MovingEntity {
 
     public void setIsZombie() {
         isZombie = true;
-        stats.setAttack(5);
     }
 
     public boolean getIsZombie() {
