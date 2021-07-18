@@ -6,12 +6,19 @@ import javafx.beans.property.SimpleIntegerProperty;
  * represents an equipped or unequipped Stake in the backend world
  */
 public class Stake extends Weapon {
-    // TODO = add more weapon/item types
+    /**
+     * constructor for Stake
+     * @param x
+     * @param y
+     */
     public Stake(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.type = "Stake";
     }
 
+    /**
+     * getter for AttackIncrease
+     */
     public int getAttackIncrease(Enemy enemy) {
         if (enemy instanceof Vampire) {
             return 15;
