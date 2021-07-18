@@ -410,6 +410,8 @@ public class LoopManiaWorldController {
         // framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             world.runTickMoves();
+            loadCard();
+            loadItem();
             List<Enemy> defeatedEnemies = world.runBattles();
 
             if (world.isGameOver()) {
@@ -476,7 +478,6 @@ public class LoopManiaWorldController {
     }
 
     private void loadCard() {
-        world.loadCard();
         List<Card> cards = world.getCardEntities();
         for (Card c: cards) {
             if (c != null) {
@@ -486,7 +487,6 @@ public class LoopManiaWorldController {
     }
 
     private void loadItem() {
-        world.addUnequippedItem(-1);
         List<Item> items = world.getUnequippedInventoryItems();
         for (Item i: items) {
             if (i != null) {
@@ -506,8 +506,8 @@ public class LoopManiaWorldController {
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
-        loadCard();
-        loadItem();
+        world.loadCard();
+        world.addUnequippedItem(-1);
     }
 
     private void onLoadCard(Card card) {
