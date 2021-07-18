@@ -103,3 +103,8 @@
 
 ### Items
 - Weapons have unlimited durability 
+
+
+### AlliedSoldier
+- There is no limit to the number of AlliedSoldiers the character has. 
+
