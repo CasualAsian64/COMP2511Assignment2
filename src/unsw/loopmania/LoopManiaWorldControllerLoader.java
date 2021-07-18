@@ -140,5 +140,9 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
         return new LoopManiaWorldController(load(), entities);        
     }
 
+    public LoopManiaWorld loadWorld() throws FileNotFoundException{
+        return load();
+    }
+
 
 }

@@ -760,7 +760,7 @@ public class LoopManiaWorldController {
                         Item item = world.getItem(nodeX, nodeY);
                         image = imageSelector.getImage(item, allItemImages);
                         
-                        if (item.getType().equals("HealthPotion")) {
+                        if (item.getType().equals("HealthPotion") && !world.isGameOver()) {
                             world.usePotion(item);
                         } else {
                             draggedEntity.setImage(image);
@@ -851,7 +851,6 @@ public class LoopManiaWorldController {
      */
     @FXML
     public void handleKeyPress(KeyEvent event) {
-        // TODO = handle additional key presses, e.g. for consuming a health potion
         switch (event.getCode()) {
             case SPACE:
                 if (isPaused) {
@@ -970,5 +969,9 @@ public class LoopManiaWorldController {
         // Platform.isFxApplicationThread());
         // System.out.println("Current system time = " +
         // java.time.LocalDateTime.now().toString().replace('T', ' '));
+    }
+
+    public LoopManiaWorld getLoopManiaWorld() {
+        return world;
     }
 }

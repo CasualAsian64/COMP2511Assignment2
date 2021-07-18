@@ -37,6 +37,7 @@ public class LoopManiaApplication extends Application {
         mainController = loopManiaLoader.loadController();
         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("LoopManiaView.fxml"));
         gameLoader.setController(mainController);
+        LoopManiaWorld world = mainController.getLoopManiaWorld();
         Parent gameRoot = gameLoader.load();
 
         // load the main menu
