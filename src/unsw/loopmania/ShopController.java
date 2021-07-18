@@ -220,6 +220,7 @@ public class ShopController {
     public void handleLeaveShop(){
         // TODO - set isInShop to false;
         gameSwitcher.switchMenu();
+        shop.setShopping(false);
     }
 
 

@@ -97,6 +97,14 @@ public class LoopManiaWorld {
         this.gameWon = gameWon;
     }
 
+    private Shop shop = new Shop(); 
+
+
+    public Shop getShop() {
+        return shop;
+    }
+
+
     private boolean inShop = false; 
 
     public boolean isInShop() {

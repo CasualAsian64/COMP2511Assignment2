@@ -6,7 +6,7 @@ import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public abstract class Shop {
+public class Shop {
 
     private int total = 0; 
 
@@ -17,9 +17,22 @@ public abstract class Shop {
     private ArrayList<Helmet> helmets; 
     private ArrayList<Armour> armours; 
     private ArrayList<Shield> shields; 
+    
+   
+    
+    public Shop() {
+    }
+
+    private boolean shopping; 
 
     
 
+    public boolean isShopping() {
+        return shopping;
+    }
+    public void setShopping(boolean shopping) {
+        this.shopping = shopping;
+    }
 
     public void addPotion(){
         total = total + 10; 

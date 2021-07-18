@@ -414,6 +414,10 @@ public class LoopManiaWorldController {
 
             if (world.isInShop()) {
                 switchToShop();
+
+                if (!world.getShop().isShopping()) {
+                    world.setInShop(false);
+                }
             }
 
             if (world.isGameOver()) {
