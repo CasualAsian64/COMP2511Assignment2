@@ -1,5 +1,7 @@
 package test;
 
+import unsw.loopmania.Enemy;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Slug;
 import unsw.loopmania.Zombie;
 import unsw.loopmania.Vampire;
@@ -7,6 +9,8 @@ import unsw.loopmania.Vampire;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
 
 public class EnemyTest {
     /**
@@ -52,12 +56,6 @@ public class EnemyTest {
         assertEquals(slug.getY(), 0);
     }
 
-    @Test
-    public void slugBattleTest() {
-        /**
-         * Test slug battle range
-         */
-    }
 
     /**
      * Tests for zombie enemy type
@@ -96,29 +94,6 @@ public class EnemyTest {
         assertEquals(zombie.getY(), 0);
     }
 
-    @Test
-
-    public void zombieSlowerMovementTest() {
-        /**
-         * Zombie entities should move 1 tile after the player moves 2 tiles
-         */
-    
-        /*
-        Helper helper = new Helper();
-
-        LoopManiaWorld world = helper.createWorld(0, MAP1);
-        
-        Character character = helper.testCharacterSetup(0, MAP1);
-        Goals world_goals = new Goals(helper.goalCondition1());
-        Zombie zombie = helper.testZombieSetup(0, MAP1);
-
-        world.setCharacter(helper.testCharacterSetup(0, MAP1));
-        world.setWorldGoals(world_goals);
-
-        world.runTickMoves();
-        */
-    }
-
     /**
      * Tests for vampire enemy type
      */
@@ -155,4 +130,38 @@ public class EnemyTest {
         assertEquals(vampire.getX(), 0);
         assertEquals(vampire.getY(), 0);
     }   
+
+    
+    @Test
+    public void vampireBackwardsMovementTest() {
+        Helper helper = new Helper();
+        //  First create world based on map in helper
+        LoopManiaWorld world = helper.createWorld(1);
+        // Then create a character and place at a path index. For this e.g. I set it to be 0
+        helper.createCharacterSetup(1, world);
+        // Create a enemy and place at a path index. For this e.g. I set it to be 1 and 0 is the enemy selector which selects slug
+        helper.createGoalsSetup(1, world);
+
+        helper.createBuildingSetup("CampfireCard", 7, world, 1);
+
+        Enemy enemy = helper.createEnemySetup(2, 6, world);
+
+        assertEquals(world.getEnemies().size(), 1);
+
+        // vampire is intially at (4,0)
+        assertEquals(enemy.getX(), 4);
+        assertEquals(enemy.getY(), 0);
+
+        // after world tick, it is at (3, 1). it is now in range of the campfire
+        world.runTickMoves();
+        world.runTickMoves();
+        world.runTickMoves();
+
+        // since in range of campfire, vampire moves back to (4, 0)
+        world.runTickMoves();
+        assertEquals(enemy.getX(), 0);
+        assertEquals(enemy.getY(), 2);
+
+        world.runTickMoves();
+    }
 }

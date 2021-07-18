@@ -15,10 +15,10 @@ public class ItemSelector {
     private static final int STAFF = 6;
     private static final int ONERING = 7;
 
-    public Item getItem(int itemSelection, List<String> allRareItems, SimpleIntegerProperty x,
-            SimpleIntegerProperty y) {
+    public Item getItem(int itemSelection, List<String> allRareItems, SimpleIntegerProperty x, SimpleIntegerProperty y,
+            boolean oneRing) {
         Item item;
-        if (itemSelection == ONERING && !allRareItems.contains("the_one_ring")) {
+        if (itemSelection == ONERING && (!allRareItems.contains("the_one_ring") || oneRing)) {
             Random randomItem = new Random();
             itemSelection = randomItem.nextInt(7);
         }

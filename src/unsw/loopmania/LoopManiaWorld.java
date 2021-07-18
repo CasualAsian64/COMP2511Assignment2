@@ -26,7 +26,8 @@ public class LoopManiaWorld {
     private static final int VAMPIRE = 2;
 
     private static final int GOLDRANDOMISER = 50;
-    private static final int ITEMRANDOMISER = 20;
+    private static final int ITEMRANDOMISER = 30;
+    private static final int CARDRANDOMISER = 20;
     /**
      * width of the world in GridPane cells
      */
@@ -94,6 +95,22 @@ public class LoopManiaWorld {
 
     public void setGameWon(boolean gameWon) {
         this.gameWon = gameWon;
+    }
+
+    private Shop shop = new Shop();
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    private boolean inShop = false;
+
+    public boolean isInShop() {
+        return inShop;
+    }
+
+    public void setInShop(boolean inShop) {
+        this.inShop = inShop;
     }
 
     private SimpleIntegerProperty loopsValue = new SimpleIntegerProperty(this, "loopsValue");
@@ -206,6 +223,10 @@ public class LoopManiaWorld {
 
     public int getNumLoops() {
         return numLoops;
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
     }
 
     /**
@@ -355,14 +376,6 @@ public class LoopManiaWorld {
      * @return list of enemies which have been killed
      */
     public List<Enemy> runBattles() {
-        // TODO = modify this - currently the character automatically wins all battles
-        // without any damage!
-
-        // Before simulating combat, detect if the character is in radius of any
-        // campfire
-        // for now, the radius of the campfire is 4
-
-        //
         boolean buffed = false;
 
         for (Building b : buildingEntities) {
@@ -390,11 +403,6 @@ public class LoopManiaWorld {
                         System.out.println("Allied zombie fight: Zombie's health is: " + soldier.getHealth());
                         enemyCharacterBattle(soldier);
                     }
-
-                    // soldier has died, it can no longer fight for the character
-                    if (soldier.getHealth() == 0) {
-                        character.removeSoldier(soldier);
-                    }
                 }
                 // enemy and character battle
                 enemyCharacterBattle(e);
@@ -410,11 +418,18 @@ public class LoopManiaWorld {
                         }
                     }
                 }
-                if (character.getHealth() == 0) {
-                    // TODO - trigger game over
+                if (character.getHealth() == 0 && checkTheOneRingInUnequippedItems()) {
+                    for (Item i : unequippedInventoryItems) {
+                        if (i.getType().equals("OneRing")) {
+                            removeUnequippedInventoryItem(i);
+                            System.out.println("The One Ring was destroyed!");
+                            break;
+                        }
+                    }
+                    Statistics stats = character.getStats();
+                    stats.setHealth(100);
+                } else {
                     triggerGameOver();
-                    break;
-                    // end the game
                 }
                 character.collectRewards(e);
                 defeatedEnemies.add(e);
@@ -446,7 +461,7 @@ public class LoopManiaWorld {
             removeCard(0);
         }
         Random randomCard = new Random();
-        int randCard = randomCard.nextInt(7);
+        int randCard = randomCard.nextInt(CARDRANDOMISER);
         CardSelector cardSelector = new CardSelector();
         Card card = cardSelector.getCard(randCard, cardEntities.size());
         if (card != null) {
@@ -466,6 +481,16 @@ public class LoopManiaWorld {
         return card;
     }
 
+    public boolean checkTheOneRingInUnequippedItems() {
+        boolean state = false;
+        for (Item i : unequippedInventoryItems) {
+            if (i != null && i.getType().equals("OneRing")) {
+                return true;
+            }
+        }
+        return state;
+    }
+
     public void addUnequippedItem() {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null) {
@@ -478,7 +503,7 @@ public class LoopManiaWorld {
         int randItem = randomItem.nextInt(ITEMRANDOMISER);
         Item item = itemSelector.getItem(randItem, allRareItems,
                 new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()), checkTheOneRingInUnequippedItems());
         if (item != null) {
             unequippedInventoryItems.add(item);
         }
@@ -539,6 +564,14 @@ public class LoopManiaWorld {
                     }
                     break;
                 case 1:
+                    if (item.getItemType().equals("Weapon") && !checkItemInEquippedInventory(item.getType())) {
+                        equippedInventoryItems.set(x, item);
+                        System.out.println("Weapon: " + item.getType() + " has been added");
+                    } else {
+                        item = null;
+                    }
+                    break;
+                case 2:
                     if (item.getItemType().equals("Equipment") && !checkItemInEquippedInventory(item.getType())) {
                         equippedInventoryItems.set(x, item);
                         System.out.println("Equipment: " + item.getType() + " has been added");
@@ -546,7 +579,7 @@ public class LoopManiaWorld {
                         item = null;
                     }
                     break;
-                case 2:
+                case 3:
                     if (item.getItemType().equals("Equipment") && !checkItemInEquippedInventory(item.getType())) {
                         equippedInventoryItems.set(x, item);
                         System.out.println("Equipment: " + item.getType() + " has been added");
@@ -594,6 +627,11 @@ public class LoopManiaWorld {
                     if (!vampireSpawned && numLoops % 5 == 0 && numLoops != 0) {
                         vampireRespawnLoop += 5;
                     }
+
+                    // TODO - just trialling first loop now, but later need to consider number of
+                    // shop loops.
+                    setInShop(true);
+
                     incrementLoops();
                     increaseShopLoops();
                     if (numLoops == shopCounter) {
@@ -990,6 +1028,14 @@ public class LoopManiaWorld {
             }
         }
         return item;
+    }
+
+    public void usePotion(Item item) {
+        unequippedInventoryItems.remove(item);
+        item.destroy();
+        Statistics stats = character.getStats();
+        int characterHealth = stats.getHealth();
+        stats.setHealth(characterHealth + 20);
     }
 
 }
