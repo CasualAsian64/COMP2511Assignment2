@@ -10,6 +10,14 @@ public class Shop {
 
     private int total = 0; 
     private IntegerProperty totalValue = new SimpleIntegerProperty(this,"totalValue"); 
+    private IntegerProperty potionsValue = new SimpleIntegerProperty(this,"potionsValue"); 
+    private IntegerProperty swordsValue = new SimpleIntegerProperty(this,"swordsValue"); 
+    private IntegerProperty stakesValue = new SimpleIntegerProperty(this,"stakesValue"); 
+    private IntegerProperty staffsValue = new SimpleIntegerProperty(this,"staffsValue"); 
+    private IntegerProperty helmetsValue = new SimpleIntegerProperty(this,"helmetsValue"); 
+    private IntegerProperty armoursValue = new SimpleIntegerProperty(this,"armoursValue"); 
+    private IntegerProperty shieldsValue = new SimpleIntegerProperty(this,"shieldsValue"); 
+
 
     private LoopManiaWorld world; 
 
@@ -35,6 +43,85 @@ public class Shop {
     }
     public void setTotalValue(int totalValue) {
         this.totalValue.set(totalValue);
+    }
+
+    public IntegerProperty potionsValueProperty() {
+        return potionsValue;
+    }
+
+    public int getPotionsValue(){
+        return potionsValue.get();
+    }
+    public void setPotionsValue(int potionsValue) {
+        this.potionsValue.set(potionsValue);
+    }
+
+    public IntegerProperty swordsValueProperty() {
+        return swordsValue;
+    }
+
+    public int getSwordsValue(){
+        return swordsValue.get();
+    }
+    public void setSwordsValue(int swordsValue) {
+        this.swordsValue.set(swordsValue);
+    }
+
+    public IntegerProperty stakesValueProperty() {
+        return stakesValue;
+    }
+
+    public int getStakesValue(){
+        return stakesValue.get();
+    }
+    public void setStakesValue(int stakesValue) {
+        this.stakesValue.set(stakesValue);
+    }
+
+    public IntegerProperty staffsValueProperty() {
+        return staffsValue;
+    }
+
+    public int getStaffsValue(){
+        return staffsValue.get();
+    }
+    public void setStaffsValue(int staffsValue) {
+        this.staffsValue.set(staffsValue);
+    }
+
+
+    public IntegerProperty helmetsValueProperty() {
+        return helmetsValue;
+    }
+
+    public int getHelmetsValue(){
+        return helmetsValue.get();
+    }
+    public void setHelmetsValue(int helmetsValue) {
+        this.helmetsValue.set(helmetsValue);
+    }
+
+    public IntegerProperty armoursValueProperty() {
+        return armoursValue;
+    }
+
+    public int getArmoursValue(){
+        return armoursValue.get();
+    }
+    public void setArmoursValue(int armoursValue) {
+        this.armoursValue.set(armoursValue);
+    }
+
+
+    public IntegerProperty shieldsValueProperty() {
+        return shieldsValue;
+    }
+
+    public int getShieldsValue(){
+        return shieldsValue.get();
+    }
+    public void setShieldsValue(int shieldsValue) {
+        this.shieldsValue.set(shieldsValue);
     }
 
 
@@ -90,6 +177,7 @@ public class Shop {
     }
 
     public void setPotions(int potions) {
+        setPotionsValue(potions);
         this.potions = potions;
     }
 
@@ -98,6 +186,7 @@ public class Shop {
     }
 
     public void setSwords(int swords) {
+        setSwordsValue(swords);
         this.swords = swords;
     }
 
@@ -106,6 +195,7 @@ public class Shop {
     }
 
     public void setStakes(int stakes) {
+        setStakesValue(stakes);
         this.stakes = stakes;
     }
 
@@ -114,6 +204,7 @@ public class Shop {
     }
 
     public void setStaffs(int staffs) {
+        setStaffsValue(staffs);
         this.staffs = staffs;
     }
 
@@ -122,6 +213,7 @@ public class Shop {
     }
 
     public void setHelmets(int helmets) {
+        setHelmetsValue(helmets);
         this.helmets = helmets;
     }
 
@@ -130,6 +222,7 @@ public class Shop {
     }
 
     public void setArmours(int armours) {
+        setArmoursValue(armours);
         this.armours = armours;
     }
 
@@ -138,6 +231,7 @@ public class Shop {
     }
 
     public void setShields(int shields) {
+        setShieldsValue(shields);
         this.shields = shields;
     }
 
