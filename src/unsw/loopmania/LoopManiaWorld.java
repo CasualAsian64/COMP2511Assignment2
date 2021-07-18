@@ -419,7 +419,7 @@ public class LoopManiaWorld {
         if (cardEntities.size() >= getWidth()) {
             Card card = cardEntities.get(0);
             card.removeCardAward(character);
-            addUnequippedItem();
+            addUnequippedItem(-1);
             removeCard(0);
         }
         Random randomCard = new Random();
@@ -451,16 +451,21 @@ public class LoopManiaWorld {
         }
         return state;
     }
-    public void addUnequippedItem() {
+    public void addUnequippedItem(int itemSelection) {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null) {
             //Give some reward for removing the card
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
+        int randItem;
         ItemSelector itemSelector = new ItemSelector();
-        Random randomItem = new Random();
-        int randItem = randomItem.nextInt(ITEMRANDOMISER);
+        if (itemSelection < 0) {
+            Random randomItem = new Random();
+            randItem = randomItem.nextInt(ITEMRANDOMISER);
+        } else {
+            randItem = itemSelection;
+        }
         Item item = itemSelector.getItem(randItem, allRareItems, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), checkTheOneRingInUnequippedItems());
         if (item != null) {
             unequippedInventoryItems.add(item);
