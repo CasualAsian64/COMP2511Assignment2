@@ -86,3 +86,25 @@
 - The human player is using a mouse and keyboard in order to interact with the user interface.
 - The language of the game is in English and all text entities will be in English.
 
+
+
+### MILESTONE 2 
+
+### Shop
+- The shops stocks all items and all are avialable for purchase every time the shop is visited. 
+- There is no limit to the number of items you can purchase, provided you have enough gold.
+
+
+
+### Buildings
+- Once placed down, all buildings will persist on the tile they are placed on (excluding the trap). 
+
+
+
+### Items
+- Weapons have unlimited durability 
+
+
+### AlliedSoldier
+- There is no limit to the number of AlliedSoldiers the character has. 
+

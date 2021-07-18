@@ -13,12 +13,23 @@ public class PathTile extends StaticEntity {
         LEFT(-1, 0),
         RIGHT(1, 0);
 
+        /**
+         * attributes for Direction
+         */
         private int xOffset;
         private int yOffset;
 
+        /**
+         * getters for X Offset and Y Offset
+         * @return
+         */
         public int getXOffset() { return xOffset; }
         public int getYOffset() { return yOffset; }
 
+        /**
+         * method to invert the path direction
+         * @return
+         */
         public Direction invert() {
             switch (this) {
                 case UP: return DOWN;
@@ -46,12 +57,22 @@ public class PathTile extends StaticEntity {
             throw new IllegalArgumentException(String.format("Invalid Direction formed from offset %d and %d", xOffset, yOffset));
         }
 
+        /**
+         * constructor for Direction
+         * @param xOffset
+         * @param yOffset
+         */
         private Direction(int xOffset, int yOffset) {
             this.xOffset = xOffset;
             this.yOffset = yOffset;
         }
     }
 
+    /**
+     * constructor for PathTile
+     * @param x
+     * @param y
+     */
     public PathTile(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }

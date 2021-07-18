@@ -293,7 +293,7 @@ public class LoopManiaWorld {
 
     public boolean checkVampireBuilding() {
         for (Building b : buildingEntities) {
-            if (b.getType().equals("VampireCastle")) {
+            if (b instanceof VampireCastle) {
                 return true;
             }
         }
@@ -302,7 +302,7 @@ public class LoopManiaWorld {
 
     public boolean checkZombiePit() {
         for (Building b : buildingEntities) {
-            if (b.getType().equals("ZombiePit")) {
+            if (b instanceof ZombiePit) {
                 return true;
             }
         }
@@ -311,7 +311,7 @@ public class LoopManiaWorld {
 
     public boolean checkVampireSpawned() {
         for (Enemy e : enemies) {
-            if (e.getType().equals("Vampire")) {
+            if (e instanceof Vampire) {
                 return true;
             }
         }
@@ -320,7 +320,7 @@ public class LoopManiaWorld {
 
     public boolean checkZombieSpawned() {
         for (Enemy e : enemies) {
-            if (e.getType().equals("Zombie")) {
+            if (e instanceof Zombie) {
                 return true;
             }
         }
@@ -560,7 +560,7 @@ public class LoopManiaWorld {
     public boolean checkTheOneRingInUnequippedItems() {
         boolean state = false;
         for (Item i : unequippedInventoryItems) {
-            if (i != null && i.getType().equals("OneRing")) {
+            if (i != null && i instanceof TheOneRing) {
                 return true;
             }
         }
@@ -714,7 +714,7 @@ public class LoopManiaWorld {
             if (b.getX() == (character.getX()) && b.getY() == (character.getY())) {
                 b.performActionOnCharacter(this.character);
 
-                if (b.getType().equals("HerosCastle")) {
+                if (b instanceof HerosCastle) {
                     if (!zombieSpawned && numLoops != 0) {
                         zombieRespawnLoop += 1;
                     }
@@ -764,7 +764,7 @@ public class LoopManiaWorld {
 
         for (Building b : buildingEntities) {
             for (Enemy e : enemies) {
-                if (b.getX() == (e.getX()) && b.getY() == (e.getY()) && b.getType().equals("Trap")) {
+                if (b.getX() == (e.getX()) && b.getY() == (e.getY()) && b instanceof Trap) {
                     boolean enemyKilledByTrap = b.performActionOnEnemy(e);
                     destroyedBuildings.add(b);
 
@@ -797,7 +797,7 @@ public class LoopManiaWorld {
 
         for (Building b : buildingEntities) {
 
-            if (b.getType().equals("Campfire")) {
+            if (b instanceof Campfire) {
                 campfires.add(b);
             }
 
@@ -805,8 +805,8 @@ public class LoopManiaWorld {
 
                 // TOWER
                 // Pythagoras calculation to see if enemy in range.
-                if (b.getType().equals("Tower") && Math.pow((b.getX() - e.getX()), 2)
-                        + Math.pow((b.getY() - e.getY()), 2) < e.getBattleRadius()) {
+                if (b instanceof Tower && Math.pow((b.getX() - e.getX()), 2) + Math.pow((b.getY() - e.getY()), 2) < e
+                        .getBattleRadius()) {
 
                     enemiesInRange.add(e);
 
@@ -818,9 +818,8 @@ public class LoopManiaWorld {
                 }
 
                 // Campfire
-                if (b.getType().equals("Campfire") && e.getType().equals("Vampire")
-                        && Math.pow((b.getX() - e.getX()), 2) + Math.pow((b.getY() - e.getY()), 2) < e
-                                .getBattleRadius()) {
+                if (b instanceof Campfire && e.getType().equals("Vampire") && Math.pow((b.getX() - e.getX()), 2)
+                        + Math.pow((b.getY() - e.getY()), 2) < e.getBattleRadius()) {
                     e.reverseDirection();
                 }
             }
@@ -971,7 +970,7 @@ public class LoopManiaWorld {
         List<Pair<Integer, Integer>> zombieSpawns = new ArrayList<>();
         List<Pair<Integer, Integer>> allZombieBuildings = new ArrayList<>();
         for (Building b : buildingEntities) {
-            if (b.getType().equals("ZombiePit")) {
+            if (b instanceof ZombiePit) {
                 allZombieBuildings.add(new Pair<Integer, Integer>(b.getX(), b.getY()));
             }
         }
@@ -994,7 +993,7 @@ public class LoopManiaWorld {
         List<Pair<Integer, Integer>> vampireSpawns = new ArrayList<>();
         List<Pair<Integer, Integer>> allVampireBuildings = new ArrayList<>();
         for (Building b : buildingEntities) {
-            if (b.getType().equals("VampireCastle")) {
+            if (b instanceof VampireCastle) {
                 allVampireBuildings.add(new Pair<Integer, Integer>(b.getX(), b.getY()));
                 System.out.println("Vampire pit building at (" + b.getX() + "," + b.getY() + ")");
             }

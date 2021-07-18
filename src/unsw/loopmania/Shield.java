@@ -6,7 +6,12 @@ import javafx.beans.property.SimpleIntegerProperty;
  * Represents an equipped or unequipped shield in the backend world
  */
 public class Shield extends Equipment {
-    // TODO = add more weapon/item types
+    /**
+     * constructor for Armour
+     * 
+     * @param x
+     * @param y
+     */
     public Shield(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.type = "Shield";

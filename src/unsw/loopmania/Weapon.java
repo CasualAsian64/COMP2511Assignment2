@@ -10,6 +10,9 @@ public abstract class Weapon extends Item {
         super(x, y);
     }
 
+    /**
+     * getter for Item Type
+     */
     public String getItemType() {
         return "Weapon";
     }

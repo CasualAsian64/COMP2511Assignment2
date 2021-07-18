@@ -17,22 +17,14 @@ public class ShopController {
 
     private MenuSwitcher gameSwitcher;
 
+    private Character character;
+
 
     public ShopController(LoopManiaWorld world) {
         this.world = world;
         this.shop = world.getShop();
+        this.character = world.getCharacter();
     }
-
-    // public void setLoopManiaWorld(LoopManiaWorld world) {
-    //     this.world = world;
-    // }
-    
-
-    // public LoopManiaWorld getWorld() {
-    //     return world;
-    // }
-
-
     
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
         this.gameSwitcher = gameSwitcher;
@@ -133,212 +125,101 @@ public class ShopController {
 
 
 
-    // @FXML 
-    // public void handleConsumableMinus(ActionEvent event) { 
 
-    //     int value = Integer.parseInt(consumableNumberField.getText());
-    //     consumableNumberField.setText(Integer.toString(value - 1));
-    //     world.getShop().subtractPotion();
-    // }
-
-    // @FXML 
-    // public void handleConsumablePlus(ActionEvent event) { 
-    //     int value = Integer.parseInt(consumableNumberField.getText());
-    //     consumableNumberField.setText(Integer.toString(value + 1));
-    //     // world.getShop().addPotion();
-    //     shop.addPotion();
-    // }
-
-
-    // @FXML 
-    // public void handleSwordMinus(ActionEvent event) {
-    //     int value = Integer.parseInt(swordNumberField.getText());
-    //     swordNumberField.setText(Integer.toString(value - 1)); 
-    //     world.getShop().subtractSword();
-    // }
-
-    // @FXML 
-    // public void handleSwordPlus(ActionEvent event) {
-    //     int value = Integer.parseInt(swordNumberField.getText());
-    //     swordNumberField.setText(Integer.toString(value + 1)); 
-    //     world.getShop().addSword();
-    // }
-
-    // @FXML 
-    // public void handleStakeMinus(ActionEvent event) { 
-    //     int value = Integer.parseInt(stakeNumberField.getText());
-    //     stakeNumberField.setText(Integer.toString(value - 1));
-    //     world.getShop().subtractStake();
-    // }
-
-    // @FXML 
-    // public void handleStakePlus(ActionEvent event) { 
-    //     int value = Integer.parseInt(stakeNumberField.getText());
-    //     stakeNumberField.setText(Integer.toString(value + 1));
-    //     world.getShop().addStake();
-    // }
-
-    // @FXML 
-    // public void handleStaffMinus(ActionEvent event) { 
-    //     int value = Integer.parseInt(staffNumberField.getText());
-    //     staffNumberField.setText(Integer.toString(value - 1));
-    //     world.getShop().subtractStaff();
-    // }
-
-    // @FXML 
-    // public void handleStaffPlus(ActionEvent event) { 
-    //     int value = Integer.parseInt(staffNumberField.getText());
-    //     staffNumberField.setText(Integer.toString(value + 1));
-    //     world.getShop().addStaff();
-    // }
-
-    // @FXML 
-    // public void handleHelmetMinus(ActionEvent event) { 
-    //     int value = Integer.parseInt(helmetNumberField.getText());
-    //     helmetNumberField.setText(Integer.toString(value - 1));
-    //     world.getShop().subtractHelmet();
-    // }
-
-    // @FXML 
-    // public void handleHelmetPlus(ActionEvent event) { 
-    //     int value = Integer.parseInt(helmetNumberField.getText());
-    //     helmetNumberField.setText(Integer.toString(value + 1));
-    //     world.getShop().addHelmet();
-    // }
-
-    // @FXML 
-    // public void handleArmourMinus(ActionEvent event) { 
-    //     int value = Integer.parseInt(armourNumberField.getText());
-    //     armourNumberField.setText(Integer.toString(value - 1));
-    //     world.getShop().subtractArmour();
-    // }
-
-    // @FXML 
-    // public void handleArmourPlus(ActionEvent event) { 
-    //     int value = Integer.parseInt(armourNumberField.getText());
-    //     armourNumberField.setText(Integer.toString(value + 1));
-    //     world.getShop().addArmour();
-    // }
-
-    // @FXML 
-    // public void handleShieldMinus(ActionEvent event) { 
-    //     int value = Integer.parseInt(shieldNumberField.getText());
-    //     shieldNumberField.setText(Integer.toString(value - 1));
-    //     world.getShop().subtractShield();
-    // }
-
-    // @FXML 
-    // public void handleShieldPlus(ActionEvent event) { 
-    //     int value = Integer.parseInt(shieldNumberField.getText());
-    //     shieldNumberField.setText(Integer.toString(value + 1));
-    //     world.getShop().addShield();
-    // }
     @FXML 
     public void handleConsumableMinus(ActionEvent event) { 
-
-        // int value = Integer.parseInt(consumableNumberField.getText());
-        // consumableNumberField.setText(Integer.toString(value - 1));
-        world.getShop().subtractPotion();
+        shop.subtractPotion();
     }
 
     @FXML 
     public void handleConsumablePlus(ActionEvent event) { 
-        // int value = Integer.parseInt(consumableNumberField.getText());
-        // consumableNumberField.setText(Integer.toString(value + 1));
-        // world.getShop().addPotion();
+
         shop.addPotion();
     }
 
 
     @FXML 
     public void handleSwordMinus(ActionEvent event) {
-        // int value = Integer.parseInt(swordNumberField.getText());
-        // swordNumberField.setText(Integer.toString(value - 1)); 
-        world.getShop().subtractSword();
+
+        shop.subtractSword();
     }
 
     @FXML 
     public void handleSwordPlus(ActionEvent event) {
-        // int value = Integer.parseInt(swordNumberField.getText());
-        // swordNumberField.setText(Integer.toString(value + 1)); 
-        world.getShop().addSword();
+
+        shop.addSword();
     }
 
     @FXML 
     public void handleStakeMinus(ActionEvent event) { 
-        // int value = Integer.parseInt(stakeNumberField.getText());
-        // stakeNumberField.setText(Integer.toString(value - 1));
-        world.getShop().subtractStake();
+
+        shop.subtractStake();
     }
 
     @FXML 
     public void handleStakePlus(ActionEvent event) { 
-        // int value = Integer.parseInt(stakeNumberField.getText());
-        // stakeNumberField.setText(Integer.toString(value + 1));
-        world.getShop().addStake();
+
+        shop.addStake();
     }
 
     @FXML 
     public void handleStaffMinus(ActionEvent event) { 
-        // int value = Integer.parseInt(staffNumberField.getText());
-        // staffNumberField.setText(Integer.toString(value - 1));
-        world.getShop().subtractStaff();
+
+        shop.subtractStaff();
     }
 
     @FXML 
     public void handleStaffPlus(ActionEvent event) { 
-        // int value = Integer.parseInt(staffNumberField.getText());
-        // staffNumberField.setText(Integer.toString(value + 1));
-        world.getShop().addStaff();
+
+        shop.addStaff();
     }
 
     @FXML 
     public void handleHelmetMinus(ActionEvent event) { 
-        // int value = Integer.parseInt(helmetNumberField.getText());
-        // helmetNumberField.setText(Integer.toString(value - 1));
-        world.getShop().subtractHelmet();
+
+        shop.subtractHelmet();
     }
 
     @FXML 
     public void handleHelmetPlus(ActionEvent event) { 
-        // int value = Integer.parseInt(helmetNumberField.getText());
-        // helmetNumberField.setText(Integer.toString(value + 1));
-        world.getShop().addHelmet();
+
+        shop.addHelmet();
     }
 
     @FXML 
     public void handleArmourMinus(ActionEvent event) { 
-        // int value = Integer.parseInt(armourNumberField.getText());
-        // armourNumberField.setText(Integer.toString(value - 1));
-        world.getShop().subtractArmour();
+
+        shop.subtractArmour();
     }
 
     @FXML 
     public void handleArmourPlus(ActionEvent event) { 
-        // int value = Integer.parseInt(armourNumberField.getText());
-        // armourNumberField.setText(Integer.toString(value + 1));
-        world.getShop().addArmour();
+
+        shop.addArmour();
     }
 
     @FXML 
     public void handleShieldMinus(ActionEvent event) { 
-        // int value = Integer.parseInt(shieldNumberField.getText());
-        // shieldNumberField.setText(Integer.toString(value - 1));
-        world.getShop().subtractShield();
+
+        shop.subtractShield();
     }
 
     @FXML 
     public void handleShieldPlus(ActionEvent event) { 
-        // int value = Integer.parseInt(shieldNumberField.getText());
-        // shieldNumberField.setText(Integer.toString(value + 1));
-        world.getShop().addShield();
+
+        shop.addShield();
     }
 
+     /**
+    * Display whether the purchase is successful or if there is not enough gold 
+    * to complete the transaction after pressing the purchase button. 
+    * @param event
+    */
     @FXML
     public void handlePurchase(ActionEvent event) {
 
-        if (world.getShop().sufficientFunds(world)) {
-            world.getShop().finaliseTransaction(world.getCharacter().getStats(), world);
+        if (shop.sufficientFunds(character.getStats())) {
+            shop.finaliseTransaction(character.getStats(), world);
             notEnoughGold.setVisible(false);
             purchaseSuccessful.setVisible(true);
         }        
@@ -355,40 +236,33 @@ public class ShopController {
 
     @FXML
     public void handleLeaveShop(){
-        // TODO - getting an exception here, to investigate further
         gameSwitcher.switchMenu();
 
-        // Set to not visible 
+        // Set both labels to not visible whenever the shop is left. 
         notEnoughGold.setVisible(false);
         purchaseSuccessful.setVisible(false);
 
-        world.getShop().setShopping(false);
+        shop.setShopping(false);
     }
 
 
     @FXML
     public void initialize() {
-        // consumableNumberField.setText("0");
-        // swordNumberField.setText("0");
-        // stakeNumberField.setText("0");
-        // staffNumberField.setText("0");
-        // helmetNumberField.setText("0");
-        // armourNumberField.setText("0");
-        // shieldNumberField.setText("0");
+
         totalNumberField.setText("0");
         availableGold.setText("0");
 
         
-        availableGold.textProperty().bind(Bindings.convert(world.getCharacter().getStats().goldValueProperty()));
-        totalNumberField.textProperty().bind(Bindings.convert(world.getShop().totalValue()));
+        availableGold.textProperty().bind(Bindings.convert(character.getStats().goldValueProperty()));
+        totalNumberField.textProperty().bind(Bindings.convert(shop.totalValue()));
 
-        consumableLabel.textProperty().bind(Bindings.convert(world.getShop().potionsValueProperty()));
-        swordLabel.textProperty().bind(Bindings.convert(world.getShop().swordsValueProperty()));
-        stakeLabel.textProperty().bind(Bindings.convert(world.getShop().stakesValueProperty()));
-        staffLabel.textProperty().bind(Bindings.convert(world.getShop().staffsValueProperty()));
-        helmetLabel.textProperty().bind(Bindings.convert(world.getShop().helmetsValueProperty()));
-        armourLabel.textProperty().bind(Bindings.convert(world.getShop().armoursValueProperty()));
-        shieldLabel.textProperty().bind(Bindings.convert(world.getShop().shieldsValueProperty()));
+        consumableLabel.textProperty().bind(Bindings.convert(shop.potionsValueProperty()));
+        swordLabel.textProperty().bind(Bindings.convert(shop.swordsValueProperty()));
+        stakeLabel.textProperty().bind(Bindings.convert(shop.stakesValueProperty()));
+        staffLabel.textProperty().bind(Bindings.convert(shop.staffsValueProperty()));
+        helmetLabel.textProperty().bind(Bindings.convert(shop.helmetsValueProperty()));
+        armourLabel.textProperty().bind(Bindings.convert(shop.armoursValueProperty()));
+        shieldLabel.textProperty().bind(Bindings.convert(shop.shieldsValueProperty()));
 
     }
 

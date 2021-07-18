@@ -11,6 +11,9 @@ public class HerosCastle extends Building {
         this.type = "HerosCastle";
     }    
 
+    /**
+    * Indicates that the Character is currently shopping. 
+    */
     public boolean atShop(int x, int y) {
         if (this.getX() == x && this.getY() == y) {
             return true;
