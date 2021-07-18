@@ -190,7 +190,7 @@ public class ShopController {
     public void handleShieldMinus(ActionEvent event) { 
         int value = Integer.parseInt(shieldNumberField.getText());
         shieldNumberField.setText(Integer.toString(value - 1));
-        shop.subtractShield();;
+        shop.subtractShield();
     }
 
     @FXML 
@@ -216,12 +216,28 @@ public class ShopController {
 
     }
 
+   
+
     @FXML
     public void handleLeaveShop(){
-        // TODO - set isInShop to false;
+        // TODO - getting an exception here, to investigate further
         gameSwitcher.switchMenu();
         shop.setShopping(false);
     }
+
+
+    @FXML
+    public void initialize() {
+        consumableNumberField.setText("0");
+        swordNumberField.setText("0");
+        stakeNumberField.setText("0");
+        staffNumberField.setText("0");
+        helmetNumberField.setText("0");
+        armourNumberField.setText("0");
+        shieldNumberField.setText("0");
+        totalNumberField.setText("0");
+    }
+
 
 
 }
