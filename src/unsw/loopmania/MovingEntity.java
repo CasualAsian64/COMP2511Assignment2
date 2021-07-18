@@ -16,6 +16,7 @@ public abstract class MovingEntity extends Entity {
      * Determines if the current entity is in a trance
      */
     private boolean inTrance;
+    private int numTranceAttacks;
     /**
      * object holding position in the path
      */
@@ -31,6 +32,7 @@ public abstract class MovingEntity extends Entity {
         this.position = position;
         this.stats = stats;
         this.inTrance = false;
+        this.numTranceAttacks = 0;
     }
 
     /**
@@ -68,35 +70,120 @@ public abstract class MovingEntity extends Entity {
         return y().get();
     }
 
+    /**
+     * Getter for the moving entity's statistics
+     * 
+     * @return
+     */
     public Statistics getStats() {
         return stats;
     }
 
+    /**
+     * Getter for moving entity's health
+     * 
+     * @return
+     */
     public int getHealth() {
         Statistics stats = this.getStats();
         return stats.getHealth();
     }
 
+    /**
+     * Set the entity's attack to a new value
+     * 
+     * @param attack
+     */
+    public void setAttack(int attack) {
+        stats.setAttack(attack);
+    }
+
+    /**
+     * Set the entity's defense to a new value
+     * 
+     * @param defense
+     */
+    public void setDefense(int defense) {
+        stats.setDefense(defense);
+    }
+
+    /**
+     * Getter for moving entity's attack
+     * 
+     * @return
+     */
     public int getAttack() {
         Statistics stats = this.getStats();
         return stats.getAttack();
     }
 
+    /**
+     * Reduce the entity's health by a given value
+     * 
+     * @param value
+     */
+    public void reduceHealth(int value) {
+        stats.reduceHealth(value);
+    }
+
+    /**
+     * used to set the health of a character
+     * 
+     * @param value
+     */
+    public void setHealth(int value) {
+        stats.setHealth(value);
+    }
+
+    /**
+     * Getter for moving entity's defense
+     * 
+     * @return
+     */
     public int getDefense() {
         Statistics stats = this.getStats();
         return stats.getDefense();
     }
 
+    /**
+     * Set a moving entity into trance
+     * 
+     * @param inTrance
+     */
     public void setInTrance(boolean inTrance) {
         this.inTrance = inTrance;
     }
 
+    /**
+     * Getter to determine if the moving entity is in trance
+     * 
+     * @return
+     */
     public boolean getInTrance() {
         return inTrance;
     }
 
-    public abstract void attack(Statistics opponentStats, List<Item> equippedItems);
+    public void setNumTranceAttacks(int numAttacks) {
+        this.numTranceAttacks = numAttacks;
+    }
 
+    public int getNumTranceAttacks() {
+        return numTranceAttacks;
+    }
+
+    /**
+     * Each moving entity must battle against each other.
+     * 
+     * @param opponentStats
+     * @param equippedItems
+     */
+    public abstract void attack(MovingEntity opponent, List<Item> equippedItems);
+
+    /**
+     * Getter for the moving entity's current path position
+     * 
+     * @return
+     */
     public PathPosition getPathPosition() {
         return position;
     }

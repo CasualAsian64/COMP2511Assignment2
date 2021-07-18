@@ -340,7 +340,7 @@ public class LoopManiaWorld {
     public void soldierEnemyBattle(AlliedSoldier soldier, Enemy enemy) {
         while (soldier.getHealth() > 0) {
             System.out.println("Soldier and enemy battle");
-            soldier.attack(enemy.getStats(), equippedInventoryItems);
+            soldier.attack(enemy, equippedInventoryItems);
             if (enemy.getHealth() == 0) {
                 break;
             }
@@ -353,25 +353,34 @@ public class LoopManiaWorld {
                 // soldier turned into a zombie, it can no longer battle
                 break;
             }
-            enemy.attack(soldier.getStats(), equippedInventoryItems);
+            enemy.attack(soldier, equippedInventoryItems);
         }
     }
 
-    public void characterEnemyBattle(MovingEntity enemy) {
+    public void characterEnemyBattle(MovingEntity enemy, List<Enemy> defeatedEnemies) {
         while (character.getHealth() > 0) {
-            character.attack(enemy.getStats(), equippedInventoryItems);
+            character.attack(enemy, equippedInventoryItems);
             if (enemy.getHealth() == 0) {
                 break;
             }
             this.determineEnemyTrance(enemy);
-            if (enemy.getInTrance()) {
-
+            // an allied soldier can not be "in-trance"
+            if (enemy.getInTrance() && enemy instanceof Enemy) {
+                // enemy in trance fights the supporting enemies
+                fightSupportingEnemies(defeatedEnemies, enemy);
+                if (enemy.getHealth() == 0) {
+                    // if the enemy has died whilst in trance,
+                    // remove the enemy
+                    defeatedEnemies.add((Enemy) enemy);
+                    return;
+                }
             }
-            enemy.attack(character.getStats(), equippedInventoryItems);
+            enemy.attack(character, equippedInventoryItems);
         }
     }
 
     public void fightSupportingEnemies(List<Enemy> defeatedEnemies, MovingEntity player) {
+        int numAttacks = 0;
         for (Enemy enemy : enemies) {
             // 1. Check the supporting enemy is alive and is in range
             // Note: The supporting enemy will never be the current enemy as either they
@@ -380,22 +389,39 @@ public class LoopManiaWorld {
             // 2. Check the character is within the supporting enemy's supprorting radius
             if (enemy.getHealth() > 0 && this.isInSupportRange(enemy)) {
                 if (player instanceof Character) {
-                    characterEnemyBattle(enemy);
+                    characterEnemyBattle(enemy, defeatedEnemies);
                     this.checkCharacterHealth();
                     // enemy has died, destroy the enemy and collect the rewards
                     if (enemy.getHealth() == 0) {
                         character.collectRewards(enemy);
                         defeatedEnemies.add(enemy);
                     }
-                } else { // enemy in trance fights for the user
-
+                } else { // enemy in trance
+                    while (numAttacks < player.getNumTranceAttacks()) {
+                        player.attack(enemy, equippedInventoryItems);
+                        if (enemy.getHealth() == 0) {
+                            // the enemy (not in trance) has died
+                            // break to iterate the enemies list and get the next supporting enemy
+                            break;
+                        }
+                        enemy.attack(player, equippedInventoryItems);
+                        if (player.getHealth() == 0) {
+                            // the enemy in trance has died
+                            return;
+                        }
+                        numAttacks++;
+                    }
+                    // the enemy has attacked for the character numAttacks time
+                    // it is now no longer in trance
+                    if (numAttacks == player.getNumTranceAttacks()) {
+                        return; // the enemy is no longer in trance
+                    }
                 }
-
             }
         }
     }
 
-    public void soldierPossiblyAttacksEnemy(Enemy enemy) {
+    public void soldierPossiblyAttacksEnemy(Enemy enemy, List<Enemy> defeatedEnemies) {
         // allied soldier exists - fights the enemy first
         if (character.alliedSoldierExists()) {
             AlliedSoldier soldier = character.getAnAlliedSoldier();
@@ -404,8 +430,7 @@ public class LoopManiaWorld {
 
             if (soldier.getIsZombie()) {
                 // allied soldier - turned zombie - battles the character
-                System.out.println("Allied zombie fight: Zombie's health is: " + soldier.getHealth());
-                characterEnemyBattle(soldier);
+                characterEnemyBattle(soldier, defeatedEnemies);
                 this.checkCharacterHealth();
             }
 
@@ -416,6 +441,11 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Determine if the enemy will be transitioned into the trance stage
+     * 
+     * @param enemy
+     */
     public void determineEnemyTrance(MovingEntity enemy) {
         Item weapon1 = equippedInventoryItems.get(0);
         Item weapon2 = equippedInventoryItems.get(1);
@@ -423,8 +453,12 @@ public class LoopManiaWorld {
             Random random = new Random();
             int tranceChance = random.nextInt(100);
             int tranceThreshold = random.nextInt(20);
+            // the chance of a trance is random (as seen by the tranceThreshold)
             if (tranceChance < tranceThreshold) {
                 enemy.setInTrance(true);
+                // set the number of attacks the enemy will undergo in trance
+                int numAttacks = random.nextInt(10);
+                enemy.setNumTranceAttacks(numAttacks);
             }
         }
     }
@@ -452,15 +486,17 @@ public class LoopManiaWorld {
             // 2. check the character is in the enemy's battle radius
             if (e.getHealth() > 0 && this.isInBattleRange(e)) {
                 // if an allied soldier exists, it fights the enemy first
-                this.soldierPossiblyAttacksEnemy(e);
+                this.soldierPossiblyAttacksEnemy(e, defeatedEnemies);
                 // enemy and character battle
-                characterEnemyBattle(e);
+                characterEnemyBattle(e, defeatedEnemies);
                 this.checkCharacterHealth();
                 character.collectRewards(e);
                 // by this point, either the enemy died or the game ended (the character died)
                 defeatedEnemies.add(e);
 
                 // character fights all the supporting enemies
+                // character that was in trance (and turned back to an enemy)
+                // will fight character again here
                 this.fightSupportingEnemies(defeatedEnemies, e);
             }
         }
@@ -645,7 +681,7 @@ public class LoopManiaWorld {
     public void runTickMoves() {
         updateCharacterBuff();
         character.updateStatistics(equippedInventoryItems);
-        character.moveDownPath();
+        character.move();
         moveEnemies();
         detectCharacterisOnTile();
         detectEnemyisOnTile();

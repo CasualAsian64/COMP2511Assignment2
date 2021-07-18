@@ -10,53 +10,74 @@ import javafx.beans.property.SimpleIntegerProperty;
  * represents the main character in the backend of the game world
  */
 public class Character extends MovingEntity {
+    // isBuffed used to determine if the character is in range of a campfire
     private boolean isBuffed;
     private ArrayList<AlliedSoldier> allies;
     private IntegerProperty alliesNumValue = new SimpleIntegerProperty(this, "alliesNumValue");
 
-    // TODO = potentially implement relationships between this class and other
-    // classes
-
+    /**
+     * Constructor for the character class.
+     * 
+     * @param position
+     */
     public Character(PathPosition position) {
         super(position, new Statistics(100, 5, 2, 0, 0));
         allies = new ArrayList<AlliedSoldier>();
         isBuffed = false;
     }
 
+    /**
+     * Move the character in the game path
+     */
     public void move() {
-
+        super.moveDownPath();
     }
 
+    /**
+     * Character collects gold and experience dropped by the enemy they just killed
+     * 
+     * @param e
+     */
     public void collectRewards(Enemy e) {
         Statistics eStats = e.getStats();
         stats.setGold(eStats.getGold() + stats.getGold());
         stats.setExp(eStats.getExp() + stats.getExp());
     }
 
-    @Override
-    public Statistics getStats() {
-        return stats;
-    }
-
+    /**
+     * Set the isBuffed boolean to determine if the character is in range of a
+     * campfire
+     * 
+     * @param isBuffed
+     */
     public void setIsBuffed(boolean isBuffed) {
         this.isBuffed = isBuffed;
     }
 
-    public void attack(Statistics opponentStats, List<Item> equippedItems) {
+    /**
+     * Character's method to attack enemies
+     */
+    public void attack(MovingEntity opponent, List<Item> equippedItems) {
         updateStatistics(equippedItems);
         int attack = stats.getAttack();
         if (this.isBuffed) {
             attack = attack * 2;
         }
-        attack -= opponentStats.getDefense();
-        opponentStats.reduceHealth(attack);
+        attack -= opponent.getDefense();
+        opponent.reduceHealth(attack);
     }
 
+    /**
+     * Update the character's attack and defense based on the currently equipped
+     * items
+     * 
+     * @param equippedItems
+     */
     public void updateStatistics(List<Item> equippedItems) {
-        stats.setAttack(5);
-        stats.setDefense(2);
-        int attack = stats.getAttack();
-        int defense = stats.getDefense();
+        super.setAttack(5);
+        super.setDefense(2);
+        int attack = super.getAttack();
+        int defense = super.getDefense();
         for (Item equippedItem : equippedItems) {
             if (equippedItem != null && equippedItem instanceof Weapon) {
                 attack += equippedItem.getIncrease();
@@ -68,14 +89,22 @@ public class Character extends MovingEntity {
                 }
             }
         }
-        stats.setAttack(attack);
-        stats.setDefense(defense);
+        super.setAttack(attack);
+        super.setDefense(defense);
     }
 
+    /**
+     * Getter for the list of allies the character currently has
+     */
     public ArrayList<AlliedSoldier> getAllies() {
         return allies;
     }
 
+    /**
+     * determine if the character has at least one allied soldier
+     * 
+     * @return
+     */
     public boolean alliedSoldierExists() {
         if (allies.size() > 0) {
             return true;
@@ -83,10 +112,18 @@ public class Character extends MovingEntity {
         return false;
     }
 
+    /**
+     * return one allied soldier of the character
+     * 
+     * @return
+     */
     public AlliedSoldier getAnAlliedSoldier() {
         return allies.get(0);
     }
 
+    /**
+     * remove a soldier from the allied soldier array
+     */
     public void removeSoldier(AlliedSoldier deadSoldier) {
         allies.remove(deadSoldier);
     }
@@ -101,10 +138,6 @@ public class Character extends MovingEntity {
 
     public void incrementAlliesNumValueProperty() {
         this.alliesNumValue.set(getAlliesNumValueProperty() + 1);
-    }
-
-    public void setHealth(int value) {
-        stats.setHealth(value);
     }
 
 }

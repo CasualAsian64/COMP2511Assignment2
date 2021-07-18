@@ -2,13 +2,16 @@ package unsw.loopmania;
 
 public class Slug extends Enemy {
     private final String type = "Slug";
-    int battleRadius;
-    int supportRadius;
+    private final int battleRadius = 2;
+    private final int supportRadius = 2;
 
+    /**
+     * Constructor for the slug enemy type
+     * 
+     * @param position
+     */
     public Slug(PathPosition position) {
         super(position, new Statistics(10, 3, 3, 20, 40));
-        battleRadius = 2;
-        supportRadius = 2;
     }
 
     /**
@@ -18,11 +21,9 @@ public class Slug extends Enemy {
         moveUpPath();
     }
 
-    @Override
-    public Statistics getStats() {
-        return stats;
-    }
-
+    /**
+     * Getter for the slug type
+     */
     public String getType() {
         return type;
     }
@@ -33,10 +34,16 @@ public class Slug extends Enemy {
 
     }
 
+    /**
+     * Getter for slug's support radius
+     */
     public int getSupportRadius() {
         return supportRadius;
     }
 
+    /**
+     * Getter for slug's battle radius
+     */
     public int getBattleRadius() {
         return battleRadius;
     }
