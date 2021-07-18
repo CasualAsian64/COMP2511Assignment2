@@ -149,7 +149,7 @@ public class Statistics {
     }
 
     public void setAttackProperty(int attack){ 
-        this.attackValue.set(exp);
+        this.attackValue.set(attack);
     }
 
     public IntegerProperty defenseValueProperty() { 
@@ -161,7 +161,7 @@ public class Statistics {
     }
 
     public void setDefenseProperty(int defense){ 
-        this.defenseValue.set(exp);
+        this.defenseValue.set(defense);
     }
 
 }

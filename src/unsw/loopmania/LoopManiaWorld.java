@@ -78,6 +78,7 @@ public class LoopManiaWorld {
     private List<String> allRareItems;
 
     private boolean gameOver = false; 
+   
   
     public boolean isGameOver() {
         return gameOver;
@@ -97,6 +98,23 @@ public class LoopManiaWorld {
         this.gameWon = gameWon;
     }
 
+    private Shop shop = new Shop(); 
+
+
+    public Shop getShop() {
+        return shop;
+    }
+
+
+    private boolean inShop = false; 
+
+    public boolean isInShop() {
+        return inShop;
+    }
+
+    public void setInShop(boolean inShop) {
+        this.inShop = inShop;
+    }
 
     private SimpleIntegerProperty loopsValue = new SimpleIntegerProperty(this, "loopsValue");
 
@@ -567,6 +585,11 @@ public class LoopManiaWorld {
                     if (!vampireSpawned && numLoops % 5 == 0 && numLoops != 0) {
                         vampireRespawnLoop += 5;
                     }
+
+                    // TODO - just trialling first loop now, but later need to consider number of shop loops. 
+                    setInShop(true);
+
+
                     incrementLoops();
                     increaseShopLoops();
                     if (numLoops == shopCounter) {
