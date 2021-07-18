@@ -9,9 +9,13 @@ public class Shop {
     private int total = 0; 
     
     private LoopManiaWorld world; 
+    private Character character; 
+    private Statistics statistics;
 
     public Shop(LoopManiaWorld world){
         this.world = world;
+        this.character = world.getCharacter();
+        this.statistics = character.getStats();
     }
 
     private int potions; 
@@ -357,10 +361,10 @@ public class Shop {
      * Return true if there are enough funds, else false.
      * @param world
      */
-    public boolean sufficientFunds(LoopManiaWorld world) {
+    public boolean sufficientFunds(Statistics statistics) {
 
          // Total of requested items exceeds characters' gold
-        if (getTotal() > world.getCharacter().getStats().getGold()){
+        if (getTotal() > statistics.getGold()) {
             return false; 
         }
 

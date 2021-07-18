@@ -218,7 +218,7 @@ public class ShopController {
     @FXML
     public void handlePurchase(ActionEvent event) {
 
-        if (shop.sufficientFunds(world)) {
+        if (shop.sufficientFunds(character.getStats())) {
             shop.finaliseTransaction(character.getStats(), world);
             notEnoughGold.setVisible(false);
             purchaseSuccessful.setVisible(true);
