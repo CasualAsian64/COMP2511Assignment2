@@ -19,7 +19,7 @@ public class LoopManiaApplication extends Application {
      * exit button
      */
     private LoopManiaWorldController mainController;
-    private ShopController shopController; 
+    private ShopController shopController = new ShopController(); 
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -48,7 +48,7 @@ public class LoopManiaApplication extends Application {
 
 
         // load the shop
-        ShopController shopController = new ShopController();
+        // ShopController shopController = new ShopController();
         FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("Shop.fxml"));
         shopLoader.setController(shopController);
         Parent shopRoot = shopLoader.load();

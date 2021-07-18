@@ -9,6 +9,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Shop {
 
     private int total = 0; 
+    private IntegerProperty totalValue = new SimpleIntegerProperty(this,"totalValue"); 
+
 
     private ArrayList<HealthPotion> potions; 
     private ArrayList<Sword> swords; 
@@ -21,6 +23,15 @@ public class Shop {
    
     
     public Shop() {
+        this.total = 0; 
+        this.shopping = false;
+        this.potions = new ArrayList<HealthPotion>(); 
+        this.swords = new ArrayList<Sword>(); 
+        this.stakes = new ArrayList<Stake>(); 
+        this.staffs = new ArrayList<Staff>(); 
+        this.helmets = new ArrayList<Helmet>(); 
+        this.armours = new ArrayList<Armour>(); 
+        this.shields = new ArrayList<Shield>(); 
     }
 
     private boolean shopping; 
