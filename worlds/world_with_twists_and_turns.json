@@ -3,7 +3,7 @@
   "height": 14,
   "rare_items": ["the_one_ring"],
   "goal-condition": { "goal": "AND", "subgoals":
-    [ { "goal": "experience", "quantity": 1000 },
+    [ { "goal": "experience", "quantity": 10000},
       { "goal": "OR", "subgoals":
         [ {"goal": "experience", "quantity": 123456 },
           {"goal": "gold", "quantity": 1000 }

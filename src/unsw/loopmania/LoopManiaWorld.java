@@ -140,7 +140,7 @@ public class LoopManiaWorld {
     // */
     private List<Pair<Integer, Integer>> orderedPath;
 
-    private int shopCounter = 1;
+    private int shopCounter = 0;
     private int shopIncrement = 1;
 
     private int castleX;
@@ -461,7 +461,7 @@ public class LoopManiaWorld {
                 defeatedEnemies.add(e);
 
                 // character fights all the supporting enemies
-                this.fightSupportingEnemies(defeatedEnemies);
+                this.fightSupportingEnemies(defeatedEnemies, e);
             }
         }
 
@@ -689,20 +689,20 @@ public class LoopManiaWorld {
 
                     // TODO - just trialling first loop now, but later need to consider number of
                     // shop loops.
-                    setInShop(true);
-
-                    incrementLoops();
-                    increaseShopLoops();
                     if (numLoops == shopCounter) {
                         System.out.println("Shop is opened");
+                        increaseShopLoops();
+                        setInShop(true);
                     }
-                    System.out.println("The number of loops completed is now " + getNumLoops());
-                    System.out.println();
-                    worldGoals.printAllGoals();
-                    System.out.println();
-                    System.out.println("Zombie respawn loop: " + zombieRespawnLoop);
-                    System.out.println("Vampire respawn loop: " + vampireRespawnLoop);
-                    System.out.println();
+                    incrementLoops();
+
+                    /*
+                     * System.out.println("The number of loops completed is now " + getNumLoops());
+                     * System.out.println(); worldGoals.printAllGoals(); System.out.println();
+                     * System.out.println("Zombie respawn loop: " + zombieRespawnLoop);
+                     * System.out.println("Vampire respawn loop: " + vampireRespawnLoop);
+                     * System.out.println();
+                     */
                 }
             }
         }
