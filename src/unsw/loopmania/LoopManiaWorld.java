@@ -144,7 +144,7 @@ public class LoopManiaWorld {
     //  */
     private List<Pair<Integer, Integer>> orderedPath;
 
-    private int shopCounter = 1;
+    private int shopCounter = 0;
     private int shopIncrement = 1;
 
     private int castleX;
@@ -591,15 +591,15 @@ public class LoopManiaWorld {
                         vampireRespawnLoop += 5;
                     }
 
-                    // TODO - just trialling first loop now, but later need to consider number of shop loops. 
-                    setInShop(true);
-
-
-                    incrementLoops();
-                    increaseShopLoops();
+                    // TODO - just trialling first loop now, but later need to consider number of shop loops.
                     if (numLoops == shopCounter) {
                         System.out.println("Shop is opened");
+                        increaseShopLoops();
+                        setInShop(true); 
                     }
+                    incrementLoops();
+                    
+                    /*
                     System.out.println("The number of loops completed is now " + getNumLoops());
                     System.out.println();
                     worldGoals.printAllGoals();
@@ -607,6 +607,7 @@ public class LoopManiaWorld {
                     System.out.println("Zombie respawn loop: " + zombieRespawnLoop);
                     System.out.println("Vampire respawn loop: " + vampireRespawnLoop);
                     System.out.println();
+                    */
                 }
             }
         }
