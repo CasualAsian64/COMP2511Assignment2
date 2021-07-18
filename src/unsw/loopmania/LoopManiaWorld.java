@@ -338,7 +338,6 @@ public class LoopManiaWorld {
     }
 
     public void soldierEnemyBattle(AlliedSoldier soldier, Enemy enemy) {
-        // need to have alliedSoldier
         while (soldier.getHealth() > 0) {
             System.out.println("Soldier and enemy battle");
             soldier.attack(enemy.getStats(), equippedInventoryItems);
@@ -349,23 +348,30 @@ public class LoopManiaWorld {
                 Zombie zombie = (Zombie) enemy;
                 zombie.possiblyTurnSoldier(soldier);
             }
+
+            if (soldier.getIsZombie()) {
+                // soldier turned into a zombie, it can no longer battle
+                break;
+            }
             enemy.attack(soldier.getStats(), equippedInventoryItems);
         }
     }
 
     public void characterEnemyBattle(MovingEntity enemy) {
         while (character.getHealth() > 0) {
-            System.out.println("Character and enemy battle");
             character.attack(enemy.getStats(), equippedInventoryItems);
-            System.out.println("Enemy's health: " + enemy.getHealth());
             if (enemy.getHealth() == 0) {
                 break;
+            }
+            this.determineEnemyTrance(enemy);
+            if (enemy.getInTrance()) {
+
             }
             enemy.attack(character.getStats(), equippedInventoryItems);
         }
     }
 
-    public void fightSupportingEnemies(List<Enemy> defeatedEnemies) {
+    public void fightSupportingEnemies(List<Enemy> defeatedEnemies, MovingEntity player) {
         for (Enemy enemy : enemies) {
             // 1. Check the supporting enemy is alive and is in range
             // Note: The supporting enemy will never be the current enemy as either they
@@ -373,13 +379,18 @@ public class LoopManiaWorld {
             // Therefore, the if condition will fail.
             // 2. Check the character is within the supporting enemy's supprorting radius
             if (enemy.getHealth() > 0 && this.isInSupportRange(enemy)) {
-                characterEnemyBattle(enemy);
-                this.checkCharacterHealth();
-                // enemy has died, destroy the enemy and collect the rewards
-                if (enemy.getHealth() == 0) {
-                    character.collectRewards(enemy);
-                    defeatedEnemies.add(enemy);
+                if (player instanceof Character) {
+                    characterEnemyBattle(enemy);
+                    this.checkCharacterHealth();
+                    // enemy has died, destroy the enemy and collect the rewards
+                    if (enemy.getHealth() == 0) {
+                        character.collectRewards(enemy);
+                        defeatedEnemies.add(enemy);
+                    }
+                } else { // enemy in trance fights for the user
+
                 }
+
             }
         }
     }
@@ -401,6 +412,19 @@ public class LoopManiaWorld {
             // soldier has died, it can no longer fight for the character
             if (soldier.getHealth() == 0) {
                 character.removeSoldier(soldier);
+            }
+        }
+    }
+
+    public void determineEnemyTrance(MovingEntity enemy) {
+        Item weapon1 = equippedInventoryItems.get(0);
+        Item weapon2 = equippedInventoryItems.get(1);
+        if ((weapon1 != null && weapon1 instanceof Staff) || (weapon2 != null && weapon2 instanceof Staff)) {
+            Random random = new Random();
+            int tranceChance = random.nextInt(100);
+            int tranceThreshold = random.nextInt(20);
+            if (tranceChance < tranceThreshold) {
+                enemy.setInTrance(true);
             }
         }
     }

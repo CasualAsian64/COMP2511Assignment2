@@ -68,8 +68,6 @@ public class Character extends MovingEntity {
                 }
             }
         }
-        System.out.println("Character's attack: " + attack);
-        System.out.println("Character's defense: " + defense);
         stats.setAttack(attack);
         stats.setDefense(defense);
     }

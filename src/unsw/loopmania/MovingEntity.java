@@ -8,8 +8,14 @@ import javafx.beans.property.SimpleIntegerProperty;
  * The moving entity
  */
 public abstract class MovingEntity extends Entity {
-    int attack;
+    /**
+     * object holding the statistics of a moving entity
+     */
     Statistics stats;
+    /**
+     * Determines if the current entity is in a trance
+     */
+    private boolean inTrance;
     /**
      * object holding position in the path
      */
@@ -24,6 +30,7 @@ public abstract class MovingEntity extends Entity {
         super();
         this.position = position;
         this.stats = stats;
+        this.inTrance = false;
     }
 
     /**
@@ -78,6 +85,14 @@ public abstract class MovingEntity extends Entity {
     public int getDefense() {
         Statistics stats = this.getStats();
         return stats.getDefense();
+    }
+
+    public void setInTrance(boolean inTrance) {
+        this.inTrance = inTrance;
+    }
+
+    public boolean getInTrance() {
+        return inTrance;
     }
 
     public abstract void attack(Statistics opponentStats, List<Item> equippedItems);

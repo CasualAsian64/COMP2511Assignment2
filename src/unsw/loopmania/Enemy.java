@@ -3,6 +3,7 @@ package unsw.loopmania;
 import java.util.List;
 
 public abstract class Enemy extends MovingEntity {
+
     // TODO = modify this, and add additional forms of enemy
     public Enemy(PathPosition position, Statistics stats) {
         super(position, stats);
@@ -13,7 +14,6 @@ public abstract class Enemy extends MovingEntity {
         attack = updateAttack(attack, equippedItems.get(2));
         attack = updateAttack(attack, equippedItems.get(3));
         attack -= opponentStats.getDefense();
-        System.out.println("attack of enemy: " + attack);
         opponentStats.reduceHealth(attack);
     }
 
