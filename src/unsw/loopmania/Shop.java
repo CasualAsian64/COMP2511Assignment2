@@ -10,28 +10,140 @@ public class Shop {
 
     private int total = 0; 
     private IntegerProperty totalValue = new SimpleIntegerProperty(this,"totalValue"); 
+    private IntegerProperty potionsValue = new SimpleIntegerProperty(this,"potionsValue"); 
+    private IntegerProperty swordsValue = new SimpleIntegerProperty(this,"swordsValue"); 
+    private IntegerProperty stakesValue = new SimpleIntegerProperty(this,"stakesValue"); 
+    private IntegerProperty staffsValue = new SimpleIntegerProperty(this,"staffsValue"); 
+    private IntegerProperty helmetsValue = new SimpleIntegerProperty(this,"helmetsValue"); 
+    private IntegerProperty armoursValue = new SimpleIntegerProperty(this,"armoursValue"); 
+    private IntegerProperty shieldsValue = new SimpleIntegerProperty(this,"shieldsValue"); 
 
 
-    private ArrayList<HealthPotion> potions; 
-    private ArrayList<Sword> swords; 
-    private ArrayList<Stake> stakes; 
-    private ArrayList<Staff> staffs; 
-    private ArrayList<Helmet> helmets; 
-    private ArrayList<Armour> armours; 
-    private ArrayList<Shield> shields; 
-    
-   
-    
+    private LoopManiaWorld world; 
+
+    public Shop(LoopManiaWorld world){
+        this.world = world;
+    }
+
+    private int potions; 
+    private int swords; 
+    private int stakes; 
+    private int staffs; 
+    private int helmets; 
+    private int armours; 
+    private int shields; 
+       
+
+    public IntegerProperty totalValue() {
+        return totalValue;
+    }
+
+    public int getTotalValue(){
+        return totalValue.get();
+    }
+    public void setTotalValue(int totalValue) {
+        this.totalValue.set(totalValue);
+    }
+
+    public IntegerProperty potionsValueProperty() {
+        return potionsValue;
+    }
+
+    public int getPotionsValue(){
+        return potionsValue.get();
+    }
+    public void setPotionsValue(int potionsValue) {
+        this.potionsValue.set(potionsValue);
+    }
+
+    public IntegerProperty swordsValueProperty() {
+        return swordsValue;
+    }
+
+    public int getSwordsValue(){
+        return swordsValue.get();
+    }
+    public void setSwordsValue(int swordsValue) {
+        this.swordsValue.set(swordsValue);
+    }
+
+    public IntegerProperty stakesValueProperty() {
+        return stakesValue;
+    }
+
+    public int getStakesValue(){
+        return stakesValue.get();
+    }
+    public void setStakesValue(int stakesValue) {
+        this.stakesValue.set(stakesValue);
+    }
+
+    public IntegerProperty staffsValueProperty() {
+        return staffsValue;
+    }
+
+    public int getStaffsValue(){
+        return staffsValue.get();
+    }
+    public void setStaffsValue(int staffsValue) {
+        this.staffsValue.set(staffsValue);
+    }
+
+
+    public IntegerProperty helmetsValueProperty() {
+        return helmetsValue;
+    }
+
+    public int getHelmetsValue(){
+        return helmetsValue.get();
+    }
+    public void setHelmetsValue(int helmetsValue) {
+        this.helmetsValue.set(helmetsValue);
+    }
+
+    public IntegerProperty armoursValueProperty() {
+        return armoursValue;
+    }
+
+    public int getArmoursValue(){
+        return armoursValue.get();
+    }
+    public void setArmoursValue(int armoursValue) {
+        this.armoursValue.set(armoursValue);
+    }
+
+
+    public IntegerProperty shieldsValueProperty() {
+        return shieldsValue;
+    }
+
+    public int getShieldsValue(){
+        return shieldsValue.get();
+    }
+    public void setShieldsValue(int shieldsValue) {
+        this.shieldsValue.set(shieldsValue);
+    }
+
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        setTotalValue(total);
+        this.total = total;
+    }
+
     public Shop() {
         this.total = 0; 
         this.shopping = false;
-        this.potions = new ArrayList<HealthPotion>(); 
-        this.swords = new ArrayList<Sword>(); 
-        this.stakes = new ArrayList<Stake>(); 
-        this.staffs = new ArrayList<Staff>(); 
-        this.helmets = new ArrayList<Helmet>(); 
-        this.armours = new ArrayList<Armour>(); 
-        this.shields = new ArrayList<Shield>(); 
+        this.potions = 0;
+        this.swords = 0;
+        this.stakes = 0;
+        this.staffs = 0;
+        this.helmets = 0;
+        this.armours = 0;
+        this.shields = 0;
     }
 
     private boolean shopping; 
@@ -45,123 +157,238 @@ public class Shop {
         this.shopping = shopping;
     }
 
+
+    
+
+    // public void setTotalValue(IntegerProperty totalValue) {
+    //     this.totalValue = totalValue;
+    // }
+
+    // public LoopManiaWorld getWorld() {
+    //     return world;
+    // }
+
+    // public void setWorld(LoopManiaWorld world) {
+    //     this.world = world;
+    // }
+
+    public int getPotions() {
+        return potions;
+    }
+
+    public void setPotions(int potions) {
+        setPotionsValue(potions);
+        this.potions = potions;
+    }
+
+    public int getSwords() {
+        return swords;
+    }
+
+    public void setSwords(int swords) {
+        setSwordsValue(swords);
+        this.swords = swords;
+    }
+
+    public int getStakes() {
+        return stakes;
+    }
+
+    public void setStakes(int stakes) {
+        setStakesValue(stakes);
+        this.stakes = stakes;
+    }
+
+    public int getStaffs() {
+        return staffs;
+    }
+
+    public void setStaffs(int staffs) {
+        setStaffsValue(staffs);
+        this.staffs = staffs;
+    }
+
+    public int getHelmets() {
+        return helmets;
+    }
+
+    public void setHelmets(int helmets) {
+        setHelmetsValue(helmets);
+        this.helmets = helmets;
+    }
+
+    public int getArmours() {
+        return armours;
+    }
+
+    public void setArmours(int armours) {
+        setArmoursValue(armours);
+        this.armours = armours;
+    }
+
+    public int getShields() {
+        return shields;
+    }
+
+    public void setShields(int shields) {
+        setShieldsValue(shields);
+        this.shields = shields;
+    }
+
     public void addPotion(){
-        total = total + 10; 
-        HealthPotion potion = new HealthPotion();
-        potions.add(potion);
+        setTotal(getTotal() + 10);
+        setPotions(getPotions() + 1);
+
     }
     public void subtractPotion(){
-        total = total - 10; 
-        potions.remove(0);
+        if (getPotions() > 0) {
+            setTotal(getTotal() - 10);
+            setPotions(getPotions()-1);
+        }
     }
     
     public void addSword(){
-        total = total + 50;
-        Sword sword = new Swords(); 
-        swords.add(sword);
+        setTotal(getTotal() + 50); 
+        setSwords(getSwords()+1);
+
     }
     public void subtractSword(){
-        total = total - 50; 
-        swords.remove(0);
+
+        if (getSwords() > 0) {
+            setTotal(getTotal() - 50);
+            setSwords(getSwords()-1);
+        }
     }
     
     public void addStaff() {
-        total = total + 80; 
-        Staff staff = new Staff();
-        staffs.add(staff);
+
+        setTotal(getTotal() + 80);
+        setStaffs(getStaffs()+1);
     }
     public void subtractStaff(){
-        total = total - 90; 
-        staffs.remove(0);
+        
+        if (getStaffs() > 0) {
+            setTotal(getTotal() - 80);
+            setStaffs(getStaffs()-1);
+        }
     }
 
     public void addStake(){
-        total = total + 30; 
-        Stake stake = new Stake();
-        stakes.add(stake);
+
+        setTotal(getTotal() + 30);
+        setStakes(getStakes()+1);
     }
     public void subtractStake(){
-        total = total - 30; 
-        stakes.remove(0);
+        
+        if (getStakes() > 0) {
+            setTotal(getTotal() - 30);
+            setStakes(getStakes()-1);
+
+        }
     }
 
     public void addHelmet(){
-        total = total + 20; 
-        Helmet helmet = new Helmet();
-        helmets.add(helmet);
+
+        setTotal(getTotal() + 20);
+        setHelmets(getHelmets()+1);
+
     }
     public void subtractHelmet(){
-        total = total - 20; 
-        helmets.remove(0);
+        
+        if (getHelmets() > 0) {
+            setTotal(getTotal() - 20);
+            setHelmets(getHelmets()-1);
+        }
     }
     
     public void addArmour(){
-        total = total + 70; 
-        Armour armour = new Armour();
-        armours.add(armour);
+
+        setTotal(getTotal() + 70);
+
+        setArmours(getArmours()+1);
     }
     public void subtractArmour(){
-        total = total - 70; 
-        armours.remove(0);
+
+        if (getArmours() > 0) {
+
+            setTotal(getTotal() - 70);
+            setArmours(getArmours()-1);
+
+        }
     }
 
     public void addShield(){
-        total = total + 40; 
-        Shield shield = new Shield; 
-        shields.add(shield);
+
+        setTotal(getTotal() + 40);
+        setShields(getShields()+1);
+
     }
     public void subtractShield(){
-        total = total - 40; 
-        shields.remove(0);
+
+        if (getShields()> 0) {
+            setTotal(getTotal() - 70);
+            setShields(getShields()-1);
+        }
+       
     }
 
-    public boolean sufficientFunds(){
+    public boolean sufficientFunds(LoopManiaWorld world) {
 
          // Compare total with Character's gold
-        if (total > stats.getGold()){
-            // Not enough gold
-            // System.out.println("Not enough gold!");
+        if (getTotal() > world.getCharacter().getStats().getGold()){
             return false; 
         }
 
         return true;
     }
 
-    public void finaliseTransaction(Statistics stats, List<Item> unequippedInventory) { 
+    public void finaliseTransaction(Statistics stats, LoopManiaWorld world) { 
 
     
-        // Add all the items to the unequipped inventory. 
-        for (HealthPotion hp: potions) {
-            unequippedInventory.add(hp);
+        // TODO Add all the purchased to the unequipped inventory. 
+        
+        while (getSwords() > 0) {
+            world.addUnequippedItem(0);
+            setSwords(getSwords()-1);
+        }
+        
+        while (getStakes() > 0) {
+            world.addUnequippedItem(1);
+            setStakes(getStakes()-1);
         }
 
-        for (Sword sword: swords) {
-            unequippedInventory.add(sword);
+
+        while (getArmours() > 0) {
+            world.addUnequippedItem(2);
+            setArmours(getArmours()-1);
         }
 
-        for (Stake stake: stakes) {
-            unequippedInventory.add(stake);
+        while (getHelmets() > 0) {
+            world.addUnequippedItem(3);
+            setHelmets(getHelmets()-1);
         }
 
-        for (Staff staff: staffs) {
-            unequippedInventory.add(staff);
+        while (getShields() > 0) {
+            world.addUnequippedItem(4);
+            setShields(getShields()-1);
+        }
+        
+        while (getPotions() > 0) {
+            world.addUnequippedItem(5);
+            setPotions(getPotions()-1);
         }
 
-        for (Helmet helmet: helmets) {
-            unequippedInventory.add(helmet);
+        while (getStaffs() > 0) {
+            world.addUnequippedItem(6);
+            setStaffs(getStaffs()-1);
         }
 
-        for (Armour armour: armours) { 
-            unequippedInventory.add(armour);
-        }
-
-        for (Shield shield: shields) { 
-            unequippedInventory.add(shield);
-        }
 
         // Decrement the players gold. 
-        stats.setGold(stats.getGold() - total); 
+        stats.setGold(stats.getGold() - getTotal()); 
 
+        // Set total back to zero after each transaction
+        setTotal(0);
 
     }
 
