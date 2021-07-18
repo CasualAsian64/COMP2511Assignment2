@@ -7,19 +7,20 @@ import java.util.List;
 import org.junit.Test;
 
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Building;
-import unsw.loopmania.Character;
 import unsw.loopmania.Enemy;
-import unsw.loopmania.Goals;
 
+/**
+ * tests for battles with entities
+ */
 public class BattleTest {
 
     private static final int SLUG = 0;
     private static final int ZOMBIE = 1;
     private static final int VAMPIRE = 2;
 
-
-
+    /**
+     * basic battle test with slug
+     */
     @Test
     public void basicBattleWithSlug() {
         Helper helper = new Helper();
@@ -32,11 +33,15 @@ public class BattleTest {
         helper.createGoalsSetup(1, world);
         // Grab list of enemies from defeated enemies
         List<Enemy> enemies = world.runBattles();
+        // Check defeated enemies contains Slug
         assertEquals(1, enemies.size());
         assertEquals(enemies.get(0).getType(), "Slug");
         world.runTickMoves();
     }                   
 
+    /**
+     * basic battle test with zombie
+     */
     @Test
     public void basicBattleWithZombie() {
         Helper helper = new Helper();
@@ -50,10 +55,14 @@ public class BattleTest {
         // Grab list of enemies from defeated enemies
         List<Enemy> enemies = world.runBattles();
         assertEquals(1, enemies.size());
+        // Check defeated enemies contains Zombie
         assertEquals(enemies.get(0).getType(), "Zombie");
         world.runTickMoves();
     }
 
+    /**
+     * basic battle test with vampire
+     */
     @Test
     public void basicBattleWithVampire() {
         Helper helper = new Helper();
@@ -67,10 +76,14 @@ public class BattleTest {
         // Grab list of enemies from defeated enemies
         List<Enemy> enemies = world.runBattles();
         assertEquals(1, enemies.size());
+        // Check defeated enemies contains Vampire
         assertEquals(enemies.get(0).getType(), "Vampire");
         world.runTickMoves();
     }
 
+    /**
+     * test enemy selector when given a false enemy type
+     */
     @Test
     public void createFalseExistingEnemyType() {
         Helper helper = new Helper();
@@ -85,7 +98,9 @@ public class BattleTest {
         assertEquals(enemy, null);
     }
 
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TODO: FIX CAMPFIRE TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /**
+     * test if campfire boosts player attack
+     */
     @Test
     public void battleWithBuff() {
         Helper helper = new Helper();

@@ -22,20 +22,27 @@ import javafx.beans.property.SimpleIntegerProperty;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * helper functions for tests
+ */
 public class Helper {
     private static final int MAP1 = 1;
     private static final int MAP2 = 2;
 
     private static final int GOAL1 = 1;
     private static final int GOAL2 = 2;
+    private static final int GOAL3 = 3;
 
     private static final int NORTH = 1;
     private static final int SOUTH = 2;
     private static final int EAST = 3;
     private static final int WEST = 4;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    /**
+     * createWorld helper function for LoopManiaWorld
+     * @param mapNo
+     * @return LoopManiaWorld
+     */
     public LoopManiaWorld createWorld(int mapNo) {
         int height = 0;
         int width = 0;
@@ -60,6 +67,12 @@ public class Helper {
         return world;
     }
 
+    /**
+     * helper function to test the character setup
+     * @param currentPositionInPath
+     * @param mapNo
+     * @return Character
+     */
     public Character testCharacterSetup(int currentPositionInPath, int mapNo) {
         int height = 0;
         int width = 0;
@@ -84,6 +97,13 @@ public class Helper {
         return c;
     }
 
+    /**
+     * helper function to create an enemy entity
+     * @param enemySelection
+     * @param currentPositionInPath
+     * @param world
+     * @return Enemy
+     */
     public Enemy createEnemySetup(int enemySelection, int currentPositionInPath, LoopManiaWorld world) {
         List<Pair<Integer, Integer>> orderedPath = world.getOrderedPath();
         PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
@@ -93,6 +113,12 @@ public class Helper {
         return enemy;
     }
 
+    /**
+     * helper function to create character entity
+     * @param currentPositionInPath
+     * @param world
+     * @return Character
+     */
     public Character createCharacterSetup(int currentPositionInPath, LoopManiaWorld world) {
         List<Pair<Integer, Integer>> orderedPath = world.getOrderedPath();
         PathPosition pathPosition = new PathPosition(currentPositionInPath, orderedPath);
@@ -101,6 +127,14 @@ public class Helper {
         return character;
     }
 
+    /**
+     * helper function to create building entity
+     * @param buildingSelection
+     * @param currentPositionInPath
+     * @param world
+     * @param direction
+     * @return Building
+     */
     public Building createBuildingSetup(String buildingSelection, int currentPositionInPath, LoopManiaWorld world, int direction) {
         List<Pair<Integer, Integer>> orderedPath = world.getOrderedPath();
         int x = orderedPath.get(currentPositionInPath).getValue0();
@@ -133,6 +167,12 @@ public class Helper {
         return building;
     }
 
+    /**
+     * helper function to create game Goals
+     * @param goalSelection
+     * @param world
+     * @return Goals
+     */
     public Goals createGoalsSetup(int goalSelection, LoopManiaWorld world) {
         Goals goals = null;
         switch (goalSelection) {
@@ -142,6 +182,9 @@ public class Helper {
             case GOAL2:
                 goals = new Goals(goalCondition2());
                 break;
+            case GOAL3:
+                goals = new Goals(goalCondition3());
+                break;
         }
         if (goals != null) {
             world.setWorldGoals(goals);
@@ -149,8 +192,6 @@ public class Helper {
         }
         return null;
     }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Function to create Slug entity on the first tile path
@@ -242,7 +283,13 @@ public class Helper {
         return vampire;
     }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * helper function to createJSONMap
+     * @param start_posX
+     * @param start_posY
+     * @param pathNo
+     * @return JSONObject
+     */
     public JSONObject createJSONMap(int start_posX, int start_posY, int pathNo) {
         JSONObject world = new JSONObject();
         world.put("type", "path_tile");
@@ -319,6 +366,10 @@ public class Helper {
         return orderedPath;
     }
 
+    /**
+     * helper function to create new game path
+     * @return JSONArray
+     */
     public JSONArray Path1() {
         String[] path = {"RIGHT", "RIGHT", "DOWN", "RIGHT", "RIGHT", "UP", "RIGHT", "RIGHT", "RIGHT",
         "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN",
@@ -335,6 +386,10 @@ public class Helper {
         return jsonPath;
     }
 
+    /**
+     * helper function to create new game path
+     * @return JSONArray
+     */
     public JSONArray Path2() {
         String[] path = {"RIGHT", "RIGHT", "DOWN", "DOWN", "LEFT", "LEFT", "UP", "UP"};
         JSONArray jsonPath = new JSONArray();
@@ -344,6 +399,10 @@ public class Helper {
         return jsonPath;
     }
 
+    /**
+     * helper function to create new goal conditions
+     * @return JSONObject
+     */
     public JSONObject goalCondition1() {
         JSONObject goalCondition = new JSONObject();
         goalCondition.put("goal", "AND");
@@ -370,10 +429,26 @@ public class Helper {
         return goalCondition;
     }
 
+    /**
+     * helper function to create new goal conditions
+     * @return JSONObject
+     */
     public JSONObject goalCondition2() {
         JSONObject goalCondition = new JSONObject();
         goalCondition.put("goal","experience");
         goalCondition.put("quantity", 123456);
+        System.out.println(goalCondition.toString());
+        return goalCondition;
+    }
+
+    /**
+     * helper function to create new goal conditions
+     * @return JSONObject
+     */
+    public JSONObject goalCondition3() {
+        JSONObject goalCondition = new JSONObject();
+        goalCondition.put("goal","experience");
+        goalCondition.put("quantity", 25);
         System.out.println(goalCondition.toString());
         return goalCondition;
     }
