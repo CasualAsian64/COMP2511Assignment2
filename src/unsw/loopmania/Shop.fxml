@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -43,7 +42,7 @@
       <HBox layoutX="84.0" layoutY="256.0">
          <children>
             <Button fx:id="minusConsumableButton" mnemonicParsing="false" onAction="#handleConsumableMinus" text="-" />
-            <TextField fx:id="consumableNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Label fx:id="consumableLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="34.0" textAlignment="CENTER" textFill="WHITE" />
             <Button fx:id="plusConsumableButton" mnemonicParsing="false" onAction="#handleConsumablePlus" text="+" />
          </children>
       </HBox>
@@ -73,14 +72,14 @@
       <HBox layoutX="281.0" layoutY="131.0">
          <children>
             <Button fx:id="minusSwordButton" mnemonicParsing="false" onAction="#handleSwordMinus" text="-" />
-            <TextField fx:id="swordNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Label fx:id="swordLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="34.0" textAlignment="CENTER" textFill="WHITE" />
             <Button fx:id="plusSwordButton" mnemonicParsing="false" onAction="#handleSwordPlus" text="+" />
          </children>
       </HBox>
       <HBox layoutX="568.0" layoutY="131.0">
          <children>
             <Button fx:id="minusHelmetButton" mnemonicParsing="false" onAction="#handleHelmetMinus" text="-" />
-            <TextField fx:id="helmetNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Label fx:id="helmetLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="34.0" textAlignment="CENTER" textFill="WHITE" />
             <Button fx:id="plusEquipmentButton" mnemonicParsing="false" onAction="#handleHelmetPlus" text="+" />
          </children>
       </HBox>
@@ -111,7 +110,7 @@
       <HBox layoutX="569.0" layoutY="257.0">
          <children>
             <Button fx:id="minusArmourButton" mnemonicParsing="false" onAction="#handleArmourMinus" text="-" />
-            <TextField fx:id="armourNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Label fx:id="armourLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="34.0" textAlignment="CENTER" textFill="WHITE" />
             <Button fx:id="plusArmourButton" mnemonicParsing="false" onAction="#handleArmourPlus" text="+" />
          </children>
       </HBox>
@@ -121,21 +120,21 @@
       <HBox layoutX="283.0" layoutY="257.0">
          <children>
             <Button fx:id="minsStakeButton" mnemonicParsing="false" onAction="#handleStakeMinus" text="-" />
-            <TextField fx:id="stakeNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Label fx:id="stakeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="34.0" textAlignment="CENTER" textFill="WHITE" />
             <Button fx:id="plusStakeButton" mnemonicParsing="false" onAction="#handleStakePlus" text="+" />
          </children>
       </HBox>
       <HBox layoutX="569.0" layoutY="388.0">
          <children>
             <Button fx:id="minusShieldButton" mnemonicParsing="false" onAction="#handleShieldMinus" text="-" />
-            <TextField fx:id="shieldNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Label fx:id="shieldLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="34.0" textAlignment="CENTER" textFill="WHITE" />
             <Button fx:id="plusShieldButton" mnemonicParsing="false" onAction="#handleShieldPlus" text="+" />
          </children>
       </HBox>
       <HBox layoutX="283.0" layoutY="389.0">
          <children>
             <Button fx:id="minusStaffButton" mnemonicParsing="false" onAction="#handleStaffMinus" text="-" />
-            <TextField fx:id="staffNumberField" prefHeight="27.0" prefWidth="38.0" />
+            <Label fx:id="staffLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="34.0" textAlignment="CENTER" textFill="WHITE" />
             <Button fx:id="plusStaffButton" mnemonicParsing="false" onAction="#handleStaffPlus" text="+" />
          </children>
       </HBox>
