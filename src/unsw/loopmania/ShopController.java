@@ -104,7 +104,7 @@ public class ShopController {
     @FXML
     public Label notEnoughGold = new Label(); 
     @FXML
-    public Label purchaseSucecssful = new Label(); 
+    public Label purchaseSuccessful = new Label(); 
 
 
     @FXML 
@@ -218,14 +218,13 @@ public class ShopController {
     public void handlePurchase(ActionEvent event) {
 
         if (world.getShop().sufficientFunds()) {
-            world.getShop().finaliseTransaction(world.getCharacter().getStats(), world.getUnequippedInventoryItems());
+            // world.getShop().finaliseTransaction(world.getCharacter().getStats(), world.getUnequippedInventoryItems());
             // TODO - trigger the purchase successful pop up
-
+            purchaseSuccessful.setVisible(true);
         }        
 
         else {
-            // TODO - trigger the not enough gold
-            // System.out.println("not enough gold!");
+
 
             notEnoughGold.setVisible(true);
         }
@@ -238,6 +237,11 @@ public class ShopController {
     public void handleLeaveShop(){
         // TODO - getting an exception here, to investigate further
         gameSwitcher.switchMenu();
+
+        // Set to not visible 
+        notEnoughGold.setVisible(false);
+        purchaseSuccessful.setVisible(false);
+
         world.getShop().setShopping(false);
     }
 
