@@ -768,7 +768,7 @@ public class LoopManiaWorldController {
                         Item item = world.getItem(nodeX, nodeY);
                         image = imageSelector.getImage(item, allItemImages);
                         
-                        if (item.getType().equals("HealthPotion") && !world.isGameOver()) {
+                        if (item instanceof HealthPotion && !world.isGameOver()) {
                             world.usePotion(item);
                         } else {
                             draggedEntity.setImage(image);
