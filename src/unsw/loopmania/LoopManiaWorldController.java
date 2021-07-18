@@ -389,7 +389,7 @@ public class LoopManiaWorldController {
         healthLabel.textProperty().bind(Bindings.convert(statistics.HealthValueProperty()));
         goldLabel.textProperty().bind(Bindings.convert(statistics.goldValueProperty()));
         expLabel.textProperty().bind(Bindings.convert(statistics.expValueProperty()));
-        alliesLabel.textProperty().bind(Bindings.convert(world.getCharacter().alliesNumValueProperty()));
+        alliesLabel.textProperty().bind(Bindings.convert(character.alliesNumValueProperty()));
         loopsLabel.textProperty().bind(Bindings.convert(world.LoopsValueProperty()));
         attackLabel.textProperty().bind(Bindings.convert(statistics.attackValueProperty()));
         defenseLabel.textProperty().bind(Bindings.convert(statistics.defenseValueProperty()));
